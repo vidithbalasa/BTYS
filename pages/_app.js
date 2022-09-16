@@ -1,12 +1,17 @@
-// import { AuthProvider } from '../src/hooks/auth'
 // import AppLayout from '../src/layout/AppLayout'
 // import AuthStateChanged from '../src/layout/AuthStateChanged'
 import '../styles/globals.css'
+import { AuthProvider } from '../src/context/authContext';
+import AuthStateChanged from '../src/auth/AuthStateChanged';
 // import "../src/config/firebase.config";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <Component {...pageProps} />    
+    <AuthProvider>
+      <AuthStateChanged>
+        <Component {...pageProps} />
+      </AuthStateChanged>
+    </AuthProvider>
   )
 }
 // function MyApp({ Component, pageProps }) {

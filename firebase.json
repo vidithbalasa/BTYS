@@ -9,8 +9,16 @@
     "rewrites": [
       {
         "source": "**/**",
-        "destination": "nextjs-server" 
+        "destination": "nextjs-server"
       }
     ]
+  },
+  "emulators": {
+    "auth": {
+      "port": 9099
+    },
+    "ui": {
+      "enabled": true
+    }
   }
 }
