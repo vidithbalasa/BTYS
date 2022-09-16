@@ -13,7 +13,7 @@ function Login(props) {
             <div className='inner-div'>
                 {/* Button that says login with google with the google logo next to it pulled locally in the public directory */}
                 <button onClick={() => AuthService.login()}>
-                    <Image src="/google-logo.png" alt="Google Logo" width={18} height={18} />
+                    <Image src="/google-logo.png" alt="Google Logo" width={17} height={17} />
                     Login with Google
                 </button>
             </div>
