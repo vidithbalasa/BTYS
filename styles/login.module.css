@@ -1,0 +1,16 @@
+/* Center the div in the page */
+.inner-div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.outer-div {
+    justify-content: center;
+}
+
+.title {
+    /* set the font to 60 */
+    font-size: 100px;
+}
