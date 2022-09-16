@@ -16,20 +16,23 @@ const firebaseConfig = {
   appId: "1:821349551727:web:0801041ff1ab6bd325c79a",
   measurementId: "G-R4EW174VXJ"
 };
-  
-// Initialize Firebase
-if (!getApps.length) {
-  const app = initializeApp(firebaseConfig);
-  console.log(app.name)
-  // if (typeof window !== "undefined") {
-	// 	if ("measurementId" in firebaseConfig) {
-	// 		getAnalytics();
-	// 	}
-	// }
-}
 
-export const provider = new GoogleAuthProvider();
-export const auth = getAuth();
+
+const app = initializeApp(firebaseConfig);
+
+// Initialize Firebase
+// if (!getApps.length) {
+//   const app = initializeApp(firebaseConfig);
+//   console.log(app.name)
+//   // if (typeof window !== "undefined") {
+//     // 	if ("measurementId" in firebaseConfig) {
+//       // 		getAnalytics();
+//       // 	}
+//       // }
+// }
+    
+export const auth = getAuth(app);
+// export const provider = new GoogleAuthProvider();
 
 
 // export const firestore = firebase.firestore()

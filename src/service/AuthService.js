@@ -1,34 +1,40 @@
-import { getApp } from "firebase/app";
-import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import { getApp } from 'firebase/app';
+import { auth } from '../config/firebase.config';
 
 class AuthService {
-    constructor(firebaseApp) {
-        this.auth = getAuth(firebaseApp);
-    };
+  constructor() {
+    this.auth = getAuth();
+  }
 
-    waitForUser(callback) {
-        return onAuthStateChanged(this.auth, (userCred) => {
-            callback(userCred)
-        })
-    };
-
-    loginWithGoogle() {
-        return signInWithPopup(this.auth, new GoogleAuthProvider())
-            .then((userCred) => {
-                return {
-                    user: userCred.user
-                }
+  login() {
+    return signInWithPopup(
+        this.auth, 
+        new GoogleAuthProvider()
+            .then((result) => {
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+                const token = credential.accessToken;
+                // The signed-in user info.
+                const user = result.user;
+                console.log(`User: ${user}`);
             })
             .catch((error) => {
-                return {
-                    error: error.message
-                }
-            });
-    }
+                // Handle Errors here.
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // The email of the user's account used.
+                const email = error.email;
+                // The AuthCredential type that was used.
+                const credential = GoogleAuthProvider.credentialFromError(error);
+                console.log(`Error: ${errorMessage}`);
+            })
+    );
+  }
 
-    async logout() {
-        await signOut(this.auth);
-    }
+  async logout() {
+    await signOut(this.auth);
+  }
 }
 
 export default new AuthService(getApp());
