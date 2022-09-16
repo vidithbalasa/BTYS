@@ -36,7 +36,6 @@ export default function Home(props) {
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
           />
-          <Link href={`/login`}>Login page</Link>
         </div>
       </main>
 

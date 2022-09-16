@@ -2,23 +2,10 @@ import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 // import { auth, provider } from '../config/firebase.config';
 import { auth, provider } from '../src/config/firebase.config';
 import React from 'react';
+import { withPublic } from '../src/hooks/route';
 
-export default function Login() {
-    const loginWithGoogle = async () => {
-        await signInWithPopup(auth, provider)
-            .then((result) => {
-                const creds = GoogleAuthProvider.credentialFromResult(result);
-                const token = creds.accessToken;
-                const user = result.user;
-                console.log(`token: ${token}`);
-                console.log(`user: ${user}`);
-            })
-            .catch((error) => {
-                console.log(`Error Code: ${error.code}`);
-                console.log(`Error: ${error.message}`);
-            })
-    };
-
+function Login() {
+    const { user, loginWithGoogle, error } = auth;
     return (
         <div>
             <h1>Login Page</h1>
@@ -31,3 +18,5 @@ export default function Login() {
 export async function getStaticProps() {
     return { props: { isStatic: true } }
 }
+
+export default withPublic(Login);
