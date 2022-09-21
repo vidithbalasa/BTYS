@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { functions } from '../src/config/firebase.config';
 import { httpsCallable } from 'firebase/functions';
+import { withProtected } from '../src/auth/route';
 
-export default function Design() {
-    const [image, setImage] = useState(null);
+function Design() {
+    const [prompt, setPrompt] = useState('test');
 
     const callFunction = async () => {
         // const response = await functions.https.onResponse(
@@ -15,10 +16,12 @@ export default function Design() {
         // console.log(response);
         // console.log(functions.)
 
-        const response = await httpsCallable(functions, 'stableai-function')({
-            prompt: 'test'
-        });
-        console.log(response);
+        // create a reponse to the stableai-function with the header Access-Control-Allow-Origin: *
+        const stableaiCall = httpsCallable(functions, 'stableai-function')
+        const response = await stableaiCall({ prompt: prompt })
+            .then((res) => res.json())
+            .then((data) => console.log(data))
+            .catch((err) => console.log(err));
     }
 
     return (
@@ -28,3 +31,5 @@ export default function Design() {
         </main>
     );
 }
+
+export default withProtected(Design);
