@@ -12,7 +12,7 @@ function Design() {
         // const corsHandler = cors({ origin: true });
         // create a reponse to the stableai-function with the header Access-Control-Allow-Origin: *
         const stableaiCall = httpsCallable(functions, 'stableai-function')
-        await stableaiCall()
+        await stableaiCall({ data: 'test' })
             .then((result) => {
                 console.log(result);
             })
