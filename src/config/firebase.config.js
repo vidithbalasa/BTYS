@@ -2,7 +2,7 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { connectAuthEmulator, getAuth } from "firebase/auth";
-import { getFunctions } from "firebase/functions";
+import { getFunctions, connectFunctionsEmulator } from "firebase/functions";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -20,6 +20,17 @@ const firebaseConfig = {
   measurementId: is_dev ? "G-R4EW174VXJ" : "G-ED6C9BHHNB"
 };
 
+// // For Deployment Only
+// const firebaseConfig = {
+//   apiKey: "AIzaSyCuMkR9ep3Aj_L3RZ5Zvir0iULbz8lIM_A",
+//   authDomain: "btys-production.firebaseapp.com",
+//   projectId: "btys-production",
+//   storageBucket: "btys-production.appspot.com",
+//   messagingSenderId: "269241867312",
+//   appId: "1:269241867312:web:eecccc5fa387aa444de1f5",
+//   measurementId: "G-ED6C9BHHNB"
+// };
+
 // Initialize Firebase
 if (!getApps.length) {
   initializeApp(firebaseConfig);
@@ -36,3 +47,6 @@ if (is_dev) {
 }
 
 export const functions = getFunctions(getApp());
+if (is_dev) {
+  connectFunctionsEmulator(functions, "localhost", 5001);
+}

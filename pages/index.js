@@ -23,6 +23,7 @@ export default function Home(props) {
             <div>
               <h1>Better Than You Society</h1>
               <p>An AI Powered Stickers Platform.</p>
+              <p>Current Build: {process.env.NODE_ENV}</p>
             </div>
           ) : (
             <h1>Not Working</h1>
