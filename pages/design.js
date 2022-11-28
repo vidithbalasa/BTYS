@@ -26,9 +26,20 @@ function Design() {
         //     .then((data) => console.log(data))
         //     .catch((err) => console.log(err));
         const response = await stableaiCall()
-            .then((res) => res.json())
-            .then((data) => console.log(data))
-            .catch((err) => console.log(err));
+            .then((result) => {
+            // Read result of the Cloud Function.
+            /** @type {any} */
+            const data = result.data;
+            const sanitizedMessage = data.text;
+            console.log(sanitizedMessage);
+            })
+            .catch((error) => {
+            // Getting the Error details.
+            const code = error.code;
+            const message = error.message;
+            const details = error.details;
+            console.log(code, message, details);
+            });
     }
 
     const callHelloWorld = async () => {
