@@ -1,7 +1,7 @@
 // import AppLayout from '../src/layout/AppLayout'
 // import AuthStateChanged from '../src/layout/AuthStateChanged'
 import '../styles/globals.css'
-import { AuthProvider } from '../src/context/authContext';
+import { AuthProvider } from '../src/auth/authContext';
 import AuthStateChanged from '../src/auth/AuthStateChanged';
 // import "../src/config/firebase.config";
 

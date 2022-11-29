@@ -3,10 +3,12 @@ import { functions } from '../src/config/firebase.config';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 import { withProtected } from '../src/auth/route';
 import { getApp } from 'firebase/app';
+import { useAuth } from '../src/auth/authContext';
 
 function Design() {
     const [prompt, setPrompt] = useState();
     const functions = getFunctions(getApp());
+    const auth = useAuth();
 
     const callFunction = async () => {
         // create a reponse to the stableai-function with the header Access-Control-Allow-Origin: *
@@ -14,6 +16,16 @@ function Design() {
         await stableaiCall({ prompt: prompt })
             .then((result) => {
                 console.log(result);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    const getToken = () => {
+        auth.user.getIdToken(true)
+            .then((idToken) => {
+                console.log(idToken);
             })
             .catch((error) => {
                 console.log(error);
@@ -35,6 +47,9 @@ function Design() {
             </div>
             <div>
                 <button onClick={callFunction}>Generate Image</button>
+            </div>
+            <div>
+                <button onClick={getToken}>Get Token</button>
             </div>
         </main>
     );
