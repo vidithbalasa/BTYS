@@ -5,7 +5,7 @@ import { withProtected } from '../src/auth/route';
 import { getApp } from 'firebase/app';
 
 function Design() {
-    const [prompt, setPrompt] = useState('test');
+    const [prompt, setPrompt] = useState();
     const functions = getFunctions(getApp());
 
     const callFunction = async () => {
@@ -22,7 +22,7 @@ function Design() {
 
     return (
         <main>
-            <h1>Generate an Image</h1>
+            <h1>Create a Design</h1>
             <div className='prompt-input'>
                 <label htmlFor='prompt'>Input a prompt</label>
                 <input
@@ -34,11 +34,11 @@ function Design() {
                 />
             </div>
             <div>
-                <button onClick={callFunction}>Call Function</button>
+                <button onClick={callFunction}>Generate Image</button>
             </div>
         </main>
     );
 }
 
-// export default withProtected(Design);
-export default Design;
+export default withProtected(Design);
+// export default Design;
