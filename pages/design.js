@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { functions } from '../src/config/firebase.config';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 import { withProtected } from '../src/auth/route';
@@ -6,28 +6,28 @@ import { getApp } from 'firebase/app';
 import useAuth from '../src/auth/authContext';
 
 function Design() {
-    const [prompt, setPrompt] = useState();
+    const [prompt, setPrompt] = useState('');
+    const [token, setToken] = useState('');
     const functions = getFunctions(getApp());
     const auth = useAuth();
 
+    // Get user token on mount
+    useEffect(() => {
+        auth.user.getIdToken().then((token) => {
+            setToken(token);
+        });
+    }, []);
+
+    // Call the function to get model prediction
     const callFunction = async () => {
         // create a reponse to the stableai-function with the header Access-Control-Allow-Origin: *
         const stableaiCall = httpsCallable(functions, 'stableai-function')
-        await stableaiCall({ prompt: prompt, token: getToken() })
+        await stableaiCall({ prompt: prompt, token: token })
             .then((result) => {
                 console.log(result);
             })
             .catch((error) => {
                 console.log(error);
-            });
-    }
-
-    const getToken = () => {
-        auth.user.getIdToken(true)
-            .then(idToken => idToken)
-            .catch((error) => {
-                console.log(error);
-                return null;
             });
     }
 
@@ -46,6 +46,9 @@ function Design() {
             </div>
             <div>
                 <button onClick={callFunction}>Generate Image</button>
+            </div>
+            <div>
+                <button onClick={e => console.log(token)}>Get Token</button>
             </div>
         </main>
     );
