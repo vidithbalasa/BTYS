@@ -3,7 +3,7 @@ Context for authentication
 */
 import React, { useState, useEffect, useContext, createContext } from 'react';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
-import AuthService from '../auth/AuthService';
+import AuthService from './AuthService';
 
 const authContext = createContext({ user: null, setUser: () => {} });
 
