@@ -25,7 +25,7 @@ function Design() {
         const stableaiCall = httpsCallable(functions, 'stableai-function')
         await stableaiCall({ prompt: prompt, token: token })
             .then((result) => {
-                img_url = result.data;
+                const img_url = result.data;
                 setImg(img_url);
             })
             .catch((error) => {
