@@ -8,6 +8,7 @@ import useAuth from '../src/auth/authContext';
 function Design() {
     const [prompt, setPrompt] = useState('');
     const [token, setToken] = useState('');
+    const [img, setImg] = useState('');
     const functions = getFunctions(getApp());
     const auth = useAuth();
 
@@ -24,7 +25,8 @@ function Design() {
         const stableaiCall = httpsCallable(functions, 'stableai-function')
         await stableaiCall({ prompt: prompt, token: token })
             .then((result) => {
-                console.log(result);
+                img_url = result.data;
+                setImg(img_url);
             })
             .catch((error) => {
                 console.log(error);
@@ -47,9 +49,7 @@ function Design() {
             <div>
                 <button onClick={callFunction}>Generate Image</button>
             </div>
-            <div>
-                <button onClick={e => console.log(token)}>Get Token</button>
-            </div>
+            {img && <img src={img} alt='Generated Image' />}
         </main>
     );
 }
