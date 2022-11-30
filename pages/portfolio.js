@@ -7,7 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const Portfolio = () => {
-    const [images, setImages] = useState([]);
+    const [images, setImages] = useState({});
     const auth = useAuth();
 
     useEffect(() => {
@@ -18,7 +18,11 @@ const Portfolio = () => {
             const catalog = await getDocs(imagesRef);
             // Get the "url" field from each document and add it to the images array
             catalog.forEach((doc) => {
-                setImages((imgs) => [...imgs, doc]);
+                // Map each image id to its data
+                setImages((images) => ({
+                    ...images,
+                    [doc.id]: doc.data(),
+                }));
             });
         }
         getImages();
@@ -27,23 +31,28 @@ const Portfolio = () => {
     return (
         <main>
             <h1 className='title'>Portfolio</h1>
-            {/* <div className='portfolio'>
+            <div className='portfolio'>
                 {
-                    images.map((image, index) => {
-                        // image that links to /portfolio/[id] where id is the document name
-                        return (
-                            <Link href={`/portfolio/${image.name}`} key={index}>
-                                <div className='imageDiv'>
-                                    <Image src={image.url} alt='Generated Image' />
-                                </div>
-                            </Link>
-                        );
-                    })
+                    // Show each image with a link to /portfolio/[id]
+                    Object.keys(images).map((id) => (
+                        <Link href={`/portfolio/${id}`} key={id}>
+                            <a>
+                                <Image
+                                    src={images[id].url}
+                                    alt='Portfolio image'
+                                    width={300}
+                                    height={300}
+                                />
+                            </a>
+                            {/* Add a caption (the prompt) */}
+                            <p className='imageCaption'>{images[id].prompt}</p>
+                        </Link>
+                    ))
                 }
-            </div> */}
-            <div>
-                <button onClick={() => console.log(images)}>Log Images</button>
             </div>
+            {/* <div>
+                <button onClick={() => console.log(images)}>Log Images</button>
+            </div> */}
         </main>
     );
 }
