@@ -9,7 +9,7 @@ const Portfolio = () => {
     const [images, setImages] = useState([]);
     const auth = useAuth();
 
-    useEffect(() => {
+    useEffect(async () => {
         const db = getFirestore();
         // Collection 'users' -> Document 'auth.user.uid' -> Collection 'images'
         const imagesRef = collection(db, 'users', auth.user.uid, 'images');
@@ -18,7 +18,7 @@ const Portfolio = () => {
         catalog.forEach((doc) => {
             setImages((imgs) => [...imgs, doc.data()]);
         });
-    }, [auth.user]);
+    }, [auth.user.uid]);
 
     return (
         <main>
@@ -29,9 +29,9 @@ const Portfolio = () => {
                         // image that links to /portfolio/[id] where id is the document name
                         return (
                             <div key={index}>
-                                <a href={`/portfolio/${image.id}`}>
-                                    <Image src={image.url} alt='Generated Image' />
-                                </a>
+                                {/* <a href={`/portfolio/${image.id}`}> */}
+                                <Image src={image.url} alt='Generated Image' />
+                                {/* </a> */}
                             </div>
                         );
                     })
