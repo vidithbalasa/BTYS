@@ -3,6 +3,7 @@ import useAuth from '../src/auth/authContext';
 import { getFirestore, collection, getDocs, doc } from 'firebase/firestore';
 import '../styles/portfolio.module.css';
 import { withProtected } from '../src/auth/route';
+import { Image } from 'next/image';
 
 const Portfolio = () => {
     const [images, setImages] = useState([]);
@@ -10,7 +11,7 @@ const Portfolio = () => {
 
     useEffect(() => {
         getCatalog();
-    }, []);
+    }, [auth.user, getCatalog]);
 
     const getCatalog = async () => {
         const db = getFirestore();
@@ -33,7 +34,7 @@ const Portfolio = () => {
                         return (
                             <div key={index}>
                                 <a href={`/portfolio/${image.id}`}>
-                                    <img src={image.url} alt='Generated Image' />
+                                    <Image src={image.url} alt='Generated Image' />
                                 </a>
                             </div>
                         );
