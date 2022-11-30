@@ -33,7 +33,9 @@ const Portfolio = () => {
                         // image that links to /portfolio/[id] where id is the document name
                         return (
                             <Link href={`/portfolio/${image.name}`} key={index}>
-                                <Image src={image.url} alt='Generated Image' />
+                                <div className='imageDiv'>
+                                    <Image src={image.url} alt='Generated Image' />
+                                </div>
                             </Link>
                         );
                     })
