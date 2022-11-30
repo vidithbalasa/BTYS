@@ -3,7 +3,7 @@ import useAuth from '../src/auth/authContext';
 import { getFirestore, collection, getDocs, doc } from 'firebase/firestore';
 import '../styles/portfolio.module.css';
 import { withProtected } from '../src/auth/route';
-import { Image } from 'next/image';
+import Image from 'next/image';
 
 const Portfolio = () => {
     const [images, setImages] = useState([]);
