@@ -27,7 +27,7 @@ const Portfolio = () => {
     return (
         <main>
             <h1 className='title'>Portfolio</h1>
-            <div className='portfolio'>
+            {/* <div className='portfolio'>
                 {
                     images.map((image, index) => {
                         // image that links to /portfolio/[id] where id is the document name
@@ -40,7 +40,7 @@ const Portfolio = () => {
                         );
                     })
                 }
-            </div>
+            </div> */}
             <div>
                 <button onClick={() => console.log(images)}>Log Images</button>
             </div>
