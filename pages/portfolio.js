@@ -10,15 +10,18 @@ const Portfolio = () => {
     const auth = useAuth();
 
     useEffect(async () => {
-        const db = getFirestore();
-        // Collection 'users' -> Document 'auth.user.uid' -> Collection 'images'
-        const imagesRef = collection(db, 'users', auth.user.uid, 'images');
-        const catalog = await getDocs(imagesRef);
-        // Get the "url" field from each document and add it to the images array
-        catalog.forEach((doc) => {
-            setImages((imgs) => [...imgs, doc.data()]);
-        });
-    }, [auth.user.uid]);
+        async function getImages() {
+            const db = getFirestore();
+            // Collection 'users' -> Document 'auth.user.uid' -> Collection 'images'
+            const imagesRef = collection(db, 'users', auth.user.uid, 'images');
+            const catalog = await getDocs(imagesRef);
+            // Get the "url" field from each document and add it to the images array
+            catalog.forEach((doc) => {
+                setImages((imgs) => [...imgs, doc.data()]);
+            });
+        }
+        getImages();
+    }, [auth.user]);
 
     return (
         <main>
