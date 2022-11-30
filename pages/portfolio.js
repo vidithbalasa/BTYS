@@ -32,9 +32,9 @@ const Portfolio = () => {
                         // image that links to /portfolio/[id] where id is the document name
                         return (
                             <div key={index}>
-                                {/* <a href={`/portfolio/${image.id}`}> */}
-                                <Image src={image.url} alt='Generated Image' />
-                                {/* </a> */}
+                                <a href={`/portfolio/${image.id}`}>
+                                    <Image src={image.url} alt='Generated Image' />
+                                </a>
                             </div>
                         );
                     })
