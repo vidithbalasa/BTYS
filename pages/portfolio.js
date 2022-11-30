@@ -18,7 +18,7 @@ const Portfolio = () => {
             const catalog = await getDocs(imagesRef);
             // Get the "url" field from each document and add it to the images array
             catalog.forEach((doc) => {
-                setImages((imgs) => [...imgs, doc.data()]);
+                setImages((imgs) => [...imgs, doc]);
             });
         }
         getImages();
