@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import useAuth from '../src/auth/authContext';
 import { getFirestore, collection, getDocs, doc } from 'firebase/firestore';
-// import '../styles/portfolio.module.css';
+import styles from '../styles/portfolio.module.css';
 import { withProtected } from '../src/auth/route';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -28,31 +28,39 @@ const Portfolio = () => {
         getImages();
     }, [auth.user]);
 
+    // useEffect(() => {
+    //     const IMG_URL = "https://picsum.photos/200/300";
+    //     // Call the above url twice and put each image in the images array with the name "image1" and "image2"
+    //     setImages({
+    //         image1: IMG_URL,
+    //         image2: IMG_URL,
+    //         image3: IMG_URL,
+    //         image4: IMG_URL,
+    //     });
+    // }, []);
+
     return (
-        <main>
+        <main className={styles.main}>
             <h1 className='title'>Portfolio</h1>
-            <div className='portfolio'>
+            <div className={styles.imageBox}>
                 {
                     // Show each image with a link to /portfolio/[id]
                     Object.keys(images).map((id) => (
                         <Link href={`/portfolio/${id}`} key={id}>
                             <a>
                                 <Image
-                                    src={images[id].url}
+                                    // src={images[id].url}
+                                    src = "https://storage.googleapis.com/vidiths_test_bucket/629d9343-d3f8-4a38-9c3e-4c3adc377cf0.png"
                                     alt='Portfolio image'
-                                    width={300}
-                                    height={300}
+                                    className={styles.image}
+                                    width={512}
+                                    height={512}
                                 />
                             </a>
-                            {/* Add a caption (the prompt) */}
-                            <p className='imageCaption'>{images[id].prompt}</p>
                         </Link>
                     ))
                 }
             </div>
-            {/* <div>
-                <button onClick={() => console.log(images)}>Log Images</button>
-            </div> */}
         </main>
     );
 }
