@@ -4,6 +4,7 @@ import { getFunctions, httpsCallable } from 'firebase/functions';
 import { withProtected } from '../src/auth/route';
 import { getApp } from 'firebase/app';
 import useAuth from '../src/auth/authContext';
+import Image from 'next/image';
 
 function Design() {
     const [prompt, setPrompt] = useState('');
@@ -17,8 +18,8 @@ function Design() {
         auth.user.getIdToken().then((token) => {
             setToken(token);
         });
-        console.log('Rendered Page')
-    }, []);
+        // console.log('Rendered Page')
+    }, [auth.user]);
 
     // Call the function to get model prediction
     const callFunction = async () => {
@@ -50,7 +51,7 @@ function Design() {
             <div>
                 <button onClick={callFunction}>Generate Image</button>
             </div>
-            {img && <img src={img} alt='Generated Image' />}
+            {img && <Image src={img} alt='Generated Image' />}
         </main>
     );
 }
