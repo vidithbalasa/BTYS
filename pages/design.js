@@ -12,11 +12,12 @@ function Design() {
     const functions = getFunctions(getApp());
     const auth = useAuth();
 
-    // Get user token on mount
+    // Get jwt token on mount
     useEffect(() => {
         auth.user.getIdToken().then((token) => {
             setToken(token);
         });
+        console.log('Rendered Page')
     }, []);
 
     // Call the function to get model prediction
