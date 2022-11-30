@@ -4,7 +4,7 @@ import useAuth from '../../src/auth/authContext';
 import Image from 'next/image';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 
-export default function Artwork() {
+export default function Artwork({ catalog }) {
     const [image, setImage] = useState({});
     const router = useRouter();
     const { id } = router.query;
@@ -26,13 +26,6 @@ export default function Artwork() {
         getImage();
     }, [id]);
 
-    // useEffect(() => {
-    //     setImage({
-    //         url: 'https://storage.googleapis.com/vidiths_test_bucket/51b14540-fd31-4a29-964e-425c0c54acdd.png',
-    //         prompt: 'This is a test image',
-    //     });
-    // })
-    
     return (
         <main>
             <h1>Artwork</h1>
@@ -47,7 +40,31 @@ export default function Artwork() {
                     <p>{image.prompt}</p>
                 </div>    
             }
-            <button onClick={e => console.log(image)}>Log image</button>
+            <button onClick={() => console.log(catalog)}>Back</button>
         </main>
     );
+}
+
+export function getStaticProps() {
+    async function getCatalog() {
+        // Get catalog of items from printify and display it on the page
+        const printify_base_url = "https://api.printify.com";
+        const printify_api_key = process.env.PRINTIFY_API_KEY;
+        const printify_catalog_url = `${printify_base_url}/v1/catalog/blueprints.json`;
+        const printify_headers = {
+            "Authorization": printify_api_key
+        };
+        const printify_response = await fetch(printify_catalog_url, {
+            method: 'GET',
+            headers: printify_headers
+        });
+        const printify_data = await printify_response.json();
+        const printify_catalog = printify_data.blueprints;
+        return printify_catalog;
+    }
+    return {
+        props: {
+            catalog: getCatalog(),
+        },
+    };
 }
