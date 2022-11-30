@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import useAuth from '../src/auth/authContext';
 import { getFirestore, collection, getDocs, doc } from 'firebase/firestore';
 import '../styles/portfolio.module.css';
+import { withProtected } from '../src/auth/route';
 
-export default function Portfolio() {
+const Portfolio = () => {
     const [images, setImages] = useState([]);
     const auth = useAuth();
 
@@ -42,6 +43,8 @@ export default function Portfolio() {
         </main>
     );
 }
+
+export default withProtected(Portfolio);
 
 // export async function getStaticProps() {
 //     const db = getFirestore();
