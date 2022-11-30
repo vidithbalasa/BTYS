@@ -49,8 +49,7 @@ const Portfolio = () => {
                         <Link href={`/portfolio/${id}`} key={id}>
                             <a>
                                 <Image
-                                    // src={images[id].url}
-                                    src = "https://storage.googleapis.com/vidiths_test_bucket/629d9343-d3f8-4a38-9c3e-4c3adc377cf0.png"
+                                    src={images[id].url}
                                     alt='Portfolio image'
                                     className={styles.image}
                                     width={512}
