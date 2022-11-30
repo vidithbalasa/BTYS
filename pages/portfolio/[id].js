@@ -4,8 +4,9 @@ import useAuth from '../../src/auth/authContext';
 import Image from 'next/image';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 
-export default function Artwork({ catalog }) {
+export default function Artwork() {
     const [image, setImage] = useState({});
+    const [catalog, setCatalog] = useState({});
     const router = useRouter();
     const { id } = router.query;
     const auth = useAuth();
@@ -24,6 +25,23 @@ export default function Artwork({ catalog }) {
             }
         }
         getImage();
+
+        async function getCatalog() {
+            // Get catalog of items from printify and display it on the page
+            const printify_base_url = "http://api.printify.com";
+            const printify_api_key = process.env.PRINTIFY_API_KEY;
+            const printify_catalog_url = `${printify_base_url}/v1/catalog/blueprints.json`;
+            const printify_headers = {
+                "Authorization": `Bearer ${printify_api_key}`,
+            };
+            await fetch(printify_catalog_url, printify_headers)
+            .then(response => response.json())
+            .then(data => { setCatalog(data)})
+            .catch(error => {
+                console.log(error);
+            });
+        }
+        getCatalog();
     }, [id]);
 
     return (
@@ -40,31 +58,31 @@ export default function Artwork({ catalog }) {
                     <p>{image.prompt}</p>
                 </div>    
             }
-            <button onClick={() => console.log(catalog)}>Back</button>
+            <button onClick={() => console.log(catalog)}>Print Catalog</button>
         </main>
     );
 }
 
-export function getStaticProps() {
-    async function getCatalog() {
-        // Get catalog of items from printify and display it on the page
-        const printify_base_url = "https://api.printify.com";
-        const printify_api_key = process.env.PRINTIFY_API_KEY;
-        const printify_catalog_url = `${printify_base_url}/v1/catalog/blueprints.json`;
-        const printify_headers = {
-            "Authorization": printify_api_key
-        };
-        const printify_response = await fetch(printify_catalog_url, {
-            method: 'GET',
-            headers: printify_headers
-        });
-        const printify_data = await printify_response.json();
-        const printify_catalog = printify_data.blueprints;
-        return printify_catalog;
-    }
-    return {
-        props: {
-            catalog: getCatalog(),
-        },
-    };
-}
+// export function getStaticProps() {
+//     async function getCatalog() {
+//         // Get catalog of items from printify and display it on the page
+//         const printify_base_url = "https://api.printify.com";
+//         const printify_api_key = process.env.PRINTIFY_API_KEY;
+//         const printify_catalog_url = `${printify_base_url}/v1/catalog/blueprints.json`;
+//         const printify_headers = {
+//             "Authorization": printify_api_key
+//         };
+//         const printify_response = await fetch(printify_catalog_url, {
+//             method: 'GET',
+//             headers: printify_headers
+//         });
+//         const printify_data = await printify_response.json();
+//         const printify_catalog = printify_data.blueprints;
+//         return printify_catalog;
+//     }
+//     return {
+//         props: {
+//             catalog: getCatalog(),
+//         },
+//     };
+// }
