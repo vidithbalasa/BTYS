@@ -10,10 +10,6 @@ const Portfolio = () => {
     const auth = useAuth();
 
     useEffect(() => {
-        getCatalog();
-    }, [auth.user, getCatalog]);
-
-    const getCatalog = async () => {
         const db = getFirestore();
         // Collection 'users' -> Document 'auth.user.uid' -> Collection 'images'
         const imagesRef = collection(db, 'users', auth.user.uid, 'images');
@@ -22,7 +18,7 @@ const Portfolio = () => {
         catalog.forEach((doc) => {
             setImages((imgs) => [...imgs, doc.data()]);
         });
-    }
+    }, [auth.user]);
 
     return (
         <main>
