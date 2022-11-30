@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useAuth from '../../src/auth/authContext';
 import Image from 'next/image';
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
 
 export default function Artwork() {
     const [image, setImage] = useState({});
