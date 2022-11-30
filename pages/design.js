@@ -17,7 +17,7 @@ function Design() {
         auth.user.getIdToken().then((token) => {
             setToken(token);
         });
-        console.log('Rendered Page')
+        // console.log('Rendered Page')
     }, []);
 
     // Call the function to get model prediction

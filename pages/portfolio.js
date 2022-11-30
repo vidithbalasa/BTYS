@@ -1,36 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import useAuth from '../src/auth/authContext';
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
-import '../styles/portfolio.css';
+import { getFirestore, collection, getDocs, doc } from 'firebase/firestore';
+import '../styles/portfolio.module.css';
 
-export default function Portfolio({ images }) {
-    // const [images, setImages] = useState([]);
+export default function Portfolio() {
+    const [images, setImages] = useState([]);
     const auth = useAuth();
 
-    // useEffect(() => {
-    //     getCatalog();
-    // }, []);
+    useEffect(() => {
+        getCatalog();
+    }, []);
 
-    // const getCatalog = async () => {
-    //     const db = getFirestore();
-    //     // Collection 'users' -> Document 'auth.user.uid' -> Collection 'images'
-    //     const imagesRef = collection(db, 'users', auth.user.uid, 'images');
-    //     const catalog = await getDocs(imagesRef);
-    //     // Get the "url" field from each document and add it to the images array
-    //     catalog.forEach((doc) => {
-    //         setImages((imgs) => [...imgs, doc.data().url]);
-    //     });
-    // }
+    const getCatalog = async () => {
+        const db = getFirestore();
+        // Collection 'users' -> Document 'auth.user.uid' -> Collection 'images'
+        const imagesRef = collection(db, 'users', auth.user.uid, 'images');
+        const catalog = await getDocs(imagesRef);
+        // Get the "url" field from each document and add it to the images array
+        catalog.forEach((doc) => {
+            setImages((imgs) => [...imgs, doc.data()]);
+        });
+    }
 
     return (
         <main>
             <h1 className='title'>Portfolio</h1>
             <div className='portfolio'>
                 {
-                    images.map((doc, index) => {
+                    images.map((image, index) => {
+                        // image that links to /portfolio/[id] where id is the document name
                         return (
                             <div key={index}>
-                                <img src={doc.data().url} alt='Generated Image' />
+                                <a href={`/portfolio/${image.id}`}>
+                                    <img src={image.url} alt='Generated Image' />
+                                </a>
                             </div>
                         );
                     })
@@ -40,15 +43,16 @@ export default function Portfolio({ images }) {
     );
 }
 
-export async function getStaticProps() {
-    const db = getFirestore();
-    // Collection 'users' -> Document 'auth.user.uid' -> Collection 'images'
-    const imagesRef = collection(db, 'users', auth.user.uid, 'images');
-    const catalog = await getDocs(imagesRef);
-    // Return the images
-    return {
-        props: {
-            images: catalog.docs,
-        }
-    };
-}
+// export async function getStaticProps() {
+//     const db = getFirestore();
+//     // Collection 'users' -> Document auth.user.uid -> Collection 'images'
+//     // const imagesRef = collection(db, 'users').doc(auth.user.uid).collection('images');
+//     const userDoc = doc(db, 'users', auth.user.uid)
+//     const catalog = await getDocs(imagesRef);
+//     // Return the images
+//     return {
+//         props: {
+//             images: catalog.docs,
+//         }
+//     };
+// }
