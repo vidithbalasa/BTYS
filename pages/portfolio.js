@@ -4,6 +4,7 @@ import { getFirestore, collection, getDocs, doc } from 'firebase/firestore';
 import '../styles/portfolio.module.css';
 import { withProtected } from '../src/auth/route';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const Portfolio = () => {
     const [images, setImages] = useState([]);
@@ -32,13 +33,16 @@ const Portfolio = () => {
                         // image that links to /portfolio/[id] where id is the document name
                         return (
                             <div key={index}>
-                                <a href={`/portfolio/${image.id}`}>
+                                <Link href={`/portfolio/${image.id}`}>
                                     <Image src={image.url} alt='Generated Image' />
-                                </a>
+                                </Link>
                             </div>
                         );
                     })
                 }
+            </div>
+            <div>
+                <button onClick={() => console.log(images)}>Log Images</button>
             </div>
         </main>
     );
