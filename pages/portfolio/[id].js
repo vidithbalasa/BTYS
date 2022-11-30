@@ -46,6 +46,7 @@ export default function Artwork() {
                     <p>{image.prompt}</p>
                 </div>    
             }
+            <button onClick={e => console.log(image)}>Log image</button>
         </main>
     );
 }
