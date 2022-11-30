@@ -6,6 +6,7 @@ import { getFirestore, doc, getDoc } from 'firebase/firestore';
 
 export default function Artwork() {
     const [image, setImage] = useState({});
+    const [catalog, setCatalog] = useState({});
     const router = useRouter();
     const { id } = router.query;
     const auth = useAuth();
@@ -24,15 +25,25 @@ export default function Artwork() {
             }
         }
         getImage();
+
+        async function getCatalog() {
+            // Get catalog of items from printify and display it on the page
+            const printify_base_url = "http://api.printify.com";
+            const printify_api_key = process.env.PRINTIFY_API_KEY;
+            const printify_catalog_url = `${printify_base_url}/v1/catalog/blueprints.json`;
+            const printify_headers = {
+                "Authorization": `Bearer ${printify_api_key}`,
+            };
+            await fetch(printify_catalog_url, printify_headers)
+            .then(response => response.json())
+            .then(data => { setCatalog(data)})
+            .catch(error => {
+                console.log(error);
+            });
+        }
+        getCatalog();
     }, [id]);
 
-    // useEffect(() => {
-    //     setImage({
-    //         url: 'https://storage.googleapis.com/vidiths_test_bucket/51b14540-fd31-4a29-964e-425c0c54acdd.png',
-    //         prompt: 'This is a test image',
-    //     });
-    // })
-    
     return (
         <main>
             <h1>Artwork</h1>
@@ -47,7 +58,31 @@ export default function Artwork() {
                     <p>{image.prompt}</p>
                 </div>    
             }
-            <button onClick={e => console.log(image)}>Log image</button>
+            <button onClick={() => console.log(catalog)}>Print Catalog</button>
         </main>
     );
 }
+
+// export function getStaticProps() {
+//     async function getCatalog() {
+//         // Get catalog of items from printify and display it on the page
+//         const printify_base_url = "https://api.printify.com";
+//         const printify_api_key = process.env.PRINTIFY_API_KEY;
+//         const printify_catalog_url = `${printify_base_url}/v1/catalog/blueprints.json`;
+//         const printify_headers = {
+//             "Authorization": printify_api_key
+//         };
+//         const printify_response = await fetch(printify_catalog_url, {
+//             method: 'GET',
+//             headers: printify_headers
+//         });
+//         const printify_data = await printify_response.json();
+//         const printify_catalog = printify_data.blueprints;
+//         return printify_catalog;
+//     }
+//     return {
+//         props: {
+//             catalog: getCatalog(),
+//         },
+//     };
+// }
