@@ -28,7 +28,7 @@ export default function Artwork() {
 
         async function getCatalog() {
             // Get catalog of items from printify and display it on the page
-            const printify_base_url = "http://api.printify.com";
+            const printify_base_url = "https://api.printify.com";
             const printify_api_key = process.env.PRINTIFY_API_KEY;
             const printify_catalog_url = `${printify_base_url}/v1/catalog/blueprints.json`;
             const printify_headers = {
