@@ -9,6 +9,12 @@ const nextConfig = {
         hostname: 'storage.googleapis.com',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'api.printify.com',
+        port: '',
+        pathname: '/**',
       }
     ]
   }

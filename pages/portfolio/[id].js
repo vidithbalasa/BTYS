@@ -30,13 +30,17 @@ export default function Artwork() {
             // Get catalog of items from printify and display it on the page
             const printify_base_url = "https://api.printify.com";
             const printify_api_key = process.env.PRINTIFY_API_KEY;
-            const printify_catalog_url = `${printify_base_url}/v1/catalog/blueprints.json`;
+            const printify_catalog_url = `${printify_base_url}/v1/catalog/blueprints/3.json`;
             const printify_headers = {
-                "Authorization": `Bearer ${printify_api_key}`,
+                "Authorization": "Bearer " + printify_api_key,
+                "Content-Type": "application/json",
             };
-            await fetch(printify_catalog_url, printify_headers)
+            await fetch(printify_catalog_url, {
+                method: "GET",
+                headers: printify_headers
+            })
             .then(response => response.json())
-            .then(data => { setCatalog(data)})
+            .then(data => console.log(data))
             .catch(error => {
                 console.log(error);
             });
@@ -58,7 +62,7 @@ export default function Artwork() {
                     <p>{image.prompt}</p>
                 </div>    
             }
-            <button onClick={() => console.log(catalog)}>Print Catalog</button>
+            <button onClick={() => console.log(process.env.PRINTIFY_API_KEY)}>Print Catalog</button>
         </main>
     );
 }
