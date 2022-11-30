@@ -32,11 +32,9 @@ const Portfolio = () => {
                     images.map((image, index) => {
                         // image that links to /portfolio/[id] where id is the document name
                         return (
-                            <div key={index}>
-                                <Link href={`/portfolio/${image.id}`}>
-                                    <Image src={image.url} alt='Generated Image' />
-                                </Link>
-                            </div>
+                            <Link href={`/portfolio/${image.name}`} key={index}>
+                                <Image src={image.url} alt='Generated Image' />
+                            </Link>
                         );
                     })
                 }
