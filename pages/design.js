@@ -19,7 +19,7 @@ function Design() {
             setToken(token);
         });
         // console.log('Rendered Page')
-    }, []);
+    }, [auth.user]);
 
     // Call the function to get model prediction
     const callFunction = async () => {

@@ -9,7 +9,7 @@ const Portfolio = () => {
     const [images, setImages] = useState([]);
     const auth = useAuth();
 
-    useEffect(async () => {
+    useEffect(() => {
         async function getImages() {
             const db = getFirestore();
             // Collection 'users' -> Document 'auth.user.uid' -> Collection 'images'
