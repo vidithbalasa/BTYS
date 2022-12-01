@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import useAuth from '../src/auth/authContext';
 import { getFirestore, collection, getDocs, doc } from 'firebase/firestore';
-import styles from '../styles/portfolio.module.css';
 import { withProtected } from '../src/auth/route';
 import Image from 'next/image';
 import Link from 'next/link';
+import styles from '../styles/portfolio.module.css';
+import globalStyles from '../styles/global.module.css';
 
 const Portfolio = () => {
     const [images, setImages] = useState({});
@@ -40,8 +41,8 @@ const Portfolio = () => {
     // }, []);
 
     return (
-        <main className={styles.main}>
-            <h1 className='title'>Portfolio</h1>
+        <main className={globalStyles.main}>
+            <h1 className={globalStyles.title}>Portfolio</h1>
             <div className={styles.imageBox}>
                 {
                     // Show each image with a link to /portfolio/[id]
