@@ -5,6 +5,8 @@ import { withProtected } from '../src/auth/route';
 import { getApp } from 'firebase/app';
 import useAuth from '../src/auth/authContext';
 import Image from 'next/image';
+import styles from '../styles/design.module.css';
+import globalStyles from '../styles/global.module.css';
 
 function Design() {
     const [prompt, setPrompt] = useState('');
@@ -36,22 +38,25 @@ function Design() {
     }
 
     return (
-        <main>
-            <h1>Create a Design</h1>
-            <div className='prompt-input'>
-                <label htmlFor='prompt'>Input a prompt</label>
+        <main className={globalStyles.main}>
+            <h1 className={globalStyles.title}>Create a Design</h1>
+            <div className={styles.promptBox}>
+                <label htmlFor='prompt' className={styles.promptLabel}>Input a prompt</label>
                 <input
                     type='text'
                     name='prompt'
                     id='prompt'
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
+                    className={styles.promptInput}
                 />
+                <button 
+                    onClick={callFunction}
+                    disabled={prompt === ''}
+                    className={styles.promptButton}
+                >Generate Image</button>
             </div>
-            <div>
-                <button onClick={callFunction}>Generate Image</button>
-            </div>
-            {img && <Image src={img} alt='Generated Image' />}
+            {img && <Image src={img} alt='Generated Image' className={styles.image} />}
         </main>
     );
 }
