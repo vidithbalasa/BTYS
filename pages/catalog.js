@@ -11,7 +11,7 @@ export default function Catalog() {
 
     return (
         <main className={styles.main}>
-            <h1 className={globalStyles.title}>Catalog</h1>
+            <h1 className={styles.title}>Catalog</h1>
             <InstantSearch searchClient={searchClient} indexName={'catalog'}>
                 <SearchBox />
                 <Hits hitComponent={Hit} />
