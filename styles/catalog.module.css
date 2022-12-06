@@ -1,11 +1,4 @@
 /* modify .image and .imageBox to fit as many images per row as possible in a grid */
-.imageBox {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    grid-gap: 1rem;
-    width: 100%;
-}
-
 .image {
     width: 100%;
     height: 100%;
@@ -13,14 +6,29 @@
 }
 
 .hitBox {
-    /* black border no fill */
-    border: 1px solid black;
-    /* decent size to fit a title */
-    height: 50px;
-    /* center the text */
-    text-align: center;
-    /* center the text vertically */
+    /* light gray border */
+    border: 1px solid #e0e0e0;
+    /* total size should fit 128x128 image + name (vertically stacked) */
+    height: 150px;
+    width: 150px;
+    /* center image and name */
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+}
+
+.productName {
+    /* Single line product name */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* center text */
+    text-align: center;
+    /* 1 line of text */
+    line-height: 1.2;
+    /* bold */
+    font-weight: bold;
+    /* 1.2rem font size */
+    font-size: 1.2rem;
 }
