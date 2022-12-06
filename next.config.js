@@ -15,6 +15,12 @@ const nextConfig = {
         hostname: 'api.printify.com',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.printify.com',
+        port: '',
+        pathname: '/**',
       }
     ]
   }
