@@ -49,5 +49,5 @@ if (is_dev) {
 
 export const searchClient = algoliasearch(
   "BTYS",
-  process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_KEY
+  "b4f5dee6147ac25d02b68b344b35a7a1"
 );
