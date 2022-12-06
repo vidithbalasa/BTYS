@@ -9,8 +9,8 @@
     /* light gray border */
     border: 1px solid #e0e0e0;
     /* total size should fit 128x128 image + name (vertically stacked) */
-    height: 400px;
-    width: 400px;
+    height: 300px;
+    width: 300px;
     /* center image and name */
     display: flex;
     flex-direction: column;
@@ -18,17 +18,7 @@
     align-items: center;
 }
 
-.productName {
-    /* Single line product name */
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    /* center text */
-    text-align: center;
-    /* 1 line of text */
-    line-height: 1.2;
-    /* bold */
-    font-weight: bold;
-    /* 1.2rem font size */
-    font-size: 0.7rem;
+.main {
+    display: flex;
+    flex-direction: column;
 }
