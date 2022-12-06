@@ -3,13 +3,16 @@
 import '../styles/globals.css'
 import { AuthProvider } from '../src/auth/authContext';
 import AuthStateChanged from '../src/auth/AuthStateChanged';
+import { CreationProvider } from '../src/context/creationContext';
 // import "../src/config/firebase.config";
 
 function MyApp({ Component, pageProps }) {
   return (
     <AuthProvider>
       <AuthStateChanged>
-        <Component {...pageProps} />
+        <CreationProvider>
+          <Component {...pageProps} />
+        </CreationProvider>
       </AuthStateChanged>
     </AuthProvider>
   )

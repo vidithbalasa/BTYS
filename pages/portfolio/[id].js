@@ -62,7 +62,6 @@ export default function Artwork() {
                     <p>{image.prompt}</p>
                 </div>    
             }
-            <button onClick={() => console.log(process.env.PRINTIFY_API_KEY)}>Print Catalog</button>
         </main>
     );
 }
