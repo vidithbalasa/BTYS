@@ -48,14 +48,14 @@ export default function Catalog() {
 function Hit({ hit }) {
     return (
         <div className={styles.hitBox}>
-            <h1>{hit.name}</h1>
-            {/* <Image
+            <Image
                 src={hit.image_urls[0]}
                 alt={hit.name}
-                width={256}
-                height={256}
+                width={128}
+                height={128}
                 className={styles.image}
-            /> */}
+            />
+            <p className={styles.productName}>{hit.name}</p>
         </div>
     )
 }
