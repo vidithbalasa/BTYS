@@ -6,40 +6,19 @@ import globalStyles from '../styles/global.module.css';
 import styles from '../styles/catalog.module.css';
 import { searchClient } from '../src/config/firebase.config';
 import { InstantSearch, SearchBox, Hits, Pagination } from 'react-instantsearch-dom';
+import '../styles/algolia.css'
 
 export default function Catalog() {
-    const [catalog, setCatalog] = useState({});
     const [page, setPage] = useState(1);
-
-    useEffect(() => {
-        setCatalog({});
-        async function getCatalog() {
-            const db = getFirestore();
-            const catalogQuery = query(
-                collection(db, 'printify_products'),
-                orderBy('name'),
-                limit(20),
-                startAt((page - 1) * 20)
-            );
-            const catalog = await getDocs(catalogQuery);
-            // Get the "url" field from each document and add it to the images array
-            catalog.forEach((doc) => {
-                // Map each image id to its data
-                setCatalog((catalog) => ({
-                    ...catalog,
-                    [doc.id]: doc.data(),
-                }));
-            });
-        }
-        getCatalog();
-    }, [page]);
 
     return (
         <main className={globalStyles.main}>
             <h1 className={globalStyles.title}>Catalog</h1>
             <InstantSearch searchClient={searchClient} indexName={'catalog'}>
-                <SearchBox />
-                <Hits hitComponent={Hit} />
+                <div className={styles.searchField}>
+                    <SearchBox />
+                    <Hits hitComponent={Hit} />
+                </div>
             </InstantSearch>
         </main>
     )
@@ -51,8 +30,8 @@ function Hit({ hit }) {
             <Image
                 src={hit.image_urls[0]}
                 alt={hit.name}
-                width={128}
-                height={128}
+                width={256}
+                height={256}
                 className={styles.image}
             />
             <p className={styles.productName}>{hit.name}</p>
