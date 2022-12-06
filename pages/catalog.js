@@ -37,44 +37,25 @@ export default function Catalog() {
     return (
         <main className={globalStyles.main}>
             <h1 className={globalStyles.title}>Catalog</h1>
-            {/* Add algolia search */}
-            <InstantSearch searchClient={searchClient} indexName='catalog'>
+            <InstantSearch searchClient={searchClient} indexName={'catalog'}>
                 <SearchBox />
                 <Hits hitComponent={Hit} />
             </InstantSearch>
-            {/* <div className={styles.imageBox}>
-                {
-                    // Show each product with a link to /catalog/[id]
-                    Object.keys(catalog).map((id) => (
-                        <Link href={`/catalog/${id}`} key={id}>
-                            <a>
-                                <Image
-                                    src={catalog[id].image_urls[0]}
-                                    alt={catalog[id].name}
-                                    width={512}
-                                    height={512}
-                                    className={styles.image}
-                                />
-                            </a>
-                        </Link>
-                    ))
-                }
-            </div> */}
         </main>
     )
 }
 
 function Hit({ hit }) {
     return (
-        <main>
+        <div className={styles.hitBox}>
             <h1>{hit.name}</h1>
-            <Image
+            {/* <Image
                 src={hit.image_urls[0]}
                 alt={hit.name}
                 width={256}
                 height={256}
                 className={styles.image}
-            />
-        </main>
+            /> */}
+        </div>
     )
 }
