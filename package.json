@@ -10,11 +10,13 @@
     "export": "next export"
   },
   "dependencies": {
+    "algoliasearch": "^4.14.2",
     "firebase": "^9.9.4",
     "firebaseui": "^6.0.1",
     "next": "12.3.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-instantsearch-dom": "^6.38.1"
   },
   "devDependencies": {
     "eslint": "8.23.1",
