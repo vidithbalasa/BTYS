@@ -48,6 +48,6 @@ if (is_dev) {
 }
 
 export const searchClient = algoliasearch(
-  "BTYS",
+  "ESJNVTMAC5",
   "b4f5dee6147ac25d02b68b344b35a7a1"
 );
