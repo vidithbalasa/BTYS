@@ -22,16 +22,17 @@ export default function Catalog() {
 
 function Hit({ hit }) {
     return (
-        <div className={styles.hitBox}>
-            <Image
-                src={hit.image_urls[0]}
-                alt={hit.name}
-                width={256}
-                height={256}
-                className={styles.image}
-            />
-            {/* <p className={styles.productName}>{hit.name}</p> */}
-            <Highlight attribute="name" hit={hit} />
-        </div>
+        <Link href={`/catalog/${hit.objectID}`} className={styles.hitBox} >
+            <a>
+                <Image
+                    src={hit.image_urls[0]}
+                    alt={hit.name}
+                    width={256}
+                    height={256}
+                    className={styles.image}
+                />
+                <Highlight attribute="name" hit={hit} />
+            </a>
+        </Link>
     )
 }
