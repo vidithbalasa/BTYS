@@ -34,10 +34,10 @@ body {
   grid-gap: 1%;
 }
 
-.ais-searchBox-input {
+.ais-SearchBox-input {
   width: calc(100vw * 0.3)
 }
 
-.ais-searchBox {
+.ais-SearchBox {
   place-self: center;
 }
