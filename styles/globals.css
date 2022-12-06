@@ -34,6 +34,10 @@ body {
   grid-gap: 1%;
 }
 
-/* .ais-Hits-item {
-  list-style: none;
-} */
+.ais-searchBox-input {
+  width: calc(100vw * 0.3)
+}
+
+.ais-searchBox {
+  place-self: center;
+}

@@ -22,3 +22,10 @@
     display: flex;
     flex-direction: column;
 }
+
+.title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 1rem 0;
+    place-self: center;
+}
