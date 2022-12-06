@@ -4,6 +4,7 @@ import { getAnalytics } from "firebase/analytics";
 import { connectAuthEmulator, getAuth } from "firebase/auth";
 import { getFunctions, connectFunctionsEmulator } from "firebase/functions";
 import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
+import algoliasearch from "algoliasearch/lite";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -20,17 +21,6 @@ const firebaseConfig = {
   appId: is_dev ? "1:821349551727:web:0801041ff1ab6bd325c79a" : "1:269241867312:web:eecccc5fa387aa444de1f5",
   measurementId: is_dev ? "G-R4EW174VXJ" : "G-ED6C9BHHNB"
 };
-
-// // For Deployment Only
-// const firebaseConfig = {
-//   apiKey: "AIzaSyCuMkR9ep3Aj_L3RZ5Zvir0iULbz8lIM_A",
-//   authDomain: "btys-production.firebaseapp.com",
-//   projectId: "btys-production",
-//   storageBucket: "btys-production.appspot.com",
-//   messagingSenderId: "269241867312",
-//   appId: "1:269241867312:web:eecccc5fa387aa444de1f5",
-//   measurementId: "G-ED6C9BHHNB"
-// };
 
 // Initialize Firebase
 if (!getApps.length) {
@@ -52,8 +42,12 @@ if (is_dev) {
   connectFunctionsEmulator(functions, "localhost", 5001);
 }
 
-// Firestore
 export const firestore = getFirestore(getApp());
 if (is_dev) {
   connectFirestoreEmulator(firestore, "localhost", 8080);
 }
+
+export const searchClient = algoliasearch(
+  "ESJNVTMAC5",
+  process.env.ALGOLIA_API_KEY
+);

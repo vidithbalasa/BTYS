@@ -4,6 +4,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import globalStyles from '../styles/global.module.css';
 import styles from '../styles/catalog.module.css';
+import { searchClient } from '../src/config/firebase.config';
+import { InstantSearch, SearchBox, Hits, Pagination } from 'react-instantsearch-dom';
 
 export default function Catalog() {
     const [catalog, setCatalog] = useState({});
@@ -35,11 +37,12 @@ export default function Catalog() {
     return (
         <main className={globalStyles.main}>
             <h1 className={globalStyles.title}>Catalog</h1>
-            <button onClick={() => setPage(currPage => currPage + 1)}>Next page</button>
-            {page > 1 && <button onClick={() => setPage(currPage => currPage - 1)}>Previous page</button>}
-            <p>Current Page: {page}</p>
-            <button onClick={() => console.log(catalog)}>Log catalog</button>
-            <div className={styles.imageBox}>
+            {/* Add algolia search */}
+            <InstantSearch searchClient={searchClient} indexName='catalog'>
+                <SearchBox />
+                <Hits hitComponent={Hit} />
+            </InstantSearch>
+            {/* <div className={styles.imageBox}>
                 {
                     // Show each product with a link to /catalog/[id]
                     Object.keys(catalog).map((id) => (
@@ -56,7 +59,22 @@ export default function Catalog() {
                         </Link>
                     ))
                 }
-            </div>
+            </div> */}
+        </main>
+    )
+}
+
+function Hit({ hit }) {
+    return (
+        <main>
+            <h1>{hit.name}</h1>
+            <Image
+                src={hit.image_urls[0]}
+                alt={hit.name}
+                width={256}
+                height={256}
+                className={styles.image}
+            />
         </main>
     )
 }
