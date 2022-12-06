@@ -3,6 +3,7 @@ import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { connectAuthEmulator, getAuth } from "firebase/auth";
 import { getFunctions, connectFunctionsEmulator } from "firebase/functions";
+import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -49,4 +50,10 @@ if (is_dev) {
 export const functions = getFunctions(getApp());
 if (is_dev) {
   connectFunctionsEmulator(functions, "localhost", 5001);
+}
+
+// Firestore
+export const firestore = getFirestore(getApp());
+if (is_dev) {
+  connectFirestoreEmulator(firestore, "localhost", 8080);
 }
