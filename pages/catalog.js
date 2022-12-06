@@ -14,7 +14,7 @@ export default function Catalog() {
         async function getCatalog() {
             const db = getFirestore();
             const catalogQuery = query(
-                collection(db, 'catalog'),
+                collection(db, 'printify_products'),
                 orderBy('name'),
                 limit(20),
                 startAt((page - 1) * 20)
