@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
-import { getFirestore, collection, getDocs, query, limit, startAt, orderBy } from 'firebase/firestore';
 import Link from 'next/link';
 import Image from 'next/image';
 import globalStyles from '../styles/global.module.css';
 import styles from '../styles/catalog.module.css';
 import { searchClient } from '../src/config/firebase.config';
-import { InstantSearch, SearchBox, Hits, Pagination } from 'react-instantsearch-dom';
+import { InstantSearch, SearchBox, Hits, Pagination, Highlight } from 'react-instantsearch-dom';
 
 export default function Catalog() {
     const [page, setPage] = useState(1);
@@ -14,10 +13,8 @@ export default function Catalog() {
         <main className={globalStyles.main}>
             <h1 className={globalStyles.title}>Catalog</h1>
             <InstantSearch searchClient={searchClient} indexName={'catalog'}>
-                <div className={styles.searchField}>
-                    <SearchBox />
-                    <Hits hitComponent={Hit} />
-                </div>
+                <SearchBox />
+                <Hits hitComponent={Hit} />
             </InstantSearch>
         </main>
     )
@@ -33,7 +30,8 @@ function Hit({ hit }) {
                 height={256}
                 className={styles.image}
             />
-            <p className={styles.productName}>{hit.name}</p>
+            {/* <p className={styles.productName}>{hit.name}</p> */}
+            <Highlight attribute="name" hit={hit} />
         </div>
     )
 }
