@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from "next/router";
 
-export default function catalogItem() {
+export default function CatalogItem() {
     const [item, setItem] = useState({});
     const router = useRouter();
     const { blueprint } = router.query;
