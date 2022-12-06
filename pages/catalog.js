@@ -35,6 +35,10 @@ export default function Catalog() {
     return (
         <main className={globalStyles.main}>
             <h1 className={globalStyles.title}>Catalog</h1>
+            <button onClick={() => setPage(currPage => currPage + 1)}>Next page</button>
+            {page > 1 && <button onClick={() => setPage(currPage => currPage - 1)}>Previous page</button>}
+            <p>Current Page: {page}</p>
+            <button onClick={() => console.log(catalog)}>Log catalog</button>
             <div className={styles.imageBox}>
                 {
                     // Show each product with a link to /catalog/[id]
@@ -53,9 +57,6 @@ export default function Catalog() {
                     ))
                 }
             </div>
-            <button onClick={() => setPage(currPage => currPage + 1)}>Next page</button>
-            {page > 1 && <button onClick={() => setPage(currPage => currPage - 1)}>Previous page</button>}
-            <p>Current Page: {page}</p>
         </main>
     )
 }
