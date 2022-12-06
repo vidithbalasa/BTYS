@@ -1,9 +1,0 @@
-#hits .ais-Hits-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    width: 100%;
-}
-
-#hits.list .ais-Hits-list {
-    grid-template-columns: 1fr;
-}
