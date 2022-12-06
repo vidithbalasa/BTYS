@@ -32,7 +32,7 @@ function Hit({ hit }) {
                         height={256}
                         className={styles.image}
                     />
-                    <Highlight attribute="name" hit={hit} />
+                    <Highlight attribute="name" hit={hit} className={styles.productName} />
                 </div>
             </a>
         </Link>

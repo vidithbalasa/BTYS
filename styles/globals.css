@@ -41,3 +41,9 @@ body {
 .ais-SearchBox {
   place-self: center;
 }
+
+.ais-Highlight-nonHighlighted {
+    text-decoration: none;
+    color: white;
+    display: inline-block;
+}
