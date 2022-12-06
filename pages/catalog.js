@@ -6,7 +6,6 @@ import globalStyles from '../styles/global.module.css';
 import styles from '../styles/catalog.module.css';
 import { searchClient } from '../src/config/firebase.config';
 import { InstantSearch, SearchBox, Hits, Pagination } from 'react-instantsearch-dom';
-import '../styles/algolia.css'
 
 export default function Catalog() {
     const [page, setPage] = useState(1);
