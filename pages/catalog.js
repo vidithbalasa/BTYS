@@ -10,7 +10,7 @@ export default function Catalog() {
     const [page, setPage] = useState(1);
 
     return (
-        <main className={globalStyles.main}>
+        <main className={styles.main}>
             <h1 className={globalStyles.title}>Catalog</h1>
             <InstantSearch searchClient={searchClient} indexName={'catalog'}>
                 <SearchBox />
