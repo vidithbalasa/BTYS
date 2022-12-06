@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
-import globalStyles from '../styles/global.module.css';
+import { getFirestore, collection, getDocs, query, limit, startAt, orderBy } from 'firebase/firestore';
 import Link from 'next/link';
 import Image from 'next/image';
+import globalStyles from '../styles/global.module.css';
+import styles from '../styles/catalog.module.css';
 
 export default function Catalog() {
     const [catalog, setCatalog] = useState({});
@@ -12,16 +13,21 @@ export default function Catalog() {
         setCatalog({});
         async function getCatalog() {
             const db = getFirestore();
-            const catalogRef = collection(db, 'printify_products');
-            // Each page should have 20 products, so we skip the first 20*(page-1) products
-            const catalog = await getDocs(catalogRef, { limit: 20, offset: 20 * (page - 1) });
-            // create a product object for each product and stick it in the catalog
+            const catalogQuery = query(
+                collection(db, 'catalog'),
+                orderBy('name'),
+                limit(20),
+                startAt((page - 1) * 20)
+            );
+            const catalog = await getDocs(catalogQuery);
+            // Get the "url" field from each document and add it to the images array
             catalog.forEach((doc) => {
+                // Map each image id to its data
                 setCatalog((catalog) => ({
                     ...catalog,
                     [doc.id]: doc.data(),
                 }));
-            })
+            });
         }
         getCatalog();
     }, [page]);
@@ -29,21 +35,27 @@ export default function Catalog() {
     return (
         <main className={globalStyles.main}>
             <h1 className={globalStyles.title}>Catalog</h1>
-            {
-                // Show each product with a link to /catalog/[id]
-                Object.keys(catalog).map((id) => (
-                    <Link href={`/catalog/${id}`} key={id}>
-                        <a>
-                            <Image
-                                src={catalog[id].image_urls[0]}
-                                alt={catalog[id].name}
-                                width={512}
-                                height={512}
-                            />
-                        </a>
-                    </Link>
-                ))
-            }
+            <div className={styles.imageBox}>
+                {
+                    // Show each product with a link to /catalog/[id]
+                    Object.keys(catalog).map((id) => (
+                        <Link href={`/catalog/${id}`} key={id}>
+                            <a>
+                                <Image
+                                    src={catalog[id].image_urls[0]}
+                                    alt={catalog[id].name}
+                                    width={512}
+                                    height={512}
+                                    className={styles.image}
+                                />
+                            </a>
+                        </Link>
+                    ))
+                }
+            </div>
+            <button onClick={() => setPage(currPage => currPage + 1)}>Next page</button>
+            {page > 1 && <button onClick={() => setPage(currPage => currPage - 1)}>Previous page</button>}
+            <p>Current Page: {page}</p>
         </main>
     )
 }
