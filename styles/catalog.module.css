@@ -11,3 +11,16 @@
     height: 100%;
     object-fit: cover;
 }
+
+.hitBox {
+    /* black border no fill */
+    border: 1px solid black;
+    /* decent size to fit a title */
+    height: 50px;
+    /* center the text */
+    text-align: center;
+    /* center the text vertically */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
