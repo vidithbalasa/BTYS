@@ -48,6 +48,6 @@ if (is_dev) {
 }
 
 export const searchClient = algoliasearch(
-  "ESJNVTMAC5",
-  process.env.ALGOLIA_API_KEY
+  "BTYS",
+  process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_KEY
 );
