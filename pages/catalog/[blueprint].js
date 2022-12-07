@@ -112,7 +112,7 @@ export default function CatalogItem(props) {
                     </div>
                 </div>
                 {
-                    !loadingStock &&
+                    loadingStock ? <p>Loading items in stock...</p> :
                     <ItemSelection unique={unique} selected={selected} validVariants={validVariants} selectItem={selectItem} unselectItem={unselectItem} createMockup={createMockup} />
                 }
             </div>
