@@ -14,13 +14,14 @@ export default function CatalogItem() {
 
     useEffect(() => {
         const getInfo = async () => {
-            const getBlueprintInfo = httpsCallable(functions, 'printify_product_info');
-            await getBlueprintInfo({ blueprint: blueprint, token: user.accessToken })
+            // get function from us-central1
+            const getBlueprintInfo = httpsCallable(functions, 'getBlueprintInfo');
+            await getBlueprintInfo({ blueprint_id: blueprint, token: user.accessToken })
                 .then((result) => {
                     console.log(result)
-                    const { unique, variants } = result.data;
-                    setUnique(unique);
-                    setVariants(variants);
+                    // const { unique, variants } = result.data;
+                    // setUnique(unique);
+                    // setVariants(variants);
                 })
                 .catch((error) => {
                     console.log(error);
