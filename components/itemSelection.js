@@ -47,7 +47,7 @@ export default function ItemSelection({ unique, validVariants, selected, selectI
                     )
                 })
             }
-            <button onClick={createMockup} disabled={true}>Create Mockup</button>
+            <button onClick={createMockup} disabled={true}>Create Mockup with Image</button>
         </div>
     )
 }
