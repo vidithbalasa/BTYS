@@ -1,40 +1,71 @@
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
+import { useEffect, useState, useRef } from 'react';
+import { useRouter } from 'next/router';
 import globalStyles from '../styles/global.module.css';
 import styles from '../styles/catalog.module.css';
 import { searchClient } from '../src/config/firebase.config';
-import { InstantSearch, SearchBox, Hits, Pagination, Highlight } from 'react-instantsearch-dom';
+import { findResultsState } from 'react-instantsearch-dom/server';
+import Search from '../components/search';
 
-export default function Catalog() {
-    const [page, setPage] = useState(1);
+const updateAfter = 700;
+
+const createURL = (state) => `?${qs.stringify(state)}`;
+
+const pathToSearchState = (path) =>
+  path.includes('?') ? qs.parse(path.substring(path.indexOf('?') + 1)) : {};
+
+const searchStateToURL = (searchState) =>
+  searchState ? `${window.location.pathname}?${qs.stringify(searchState)}` : '';
+
+export default function Catalog(props) {
+    const [searchState, setSearchState] = useState(props.searchState);
+    const router = useRouter();
+    const debouncedSetState = useRef();
+
+    useEffect(() => {
+        if (router) {
+          router.beforePopState(({ url }) => {
+            setSearchState(pathToSearchState(url));
+          });
+        }
+      }, [router]);
 
     return (
         <main className={styles.main}>
             <h1 className={styles.title}>Catalog</h1>
-            <InstantSearch searchClient={searchClient} indexName={'catalog'}>
-                <SearchBox />
-                <Hits hitComponent={Hit} />
-            </InstantSearch>
+            <Search
+                searchClient={searchClient} 
+                indexName={'catalog'}
+                searchState={searchState}
+                resultsState={props.resultsState}
+                onSearchStateChange={(nextSearchState) => {
+                    clearTimeout(debouncedSetState.current);
+            
+                    debouncedSetState.current = setTimeout(() => {
+                        const href = searchStateToURL(nextSearchState);
+            
+                        router.push(href, href, { shallow: true });
+                    }, updateAfter);
+            
+                    setSearchState(nextSearchState);
+                }}
+                createURL={createURL}
+            />
         </main>
     )
 }
 
-function Hit({ hit }) {
-    return (
-        <Link href={`/catalog/${hit.objectID}`}>
-            <a>
-                <div className={styles.hitBox}>
-                    <Image
-                        src={hit.image_urls[0]}
-                        alt={hit.name}
-                        width={256}
-                        height={256}
-                        className={styles.image}
-                    />
-                    <Highlight attribute="name" hit={hit} className={styles.productName} />
-                </div>
-            </a>
-        </Link>
-    )
+export async function getServerSideProps({ resolvedUrl }) {
+    const searchState = pathToSearchState(resolvedUrl);
+    const resultsState = await findResultsState(Search, {
+        searchClient,
+        indexName: 'catalog',
+        searchState,
+    });
+
+    return {
+        props: {
+            searchState,
+            resultsState: JSON.parse(JSON.stringify(resultsState))
+        }
+    }
 }
