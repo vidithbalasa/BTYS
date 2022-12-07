@@ -6,12 +6,15 @@ import useAuth from '../../src/auth/authContext';
 import styles from '../../styles/item.module.css'
 import globalStyles from '../../styles/global.module.css'
 import Image from 'next/image';
+// import sample_images from '../../public/images.js'
+import { motion, AnimatePresence, useCycle } from 'framer-motion';
 
 export default function CatalogItem({ item }) {
     const [unique, setUnique] = useState([]);
     const [variants, setVariants] = useState([]);
-    // const [currImage, setCurrImage] = useState(0);
-    // const [item, setItem] = useState({});
+    const NUM_IMAGES = sample_images.length;
+    const indices = Array.from({ length: NUM_IMAGES-1 }, (value, index) => index + 1);
+    const [currentIndex, setCurrentIndex] = useCycle(...indices);
 
     const router = useRouter();
     const { blueprint } = router.query;
@@ -39,21 +42,32 @@ export default function CatalogItem({ item }) {
 
     return (
         <main className={globalStyles.main}>
-            <h1>{item.name}</h1>
-            <div className={styles.display}>
-                <div className={styles.images}>
-                    {/* <button className={styles.scrollLeft} onClick={e => setCurrImage(img => img - 1)}>&lt;</button> */}
-                    <div className={styles.slider_container}>
+            <h1 className={globalStyles.title}>{item.name}</h1>
+
+            <div className={styles.carousel}>
+                <button onClick={() => setCurrentIndex(idx => idx + 1)} className={`${styles.next} ${styles.button}`}>Next</button>
+                <button onClick={() => setCurrentIndex(idx => idx - 1)} className={`${styles.prev} ${styles.button}`}>Prev</button>
+
+                <motion.div initial={{ x: '-100%' }} animate={{ x: 0 }}>
+                    <AnimatePresence>
                         {
-                            item.image_urls.map((url, i) => {
+                            item.image_urls.map((image, index) => {
                                 return (
-                                    <Image src={url} alt={item.name} width={250} height={250} key={i} className={styles.slider_image} />
+                                    <motion.img
+                                        key={index}
+                                        src={image}
+                                        alt="product-image"
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        transition={{ duration: 0.5 }}
+                                        style={{ display: index === currentIndex ? 'block' : 'none' }}
+                                    />
                                 )
                             })
                         }
-                    </div>
-                    {/* <button className={styles.scrollRight} onClick={e => setCurrImage(img => img + 1)}>&gt;</button> */}
-                </div>
+                    </AnimatePresence>
+                </motion.div>
             </div>
         </main>
     )

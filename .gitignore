@@ -38,3 +38,6 @@ next-env.d.ts
 
 # firebase
 service_account.json
+
+#misc
+images.js
