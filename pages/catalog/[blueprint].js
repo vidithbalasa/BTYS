@@ -33,7 +33,6 @@ export default function CatalogItem(props) {
     const router = useRouter();
     const { blueprint } = router.query;
     
-    const functions = getFunctions();
     const { user } = useAuth();
 
     const { addProduct } = useContext(creationContext);
@@ -143,6 +142,7 @@ export async function getStaticProps({ params }) {
     const item = await getDoc(item_doc);
 
     // Get printify product stock data
+    const functions = getFunctions();
     const getInfo = async () => {
         // get function from us-central1
         const getBlueprintInfo = httpsCallable(functions, 'printify_product_info');
