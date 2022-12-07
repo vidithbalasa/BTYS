@@ -26,7 +26,7 @@ export default function ItemSelection({ unique, validVariants, selected, selectI
                                 {
                                     unique[key].map((value, index) => {
                                         return (
-                                            <div>
+                                            <div key={index}>
                                                 {/* styling in globals.css */}
                                                 <input 
                                                     type="radio" id={value} 
