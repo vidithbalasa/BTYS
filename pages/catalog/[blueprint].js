@@ -146,7 +146,7 @@ export async function getStaticProps({ params }) {
     const getInfo = async () => {
         // get function from us-central1
         const getBlueprintInfo = httpsCallable(functions, 'printify_product_info');
-        await getBlueprintInfo({ blueprint_id: blueprint, token: user.accessToken })
+        await getBlueprintInfo({ blueprint_id: params.blueprint, token: 'test' })
             .then((result) => {
                 console.log(result.data)
                 const { unique, variants } = result.data;
