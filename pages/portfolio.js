@@ -29,17 +29,6 @@ const Portfolio = () => {
         getImages();
     }, [auth.user]);
 
-    // useEffect(() => {
-    //     const IMG_URL = "https://picsum.photos/200/300";
-    //     // Call the above url twice and put each image in the images array with the name "image1" and "image2"
-    //     setImages({
-    //         image1: IMG_URL,
-    //         image2: IMG_URL,
-    //         image3: IMG_URL,
-    //         image4: IMG_URL,
-    //     });
-    // }, []);
-
     return (
         <main className={globalStyles.main}>
             <h1 className={globalStyles.title}>Portfolio</h1>
