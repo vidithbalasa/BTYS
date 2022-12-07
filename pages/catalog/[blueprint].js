@@ -12,19 +12,19 @@ import Carousel from '../../components/carousel';
 import ItemSelection from '../../components/itemSelection';
 import creationContext from '../../src/context/creationContext';
 
-export default function CatalogItem({ item }) {
-    const [unique, setUnique] = useState([]);
-    const [variants, setVariants] = useState([]);
+export default function CatalogItem(props) {
+    const [unique, setUnique] = useState(props.unique);
+    const [variants, setVariants] = useState(props.variants);
     
     // const [unique, setUnique] = useState(mockUnique);
     // const [variants, setVariants] = useState(mockVariants);
 
-    const images = item.image_urls;
+    const images = props.item.image_urls;
 
     /* PROD */
 
     const [selected, setSelected] = useState({})
-    const [validVariants, setValidVariants] = useState(variants);
+    const [validVariants, setValidVariants] = useState(props.variants);
 
     const NUM_IMAGES = images.length;
     const indices = Array.from({ length: NUM_IMAGES-1 }, (value, index) => index + 1);
@@ -38,23 +38,23 @@ export default function CatalogItem({ item }) {
 
     const { addProduct } = useContext(creationContext);
 
-    useEffect(() => {
-        const getInfo = async () => {
-            // get function from us-central1
-            const getBlueprintInfo = httpsCallable(functions, 'printify_product_info');
-            await getBlueprintInfo({ blueprint_id: blueprint, token: user.accessToken })
-                .then((result) => {
-                    console.log(result.data)
-                    const { unique, variants } = result.data;
-                    setUnique(unique);
-                    setVariants(variants);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        }
-        getInfo();
-    }, [blueprint]);
+    // useEffect(() => {
+    //     const getInfo = async () => {
+    //         // get function from us-central1
+    //         const getBlueprintInfo = httpsCallable(functions, 'printify_product_info');
+    //         await getBlueprintInfo({ blueprint_id: blueprint, token: user.accessToken })
+    //             .then((result) => {
+    //                 console.log(result.data)
+    //                 const { unique, variants } = result.data;
+    //                 setUnique(unique);
+    //                 setVariants(variants);
+    //             })
+    //             .catch((error) => {
+    //                 console.log(error);
+    //             });
+    //     }
+    //     getInfo();
+    // }, [blueprint]);
 
     useEffect(() => {
         // Go through each variant and put the ones that match selections in validVariants
@@ -98,7 +98,7 @@ export default function CatalogItem({ item }) {
 
     return (
         <main className={globalStyles.main}>
-            <h1 className={globalStyles.title}>{item.name}</h1>
+            <h1 className={globalStyles.title}>{props.item.name}</h1>
             <div className={styles.box}>
                 <div className={styles.carousel}>
                     <Carousel currentIndex={currentIndex} images={images} />
@@ -142,11 +142,30 @@ export async function getStaticProps({ params }) {
     const item_doc = doc(firestore, 'printify_products', params.blueprint);
     const item = await getDoc(item_doc);
 
+    // Get printify product stock data
+    const getInfo = async () => {
+        // get function from us-central1
+        const getBlueprintInfo = httpsCallable(functions, 'printify_product_info');
+        await getBlueprintInfo({ blueprint_id: blueprint, token: user.accessToken })
+            .then((result) => {
+                console.log(result.data)
+                const { unique, variants } = result.data;
+                setUnique(unique);
+                setVariants(variants);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+    const {unique, variants} = await getInfo();
+
   
     // Return the product data as props
     return {
       props: {
-        item: item.data()
+        item: item.data(),
+        variants: variants,
+        unique: unique
       }
     }
 }
