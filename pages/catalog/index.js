@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter, Router } from 'next/router';
 import globalStyles from '../../styles/global.module.css';
 import styles from '../../styles/catalog.module.css';
 import { searchClient } from '../../src/config/firebase.config';
@@ -25,9 +25,11 @@ export default function Catalog(props) {
         if (router) {
           router.beforePopState(({ url }) => {
             setSearchState(pathToSearchState(url));
+            Router.back();
+            return false;
           });
         }
-      }, [router]);
+    }, [router]);
 
     return (
         <main className={styles.main}>
