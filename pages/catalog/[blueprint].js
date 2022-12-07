@@ -12,7 +12,6 @@ import { motion, AnimatePresence, useCycle } from 'framer-motion';
 export default function CatalogItem({ item }) {
     const [unique, setUnique] = useState([]);
     const [variants, setVariants] = useState([]);
-    // list of numbers 0 to sample_images.length - 1
     const NUM_IMAGES = sample_images.length;
     const indices = Array.from({ length: NUM_IMAGES-1 }, (value, index) => index + 1);
     const [currentIndex, setCurrentIndex] = useCycle(...indices);
@@ -42,68 +41,72 @@ export default function CatalogItem({ item }) {
     }, [blueprint]);
 
     return (
-        <main>
-            <button onClick={() => setCurrentIndex(idx => idx + 1)}>Next</button>
-            <button onClick={() => setCurrentIndex(idx => idx - 1)}>Prev</button>
+        <main className={globalStyles.main}>
+            <h1 className={globalStyles.title}>{item.name}</h1>
 
-            <motion.div initial={{ x: '-100%' }} animate={{ x: 0 }}>
-                <AnimatePresence>
-                    {
-                        sample_images.map((image, index) => {
-                            return (
-                                <motion.img
-                                    key={index}
-                                    src={image}
-                                    alt="product-image"
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    exit={{ opacity: 0 }}
-                                    transition={{ duration: 0.5 }}
-                                    style={{ display: index === currentIndex ? 'block' : 'none' }}
-                                />
-                            )
-                        })
-                    }
-                </AnimatePresence>
-            </motion.div>
+            <div className={styles.carousel}>
+                <button onClick={() => setCurrentIndex(idx => idx + 1)} className={`${styles.next} ${styles.button}`}>Next</button>
+                <button onClick={() => setCurrentIndex(idx => idx - 1)} className={`${styles.prev} ${styles.button}`}>Prev</button>
+
+                <motion.div initial={{ x: '-100%' }} animate={{ x: 0 }}>
+                    <AnimatePresence>
+                        {
+                            item.image_urls.map((image, index) => {
+                                return (
+                                    <motion.img
+                                        key={index}
+                                        src={image}
+                                        alt="product-image"
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        transition={{ duration: 0.5 }}
+                                        style={{ display: index === currentIndex ? 'block' : 'none' }}
+                                    />
+                                )
+                            })
+                        }
+                    </AnimatePresence>
+                </motion.div>
+            </div>
         </main>
     )
 }
 
-// export async function getStaticPaths() {
-//     // Get a reference to the firestore instance
-//     const firestore = getFirestore();
+export async function getStaticPaths() {
+    // Get a reference to the firestore instance
+    const firestore = getFirestore();
   
-//     // Query the 'printify_products' collection to get a list of all product names
-//     const productCollection = collection(firestore, 'printify_products')
-//     const productNames = await getDocs(productCollection)
+    // Query the 'printify_products' collection to get a list of all product names
+    const productCollection = collection(firestore, 'printify_products')
+    const productNames = await getDocs(productCollection)
 
-//     // Map the product names to a list of paths
-//     const paths = productNames.docs.map(doc => ({
-//         params: { blueprint: doc.id }
-//     }))
+    // Map the product names to a list of paths
+    const paths = productNames.docs.map(doc => ({
+        params: { blueprint: doc.id }
+    }))
   
-//     // Return a list of paths with the dynamic IDs set to the product names
-//     return {
-//       paths: paths,
-//       fallback: false
-//     }
-// }
+    // Return a list of paths with the dynamic IDs set to the product names
+    return {
+      paths: paths,
+      fallback: false
+    }
+}
 
-// // Get the info for the product from firestore
-// export async function getStaticProps({ params }) {
-//     // Get a reference to the firestore instance
-//     const firestore = getFirestore();
+// Get the info for the product from firestore
+export async function getStaticProps({ params }) {
+    // Get a reference to the firestore instance
+    const firestore = getFirestore();
   
-//     // Get the document from the 'printify_products' collection with the name matching the dynamic ID
-//     const item_doc = doc(firestore, 'printify_products', params.blueprint);
-//     const item = await getDoc(item_doc);
+    // Get the document from the 'printify_products' collection with the name matching the dynamic ID
+    const item_doc = doc(firestore, 'printify_products', params.blueprint);
+    const item = await getDoc(item_doc);
 
   
-//     // Return the product data as props
-//     return {
-//       props: {
-//         item: item.data()
-//       }
-//     }
-// }
+    // Return the product data as props
+    return {
+      props: {
+        item: item.data()
+      }
+    }
+}
