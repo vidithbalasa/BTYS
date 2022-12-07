@@ -1,0 +1,22 @@
+.display {
+    /* Flex where the left side is the images and the right side is size/color selector */
+    display: flex;
+    flex-direction: row;
+}
+
+.images {
+    /* Images should be 50% of the width of the display */
+
+}
+
+.scrollLeft {
+
+}
+
+.imagesContainer {
+    /* images should display one at a time an */
+}
+
+.scrollRight {
+
+}
