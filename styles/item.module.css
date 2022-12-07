@@ -13,8 +13,17 @@
 
 }
 
-.imagesContainer {
-    /* images should display one at a time an */
+@keyframes slide {
+    0% {
+        left: 0;
+    }
+    100% {
+        left: -100%;
+    }
+}
+
+.slider_container .slider_image {
+    animation: slide 3s linear infinite;
 }
 
 .scrollRight {

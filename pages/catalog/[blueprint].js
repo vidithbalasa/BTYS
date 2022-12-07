@@ -5,11 +5,12 @@ import { getFirestore, collection, getDocs, doc, getDoc } from 'firebase/firesto
 import useAuth from '../../src/auth/authContext';
 import styles from '../../styles/item.module.css'
 import globalStyles from '../../styles/global.module.css'
+import Image from 'next/image';
 
 export default function CatalogItem({ item }) {
     const [unique, setUnique] = useState([]);
     const [variants, setVariants] = useState([]);
-    const [currImage, setCurrImage] = useState(0);
+    // const [currImage, setCurrImage] = useState(0);
     // const [item, setItem] = useState({});
 
     const router = useRouter();
@@ -40,13 +41,18 @@ export default function CatalogItem({ item }) {
         <main className={globalStyles.main}>
             <h1>{item.name}</h1>
             <div className={styles.display}>
-                {/* Display the images from item.image_urls with buttons to scroll through them */}
                 <div className={styles.images}>
-                    <button className={styles.scrollLeft} onClick={e => setCurrImage(img => img - 1)}>&lt;</button>
-                    <div className={styles.imageContainer}>
-                        <img src={item.image_urls[currImage]} alt={item.name} />
+                    {/* <button className={styles.scrollLeft} onClick={e => setCurrImage(img => img - 1)}>&lt;</button> */}
+                    <div className={styles.slider_container}>
+                        {
+                            item.image_urls.map((url, i) => {
+                                return (
+                                    <Image src={url} alt={item.name} width={250} height={250} key={i} className={styles.slider_image} />
+                                )
+                            })
+                        }
                     </div>
-                    <button className={styles.scrollRight} onClick={e => setCurrImage(img => img + 1)}>&gt;</button>
+                    {/* <button className={styles.scrollRight} onClick={e => setCurrImage(img => img + 1)}>&gt;</button> */}
                 </div>
             </div>
         </main>
