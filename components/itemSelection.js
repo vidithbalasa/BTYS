@@ -1,4 +1,3 @@
-// import styles from '../styles/item.module.css'
 import styles from '../styles/itemSelection.module.css'
 
 export default function ItemSelection({ unique, validVariants, selected, selectItem, unselectItem, createMockup }) {
