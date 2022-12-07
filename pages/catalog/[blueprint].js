@@ -56,7 +56,7 @@ export async function getStaticPaths() {
 
     // Map the product names to a list of paths
     const paths = productNames.docs.map(doc => ({
-        params: { id: doc.id }
+        params: { id: doc.id, blueprint: 'default' }
     }))
   
     // Return a list of paths with the dynamic IDs set to the product names
