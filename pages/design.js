@@ -25,7 +25,6 @@ function Design() {
 
     // Call the function to get model prediction
     const callFunction = async () => {
-        // create a reponse to the stableai-function with the header Access-Control-Allow-Origin: *
         const stableaiCall = httpsCallable(functions, 'stableai-function')
         await stableaiCall({ prompt: prompt, token: token })
             .then((result) => {
