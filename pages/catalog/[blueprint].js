@@ -3,10 +3,13 @@ import { useRouter } from "next/router";
 import { getFunctions, httpsCallable } from 'firebase/functions';
 import { getFirestore, collection, getDocs, doc, getDoc } from 'firebase/firestore';
 import useAuth from '../../src/auth/authContext';
+import styles from '../../styles/item.module.css'
+import globalStyles from '../../styles/global.module.css'
 
 export default function CatalogItem({ item }) {
     const [unique, setUnique] = useState([]);
     const [variants, setVariants] = useState([]);
+    const [currImage, setCurrImage] = useState(0);
     // const [item, setItem] = useState({});
 
     const router = useRouter();
@@ -34,15 +37,19 @@ export default function CatalogItem({ item }) {
     }, [blueprint]);
 
     return (
-        <div>
-            <h1>{blueprint}</h1>
-            {/* button to log unique values */}
-            <button onClick={() => console.log(unique)}>Log Unique Values</button>
-            {/* button to log variants */}
-            <button onClick={() => console.log(variants)}>Log Variants</button>
-            {/* button to log item */}
-            <button onClick={() => console.log(item)}>Log Item</button>
-        </div>
+        <main className={globalStyles.main}>
+            <h1>{item.name}</h1>
+            <div className={styles.display}>
+                {/* Display the images from item.image_urls with buttons to scroll through them */}
+                <div className={styles.images}>
+                    <button className={styles.scrollLeft} onClick={e => setCurrImage(img => img - 1)}>&lt;</button>
+                    <div className={styles.imageContainer}>
+                        <img src={item.image_urls[currImage]} alt={item.name} />
+                    </div>
+                    <button className={styles.scrollRight} onClick={e => setCurrImage(img => img + 1)}>&gt;</button>
+                </div>
+            </div>
+        </main>
     )
 }
 
