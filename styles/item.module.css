@@ -1,31 +1,55 @@
-.display {
-    /* Flex where the left side is the images and the right side is size/color selector */
+.indicators {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
-.images {
-    /* Images should be 50% of the width of the display */
-
+.button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: #fff;
+    color: #000;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
 }
 
-.scrollLeft {
-
+.button:hover {
+    /* charcoal gray on hover */
+    background-color: #333;
+    color: #fff;
 }
 
-@keyframes slide {
-    0% {
-        left: 0;
+.button:focus {
+    outline: none;
+}
+
+.next {
+    margin-left: auto;
+}
+
+.prev {
+    margin-right: auto;
+}
+
+.box {
+    display: flex;
+    flex-direction: row;
+    gap: 20%;
+}
+
+@media (max-width: 901px) {
+    .box {
+        flex-direction: column;
     }
-    100% {
-        left: -100%;
-    }
-}
-
-.slider_container .slider_image {
-    animation: slide 3s linear infinite;
-}
-
-.scrollRight {
-
 }

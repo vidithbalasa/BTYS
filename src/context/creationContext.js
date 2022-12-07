@@ -17,7 +17,7 @@ export function CreationProvider(props) {
 
     const addProduct = (product) => {
         // make sure product has blueprint_id, name, description, image_urls, and price
-        if (product.name && product.description && product.price && product.image_urls) {
+        if (product.name && product.url && product.blueprint_id && product.provider_id) {
             setProduct(product);
         }
     }
