@@ -6,7 +6,7 @@ import useAuth from '../../src/auth/authContext';
 import styles from '../../styles/item.module.css'
 import globalStyles from '../../styles/global.module.css'
 import Image from 'next/image';
-import sample_images from '../../public/images.js'
+// import sample_images from '../../public/images.js'
 import { motion, AnimatePresence, useCycle } from 'framer-motion';
 
 export default function CatalogItem({ item }) {
