@@ -14,7 +14,7 @@ export default function CatalogItem() {
 
     useEffect(() => {
         const getInfo = async () => {
-            const getBlueprintInfo = httpsCallable(functions, 'getBlueprintInfo');
+            const getBlueprintInfo = httpsCallable(functions, 'printify_product_info');
             await getBlueprintInfo({ blueprint: blueprint, token: user.accessToken })
                 .then((result) => {
                     const { unique_values, variants } = result.data;
