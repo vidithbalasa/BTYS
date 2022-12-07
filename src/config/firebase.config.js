@@ -39,12 +39,12 @@ if (is_dev) {
 
 export const functions = getFunctions(getApp());
 if (is_dev) {
-  connectFunctionsEmulator(functions, "localhost", 5001);
+  connectFunctionsEmulator(functions, "localhost", 8080);
 }
 
 export const firestore = getFirestore(getApp());
 if (is_dev) {
-  connectFirestoreEmulator(firestore, "localhost", 8080);
+  connectFirestoreEmulator(firestore, "localhost", 5001);
 }
 
 export const searchClient = algoliasearch(
