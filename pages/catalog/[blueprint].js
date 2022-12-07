@@ -11,6 +11,7 @@ import { useCycle } from 'framer-motion';
 import Carousel from '../../components/carousel';
 import ItemSelection from '../../components/itemSelection';
 import creationContext from '../../src/context/creationContext';
+import { connectStateResults } from 'react-instantsearch-dom';
 
 export default function CatalogItem(props) {
     const [unique, setUnique] = useState(props.unique);
@@ -148,10 +149,7 @@ export async function getStaticProps({ params }) {
         const getBlueprintInfo = httpsCallable(functions, 'printify_product_info');
         await getBlueprintInfo({ blueprint_id: params.blueprint, token: 'test' })
             .then((result) => {
-                console.log(result.data)
-                const { unique, variants } = result.data;
-                setUnique(unique);
-                setVariants(variants);
+                return result.data
             })
             .catch((error) => {
                 console.log(error);
