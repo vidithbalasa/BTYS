@@ -17,6 +17,7 @@ export default function CatalogItem() {
             const getBlueprintInfo = httpsCallable(functions, 'printify_product_info');
             await getBlueprintInfo({ blueprint: blueprint, token: user.accessToken })
                 .then((result) => {
+                    console.log(result)
                     const { unique_values, variants } = result.data;
                     setUnique(unique_values);
                     setVariants(variants);
