@@ -18,8 +18,8 @@ export default function CatalogItem() {
             await getBlueprintInfo({ blueprint: blueprint, token: user.accessToken })
                 .then((result) => {
                     console.log(result)
-                    const { unique_values, variants } = result.data;
-                    setUnique(unique_values);
+                    const { unique, variants } = result.data;
+                    setUnique(unique);
                     setVariants(variants);
                 })
                 .catch((error) => {
