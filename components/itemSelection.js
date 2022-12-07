@@ -1,4 +1,3 @@
-// import styles from '../styles/item.module.css'
 import styles from '../styles/itemSelection.module.css'
 
 export default function ItemSelection({ unique, validVariants, selected, selectItem, unselectItem, createMockup }) {
@@ -38,7 +37,7 @@ export default function ItemSelection({ unique, validVariants, selected, selectI
                                                     disabled={isDisabled(key, value)}
                                                     className={styles.radio}
                                                 />
-                                                <label htmlFor={value}>{value}</label>
+                                                <label key={index} htmlFor={value}>{value}</label>
                                             </div>
                                         )
                                     })
