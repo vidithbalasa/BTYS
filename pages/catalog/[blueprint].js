@@ -14,8 +14,8 @@ import creationContext from '../../src/context/creationContext';
 import { connectStateResults } from 'react-instantsearch-dom';
 
 export default function CatalogItem(props) {
-    const [unique, setUnique] = useState(props.unique);
-    const [variants, setVariants] = useState(props.variants);
+    const [unique, setUnique] = useState([]);
+    const [variants, setVariants] = useState([]);
     
     // const [unique, setUnique] = useState(mockUnique);
     // const [variants, setVariants] = useState(mockVariants);
@@ -25,36 +25,40 @@ export default function CatalogItem(props) {
     /* PROD */
 
     const [selected, setSelected] = useState({})
-    const [validVariants, setValidVariants] = useState(props.variants);
+    const [validVariants, setValidVariants] = useState([]);
 
     const NUM_IMAGES = images.length;
     const indices = Array.from({ length: NUM_IMAGES-1 }, (value, index) => index + 1);
     const [currentIndex, setCurrentIndex] = useCycle(...indices);
+    const [loadingStock, setLoadingStock] = useState(true);
 
     const router = useRouter();
     const { blueprint } = router.query;
     
+    const functions = getFunctions();
     const { user } = useAuth();
 
     const { addProduct } = useContext(creationContext);
 
-    // useEffect(() => {
-    //     const getInfo = async () => {
-    //         // get function from us-central1
-    //         const getBlueprintInfo = httpsCallable(functions, 'printify_product_info');
-    //         await getBlueprintInfo({ blueprint_id: blueprint, token: user.accessToken })
-    //             .then((result) => {
-    //                 console.log(result.data)
-    //                 const { unique, variants } = result.data;
-    //                 setUnique(unique);
-    //                 setVariants(variants);
-    //             })
-    //             .catch((error) => {
-    //                 console.log(error);
-    //             });
-    //     }
-    //     getInfo();
-    // }, [blueprint]);
+    useEffect(() => {
+        const getInfo = async () => {
+            // get function from us-central1
+            const getBlueprintInfo = httpsCallable(functions, 'printify_product_info');
+            await getBlueprintInfo({ blueprint_id: blueprint, token: user.accessToken })
+                .then((result) => {
+                    console.log(result.data)
+                    const { unique, variants } = result.data;
+                    setUnique(unique);
+                    setVariants(variants);
+                    setValidVariants(variants);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+        getInfo();
+        setLoadingStock(false);
+    }, [blueprint]);
 
     useEffect(() => {
         // Go through each variant and put the ones that match selections in validVariants
@@ -107,7 +111,10 @@ export default function CatalogItem(props) {
                         <button onClick={() => setCurrentIndex(idx => idx + 1)} className={`${styles.next} ${styles.button}`}>&#8680;</button>
                     </div>
                 </div>
-                <ItemSelection unique={unique} selected={selected} validVariants={validVariants} selectItem={selectItem} unselectItem={unselectItem} createMockup={createMockup} />
+                {
+                    !loadingStock &&
+                    <ItemSelection unique={unique} selected={selected} validVariants={validVariants} selectItem={selectItem} unselectItem={unselectItem} createMockup={createMockup} />
+                }
             </div>
         </main>
     )
@@ -142,28 +149,28 @@ export async function getStaticProps({ params }) {
     const item_doc = doc(firestore, 'printify_products', params.blueprint);
     const item = await getDoc(item_doc);
 
-    // Get printify product stock data
-    const functions = getFunctions();
-    const getInfo = async () => {
-        // get function from us-central1
-        const getBlueprintInfo = httpsCallable(functions, 'printify_product_info');
-        await getBlueprintInfo({ blueprint_id: params.blueprint, token: 'test' })
-            .then((result) => {
-                return result.data
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }
-    const {unique, variants} = await getInfo();
+    // // Get printify product stock data
+    // const functions = getFunctions();
+    // const getInfo = async () => {
+    //     // get function from us-central1
+    //     const getBlueprintInfo = httpsCallable(functions, 'printify_product_info');
+    //     await getBlueprintInfo({ blueprint_id: params.blueprint, token: 'test' })
+    //         .then((result) => {
+    //             return result.data
+    //         })
+    //         .catch((error) => {
+    //             console.log(error);
+    //         });
+    // }
+    // const {unique, variants} = await getInfo();
 
   
     // Return the product data as props
     return {
       props: {
         item: item.data(),
-        variants: variants,
-        unique: unique
+        // variants: variants,
+        // unique: unique
       }
     }
 }
