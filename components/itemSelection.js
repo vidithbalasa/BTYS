@@ -37,7 +37,7 @@ export default function ItemSelection({ unique, validVariants, selected, selectI
                                                     disabled={isDisabled(key, value)}
                                                     className={styles.radio}
                                                 />
-                                                <label htmlFor={value}>{value}</label>
+                                                <label key={index} htmlFor={value}>{value}</label>
                                             </div>
                                         )
                                     })
