@@ -6,7 +6,7 @@ import useAuth from '../../src/auth/authContext';
 import styles from '../../styles/item.module.css'
 import globalStyles from '../../styles/global.module.css'
 import Image from 'next/image';
-import sample_images from '../../public/images.js'
+// import sample_images from '../../public/images.js'
 import { useCycle } from 'framer-motion';
 import Carousel from '../../components/carousel';
 import ItemSelection from '../../components/itemSelection';
