@@ -21,15 +21,15 @@ export default function Catalog(props) {
     const router = useRouter();
     const debouncedSetState = useRef();
 
-    useEffect(() => {
-        if (router) {
-          router.beforePopState(({ url }) => {
-            setSearchState(pathToSearchState(url));
-            Router.back();
-            return false;
-          });
-        }
-    }, [router]);
+    // useEffect(() => {
+    //     if (router) {
+    //       router.beforePopState(({ url }) => {
+    //         setSearchState(pathToSearchState(url));
+    //         Router.back();
+    //         return false;
+    //       });
+    //     }
+    // }, [router]);
 
     return (
         <main className={styles.main}>
