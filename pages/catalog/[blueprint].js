@@ -12,7 +12,7 @@ import { motion, AnimatePresence, useCycle } from 'framer-motion';
 export default function CatalogItem({ item }) {
     const [unique, setUnique] = useState([]);
     const [variants, setVariants] = useState([]);
-    const NUM_IMAGES = sample_images.length;
+    const NUM_IMAGES = item.image_urls.length;
     const indices = Array.from({ length: NUM_IMAGES-1 }, (value, index) => index + 1);
     const [currentIndex, setCurrentIndex] = useCycle(...indices);
 
