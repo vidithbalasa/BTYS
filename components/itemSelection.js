@@ -13,6 +13,18 @@ export default function ItemSelection({ unique, validVariants, selected, selectI
         }
     }
 
+    const canCreate = () => {
+        // if every key in the first validVariant is in selected, then you can create a mockup
+        const firstVariant = validVariants[0];
+        for (let key in firstVariant) {
+            if (key === 'id') { continue; }
+            if (!selected[key]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     return (
         <div className={styles.infoBox}>
             <h3>Create a Mockup</h3>
@@ -26,18 +38,18 @@ export default function ItemSelection({ unique, validVariants, selected, selectI
                                 {
                                     unique[key].map((value, index) => {
                                         return (
-                                            <div key={index}>
+                                            <div key={value + index}>
                                                 {/* styling in globals.css */}
                                                 <input 
                                                     type="radio" id={value} 
                                                     name={key} value={value} 
-                                                    key={index} checked={selected[key] === value}
+                                                    checked={selected[key] === value}
                                                     onChange={(e) => selectItem(key, value)}
                                                     onClick={(e) => unselectItem(key)}
                                                     disabled={isDisabled(key, value)}
                                                     className={styles.radio}
                                                 />
-                                                <label key={index} htmlFor={value}>{value}</label>
+                                                <label htmlFor={value}>{value}</label>
                                             </div>
                                         )
                                     })
@@ -47,7 +59,7 @@ export default function ItemSelection({ unique, validVariants, selected, selectI
                     )
                 })
             }
-            <button onClick={createMockup} disabled={true}>Create Mockup with Image</button>
+            <button onClick={createMockup} disabled={!canCreate()} className={styles.createButton}>Create Mockup with Image</button>
         </div>
     )
 }

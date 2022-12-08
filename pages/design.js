@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { functions } from '../src/config/firebase.config';
+// import { functions } from '../src/config/firebase.config';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 import { withProtected } from '../src/auth/route';
 import { getApp } from 'firebase/app';
@@ -10,23 +10,23 @@ import globalStyles from '../styles/global.module.css';
 
 function Design() {
     const [prompt, setPrompt] = useState('');
-    const [token, setToken] = useState('');
+    // const [token, setToken] = useState('');
     const [img, setImg] = useState('');
     const functions = getFunctions(getApp());
-    const auth = useAuth();
+    const { user } = useAuth();
 
-    // Get jwt token on mount
-    useEffect(() => {
-        auth.user.getIdToken().then((token) => {
-            setToken(token);
-        });
-        // console.log('Rendered Page')
-    }, [auth.user]);
+    // // Get jwt token on mount
+    // useEffect(() => {
+    //     auth.user.getIdToken().then((token) => {
+    //         setToken(token);
+    //     });
+    //     // console.log('Rendered Page')
+    // }, [auth.user]);
 
     // Call the function to get model prediction
     const callFunction = async () => {
         const stableaiCall = httpsCallable(functions, 'stableai-function')
-        await stableaiCall({ prompt: prompt, token: token })
+        await stableaiCall({ prompt: prompt, token: user.accessToken })
             .then((result) => {
                 const img_url = result.data;
                 setImg(img_url);
