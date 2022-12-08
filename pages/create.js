@@ -40,7 +40,8 @@ export default function Create() {
                     {/* if image, show image else "Add an Image" with a button */}
                     {image ? <Image src={image} alt='image' width={img_size} height={img_size} /> : (
                         <div>
-                            <Link href="/design">Add an Image</Link>
+                            {/* <Link href="/design">Add an Image</Link> */}
+                            <button onClick={() => addImage(IMG)}>Add an Image</button>
                         </div>
                     )}
                 </div>
@@ -51,7 +52,7 @@ export default function Create() {
                         product ? (
                             <div className={styles.productBox}>
                                 <Image src={product.image} alt='product' width={img_size} height={img_size} />
-                                <p className={styles.name}>{product.blueprint_id}</p>
+                                <p className={styles.name}>{product.name}</p>
                             </div>
                         ) : (
                             <Link href="/catalog">Add a Product</Link>
@@ -59,6 +60,7 @@ export default function Create() {
                     }
                 </div>
             </div>
+            <button className={styles.button} onClick={() => console.log(image, product)}>Log Items</button>
             <button className={styles.button} onClick={generateMockup}>Generate Mockup</button>
         </div>
     )
