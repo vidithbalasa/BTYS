@@ -111,10 +111,11 @@ export default function CatalogItem(props) {
                         <button onClick={() => setCurrentIndex(idx => idx + 1)} className={`${styles.next} ${styles.button}`}>&#8680;</button>
                     </div>
                 </div>
-                {
+                <ItemSelection unique={unique} selected={selected} validVariants={validVariants} selectItem={selectItem} unselectItem={unselectItem} createMockup={createMockup} />
+                {/* {
                     loadingStock ? <p>Loading items in stock...</p> :
                     <ItemSelection unique={unique} selected={selected} validVariants={validVariants} selectItem={selectItem} unselectItem={unselectItem} createMockup={createMockup} />
-                }
+                } */}
             </div>
         </main>
     )
