@@ -28,7 +28,7 @@ export default function CatalogItem({ item }) {
 
     const [selected, setSelected] = useState({})
     const [validVariants, setValidVariants] = useState([]);
-    const [stockIsLoading, setStockIsLoading] = useState(false);
+    const [stockIsLoading, setStockIsLoading] = useState(true);
     const [provider, setProvider] = useState('');
 
     const NUM_IMAGES = images.length;
@@ -101,7 +101,7 @@ export default function CatalogItem({ item }) {
             printer_id: provider,
             variant: variant,
             image: images[0],
-            // name: item.name,
+            name: item.name,
         }
         addProduct(mockup);
         router.push('/create');
