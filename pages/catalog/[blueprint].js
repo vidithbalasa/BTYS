@@ -11,26 +11,25 @@ import { useCycle } from 'framer-motion';
 import Carousel from '../../components/carousel';
 import ItemSelection from '../../components/itemSelection';
 import creationContext from '../../src/context/creationContext';
-import { connectStateResults } from 'react-instantsearch-dom';
 
-export default function CatalogItem(props) {
+export default function CatalogItem({ item }) {
     const [unique, setUnique] = useState([]);
     const [variants, setVariants] = useState([]);
     
     // const [unique, setUnique] = useState(mockUnique);
     // const [variants, setVariants] = useState(mockVariants);
 
-    const images = props.item.image_urls;
+    const images = item.image_urls;
 
     /* PROD */
 
     const [selected, setSelected] = useState({})
     const [validVariants, setValidVariants] = useState([]);
+    const [stockIsLoading, setStockIsLoading] = useState(true);
 
     const NUM_IMAGES = images.length;
     const indices = Array.from({ length: NUM_IMAGES-1 }, (value, index) => index + 1);
     const [currentIndex, setCurrentIndex] = useCycle(...indices);
-    const [loadingStock, setLoadingStock] = useState(true);
 
     const router = useRouter();
     const { blueprint } = router.query;
@@ -57,7 +56,7 @@ export default function CatalogItem(props) {
                 });
         }
         getInfo();
-        setLoadingStock(false);
+        setStockIsLoading(false);
     }, [blueprint]);
 
     useEffect(() => {
@@ -102,7 +101,7 @@ export default function CatalogItem(props) {
 
     return (
         <main className={globalStyles.main}>
-            <h1 className={globalStyles.title}>{props.item.name}</h1>
+            <h1 className={globalStyles.title}>{item.name}</h1>
             <div className={styles.box}>
                 <div className={styles.carousel}>
                     <Carousel currentIndex={currentIndex} images={images} />
@@ -112,7 +111,7 @@ export default function CatalogItem(props) {
                     </div>
                 </div>
                 {
-                    loadingStock ? <p>Loading items in stock...</p> :
+                    stockIsLoading ? <p>Checking Item Availability...</p> :
                     <ItemSelection unique={unique} selected={selected} validVariants={validVariants} selectItem={selectItem} unselectItem={unselectItem} createMockup={createMockup} />
                 }
             </div>
@@ -149,28 +148,11 @@ export async function getStaticProps({ params }) {
     const item_doc = doc(firestore, 'printify_products', params.blueprint);
     const item = await getDoc(item_doc);
 
-    // // Get printify product stock data
-    // const functions = getFunctions();
-    // const getInfo = async () => {
-    //     // get function from us-central1
-    //     const getBlueprintInfo = httpsCallable(functions, 'printify_product_info');
-    //     await getBlueprintInfo({ blueprint_id: params.blueprint, token: 'test' })
-    //         .then((result) => {
-    //             return result.data
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //         });
-    // }
-    // const {unique, variants} = await getInfo();
-
   
     // Return the product data as props
     return {
       props: {
-        item: item.data(),
-        // variants: variants,
-        // unique: unique
+        item: item.data()
       }
     }
 }
