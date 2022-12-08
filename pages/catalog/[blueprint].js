@@ -111,17 +111,16 @@ export default function CatalogItem(props) {
                         <button onClick={() => setCurrentIndex(idx => idx + 1)} className={`${styles.next} ${styles.button}`}>&#8680;</button>
                     </div>
                 </div>
-                <ItemSelection unique={unique} selected={selected} validVariants={validVariants} selectItem={selectItem} unselectItem={unselectItem} createMockup={createMockup} />
-                {/* {
+                {
                     loadingStock ? <p>Loading items in stock...</p> :
                     <ItemSelection unique={unique} selected={selected} validVariants={validVariants} selectItem={selectItem} unselectItem={unselectItem} createMockup={createMockup} />
-                } */}
+                }
             </div>
         </main>
     )
 }
 
-export async function getStaticPaths() {
+export async function getServerSidePaths() {
     // Get a reference to the firestore instance
     const firestore = getFirestore();
   
@@ -142,7 +141,7 @@ export async function getStaticPaths() {
 }
 
 // Get the info for the product from firestore
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
     // Get a reference to the firestore instance
     const firestore = getFirestore();
   
