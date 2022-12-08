@@ -59,3 +59,41 @@
     padding: 0;
     list-style: none;    
 }
+
+/* CREATE BUTTON: should be a prominent button that is gray when disabled and geen when active, big and centered */
+.infoBox {
+    /* should be a prominent button that is gray when disabled and geen when active, big and centered */
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;    
+}
+
+.infoBox button {
+    /* should be a prominent button that is gray when disabled and geen when active, big and centered */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;    
+}
+
+.infoBox button:disabled {
+    /* should be a prominent button that is gray when disabled and geen when active, big and centered */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    cursor: not-allowed;
+}

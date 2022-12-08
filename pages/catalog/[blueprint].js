@@ -6,11 +6,13 @@ import useAuth from '../../src/auth/authContext';
 import styles from '../../styles/item.module.css'
 import globalStyles from '../../styles/global.module.css'
 import Image from 'next/image';
-// import sample_images from '../../public/images.js'
 import { useCycle } from 'framer-motion';
 import Carousel from '../../components/carousel';
 import ItemSelection from '../../components/itemSelection';
 import creationContext from '../../src/context/creationContext';
+
+// import sample_images from '../../public/images.js'
+
 
 export default function CatalogItem({ item }) {
     const [unique, setUnique] = useState([]);
@@ -20,15 +22,17 @@ export default function CatalogItem({ item }) {
     // const [variants, setVariants] = useState(mockVariants);
 
     const images = item.image_urls;
+    // const images = sample_images;
 
     /* PROD */
 
     const [selected, setSelected] = useState({})
     const [validVariants, setValidVariants] = useState([]);
-    const [stockIsLoading, setStockIsLoading] = useState(true);
+    const [stockIsLoading, setStockIsLoading] = useState(false);
+    const [provider, setProvider] = useState('');
 
     const NUM_IMAGES = images.length;
-    const indices = Array.from({ length: NUM_IMAGES-1 }, (value, index) => index + 1);
+    const indices = Array.from({ length: NUM_IMAGES }, (value, index) => index);
     const [currentIndex, setCurrentIndex] = useCycle(...indices);
 
     const router = useRouter();
@@ -46,10 +50,11 @@ export default function CatalogItem({ item }) {
             await getBlueprintInfo({ blueprint_id: blueprint, token: user.accessToken })
                 .then((result) => {
                     console.log(result.data)
-                    const { unique, variants } = result.data;
+                    const { unique, variants, provider } = result.data;
                     setUnique(unique);
                     setVariants(variants);
                     setValidVariants(variants);
+                    setProvider(provider);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -88,25 +93,29 @@ export default function CatalogItem({ item }) {
     const selectItem = (key,val) => setSelected({...selected, [key]:val})
 
     const createMockup = () => {
-        if (validVariants.length !== 1) { return }
+        // if (validVariants.length !== 1) { return }
         const variant = validVariants[0];
         const mockup = {
             blueprint_id: blueprint,
             variant_id: variant.id,
+            printer_id: provider,
             variant: variant,
             image: images[0],
+            // name: item.name,
         }
         addProduct(mockup);
+        router.push('/create');
     }
 
     return (
         <main className={globalStyles.main}>
-            <h1 className={globalStyles.title}>{item.name}</h1>
+            {/* <h1 className={globalStyles.title}>{item.name}</h1> */}
             <div className={styles.box}>
                 <div className={styles.carousel}>
                     <Carousel currentIndex={currentIndex} images={images} />
                     <div className={styles.indicators}>
                         <button onClick={() => setCurrentIndex(idx => idx - 1)} className={`${styles.prev} ${styles.button}`}>&#8678;</button>
+                        {currentIndex}
                         <button onClick={() => setCurrentIndex(idx => idx + 1)} className={`${styles.next} ${styles.button}`}>&#8680;</button>
                     </div>
                 </div>

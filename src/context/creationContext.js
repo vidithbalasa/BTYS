@@ -5,21 +5,15 @@ const creationContext = createContext({ image: null, product: null });
 export default creationContext;
 
 export function CreationProvider(props) {
-    const [image, setImage] = useState(null);
-    const [product, setProduct] = useState(null);
+    const image = JSON.parse(localStorage.getItem('image'));
+    const product = JSON.parse(localStorage.getItem('product'));
 
-    const addImage = (image) => {
-        // make sure image has url, prompt, and date created
-        if (image.url && image.prompt && image.dateCreated) {
-            setImage(image);
-        }
+    const addImage = (newImage) => {
+        localStorage.setItem('image', JSON.stringify(newImage));
     }
 
-    const addProduct = (product) => {
-        // make sure product has blueprint_id, name, description, image_urls, and price
-        if (product.name && product.url && product.blueprint_id && product.provider_id) {
-            setProduct(product);
-        }
+    const addProduct = (newProduct) => {
+        localStorage.setItem('product', JSON.stringify(newProduct));
     }
 
     const value = { image, product, addImage, addProduct };

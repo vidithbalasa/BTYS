@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import useAuth from '../../src/auth/authContext';
 import Image from 'next/image';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import creationContext from '../../src/context/creationContext';
 
 export default function Artwork() {
     const [image, setImage] = useState({});
@@ -10,6 +11,7 @@ export default function Artwork() {
     const router = useRouter();
     const { id } = router.query;
     const auth = useAuth();
+    const { addImage } = useContext(creationContext);
 
     useEffect(() => {
         async function getImage() {
@@ -41,6 +43,7 @@ export default function Artwork() {
                     <p>{image.prompt}</p>
                 </div>    
             }
+            <button onClick={() => addImage(image.url)}>Add Image</button>
         </main>
     );
 }
