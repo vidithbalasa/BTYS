@@ -120,7 +120,7 @@ export default function CatalogItem(props) {
     )
 }
 
-export async function getServerSidePaths() {
+export async function getStaticPaths() {
     // Get a reference to the firestore instance
     const firestore = getFirestore();
   
@@ -141,7 +141,7 @@ export async function getServerSidePaths() {
 }
 
 // Get the info for the product from firestore
-export async function getServerSideProps({ params }) {
+export async function getStaticProps({ params }) {
     // Get a reference to the firestore instance
     const firestore = getFirestore();
   
