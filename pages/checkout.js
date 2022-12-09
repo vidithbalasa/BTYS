@@ -4,6 +4,7 @@ import useAuth from "../src/auth/authContext";
 import stripeContext from "../src/stripe/stripeContext";
 import globalStyles from '../styles/global.module.css'
 import { withProtected } from "../src/auth/route";
+import { loadStripe } from "@stripe/stripe-js";
 
 function Checkout() {
     /* DEV */
