@@ -27,7 +27,7 @@ function Checkout() {
             success_url: success_url,
             cancel_url: cancel_url,
             line_items: [{
-                price_data: {currency: 'usd', product_data: {name: 'testing'}, unit_amound: 10000},
+                price_data: {currency: 'usd', product_data: {name: 'testing'}, unit_amount: 10000},
                 quantity: 1
             }]
         })
