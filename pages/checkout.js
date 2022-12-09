@@ -43,6 +43,7 @@ function Checkout() {
 
     return (
         <main className={globalStyles.main}>
+            <h1>Checkout</h1>
             <button onClick={createSession}>Create Session</button>
         </main>
     )
