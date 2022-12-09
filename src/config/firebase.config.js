@@ -43,9 +43,9 @@ if (is_dev) {
 }
 
 export const firestore = getFirestore(getApp());
-if (is_dev) {
-  connectFirestoreEmulator(firestore, "localhost", 5001);
-}
+// if (is_dev) {
+//   connectFirestoreEmulator(firestore, "localhost", 5001);
+// }
 
 export const searchClient = algoliasearch(
   "ESJNVTMAC5",

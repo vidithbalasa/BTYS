@@ -16,6 +16,11 @@ export function CreationProvider(props) {
         localStorage.setItem('product', JSON.stringify(newProduct));
     }
 
-    const value = { image, product, addImage, addProduct };
+    const resetCreation = () => {
+        localStorage.removeItem('image');
+        localStorage.removeItem('product');
+    }
+
+    const value = { image, product, addImage, addProduct, resetCreation };
     return <creationContext.Provider value={value} {...props} />;
 }
