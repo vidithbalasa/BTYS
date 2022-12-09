@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import globalStyles from '../styles/global.module.css';
 import styles from '../styles/create.module.css';
 import creationContext from '../src/context/creationContext';
@@ -7,12 +7,18 @@ import Image from 'next/image';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 import useAuth from '../src/auth/authContext';
 import { withProtected } from '../src/auth/route';
+// import StripeService from '../src/stripe/stripeService';
+import stripeContext from '../src/stripe/stripeContext';
+import { useRouter } from 'next/router';
 
 function Create() {
-    const { image, product } = useContext(creationContext);
+    const { image, product, resetCreation } = useContext(creationContext);
+    const [mockup, setMockup] = useState({});
     const functions = getFunctions();
     const { user } = useAuth();
     const img_size = 300;
+    const { stripe } = useContext(stripeContext);
+    const router = useRouter();
 
     async function generateMockup() {
         const generateMockup = httpsCallable(functions, 'create_product');
@@ -24,40 +30,54 @@ function Create() {
             token: user.accessToken            
         })
             .then((result) => {
-                console.log(result.data);
+                setMockup({
+                    image: result.data.image,
+                    product_id: result.data.product_id,
+                    price: result.data.price
+                })
+                // resetCreation();
             })
             .catch((error) => {
                 console.log(error);
             })
     }
-    
+
+    const buyNow = async () => {
+        router.push('/checkout')
+    }
+
     // const IMG = 'https://storage.googleapis.com/vidiths_test_bucket/51b14540-fd31-4a29-964e-425c0c54acdd.png'
+
+    if (mockup) {
+        return (
+            <div className={globalStyles.main}>
+                <h1>Mockup</h1>
+                <Image src={mockup.image} alt='mockup' width={img_size} height={img_size} />
+                <div className={styles.buttons}>
+                    <button className={`${styles.cartButton} ${styles.mockupButton}`}>Add to Cart</button>
+                    <button className={`${styles.buyNowButton} ${styles.mockupButton}`} onClick={buyNow}>call printify</button>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <div className={globalStyles.main}>
             <h1>Create</h1>
             <div className={styles.boxes}>
                 <div className={`${styles.leftBox} ${styles.box}`}>
-                    {/* if image, show image else "Add an Image" with a button */}
                     {image ? <Image src={image.url} alt='image' width={img_size} height={img_size} /> : (
-                        <div>
                             <Link href="/design">Add an Image</Link>
-                            {/* <button onClick={() => addImage(IMG)}>Add an Image</button> */}
-                        </div>
                     )}
                 </div>
                 <div>&#43;</div>
                 <div className={`${styles.rightBox} ${styles.box}`}>
-                    {/* if product, show product else "Add a Product" with a button */}
-                    {
-                        product ? (
-                            <div className={styles.productBox}>
-                                <Image src={product.image} alt='product' width={img_size} height={img_size} />
-                                <p className={styles.name}>{product.name}</p>
-                            </div>
-                        ) : (
-                            <Link href="/catalog">Add a Product</Link>
-                        )
+                    {product ? (
+                        <div className={styles.productBox}>
+                            <Image src={product.image} alt='product' width={img_size} height={img_size} />
+                            <p className={styles.name}>{product.name}</p>
+                        </div>
+                        ) : <Link href="/catalog">Add a Product</Link>
                     }
                 </div>
             </div>

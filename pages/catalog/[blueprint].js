@@ -30,6 +30,7 @@ export default function CatalogItem({ item }) {
     const [validVariants, setValidVariants] = useState([]);
     const [stockIsLoading, setStockIsLoading] = useState(true);
     const [provider, setProvider] = useState('');
+    const [outOfStock, setOutOfStock] = useState(false);
 
     const NUM_IMAGES = images.length;
     const indices = Array.from({ length: NUM_IMAGES }, (value, index) => index);
@@ -51,6 +52,10 @@ export default function CatalogItem({ item }) {
                 .then((result) => {
                     console.log(result.data)
                     const { unique, variants, provider } = result.data;
+                    if (!provider) {
+                        setOutOfStock(true);
+                        return;
+                    }
                     setUnique(unique);
                     setVariants(variants);
                     setValidVariants(variants);
@@ -120,8 +125,11 @@ export default function CatalogItem({ item }) {
                     </div>
                 </div>
                 {
-                    stockIsLoading ? <p>Checking Item Availability...</p> :
-                    <ItemSelection unique={unique} selected={selected} validVariants={validVariants} selectItem={selectItem} unselectItem={unselectItem} createMockup={createMockup} />
+                    stockIsLoading ? <p>Checking Item Availability...</p> : (
+                        outOfStock ? <p>Item is out of stock</p> : (
+                            <ItemSelection unique={unique} selected={selected} validVariants={validVariants} selectItem={selectItem} unselectItem={unselectItem} createMockup={createMockup} />
+                        )
+                    )
                 }
             </div>
         </main>

@@ -4,29 +4,20 @@ import '../styles/globals.css'
 import { AuthProvider } from '../src/auth/authContext';
 import AuthStateChanged from '../src/auth/AuthStateChanged';
 import { CreationProvider } from '../src/context/creationContext';
-// import "../src/config/firebase.config";
+import { StripeProvider } from '../src/stripe/stripeContext';
 
 function MyApp({ Component, pageProps }) {
   return (
     <AuthProvider>
       <AuthStateChanged>
         <CreationProvider>
-          <Component {...pageProps} />
+          <StripeProvider>
+            <Component {...pageProps} />
+          </StripeProvider>
         </CreationProvider>
       </AuthStateChanged>
     </AuthProvider>
   )
 }
-// function MyApp({ Component, pageProps }) {
-//   return (
-//     <AuthProvider>
-//       <AppLayout>
-//         <AuthStateChanged>
-//           <Component {...pageProps} />    
-//         </AuthStateChanged>
-//       </AppLayout>
-//     </AuthProvider>
-//   )
-// }
 
 export default MyApp;
