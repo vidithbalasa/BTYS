@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import React from "react";
+import LoginModal from "../../components/loginModal";
 import useAuth from "./authContext";
 
 export function withPublic(Component) {
@@ -21,8 +22,12 @@ export function withProtected(Component) {
 		const router = useRouter();
 
 		if (!auth.user) {
-			router.replace("/login");
-			return <h1>Loading...</h1>;
+			// return <LoginModal children={<Component {...props} />} />;
+			return (
+				<LoginModal>
+					<Component auth={auth} {...props} />
+				</LoginModal>
+			)
 		}
 		return <Component auth={auth} {...props} />;
 	};

@@ -6,9 +6,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 import useAuth from '../src/auth/authContext';
+import { withProtected } from '../src/auth/route';
 
-export default function Create() {
-    const { image, product, addImage } = useContext(creationContext);
+function Create() {
+    const { image, product } = useContext(creationContext);
     const functions = getFunctions();
     const { user } = useAuth();
     const img_size = 300;
@@ -30,7 +31,7 @@ export default function Create() {
             })
     }
     
-    const IMG = 'https://storage.googleapis.com/vidiths_test_bucket/51b14540-fd31-4a29-964e-425c0c54acdd.png'
+    // const IMG = 'https://storage.googleapis.com/vidiths_test_bucket/51b14540-fd31-4a29-964e-425c0c54acdd.png'
 
     return (
         <div className={globalStyles.main}>
@@ -38,10 +39,10 @@ export default function Create() {
             <div className={styles.boxes}>
                 <div className={`${styles.leftBox} ${styles.box}`}>
                     {/* if image, show image else "Add an Image" with a button */}
-                    {image ? <Image src={image} alt='image' width={img_size} height={img_size} /> : (
+                    {image ? <Image src={image.url} alt='image' width={img_size} height={img_size} /> : (
                         <div>
-                            {/* <Link href="/design">Add an Image</Link> */}
-                            <button onClick={() => addImage(IMG)}>Add an Image</button>
+                            <Link href="/design">Add an Image</Link>
+                            {/* <button onClick={() => addImage(IMG)}>Add an Image</button> */}
                         </div>
                     )}
                 </div>
@@ -60,8 +61,9 @@ export default function Create() {
                     }
                 </div>
             </div>
-            <button className={styles.button} onClick={() => console.log(image, product)}>Log Items</button>
             <button className={styles.button} onClick={generateMockup}>Generate Mockup</button>
         </div>
     )
 }
+
+export default withProtected(Create);
