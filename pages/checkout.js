@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, onSnapshot } from "firebase/firestore";
 import useAuth from "../src/auth/authContext";
 import stripeContext from "../src/stripe/stripeContext";
 import globalStyles from '../styles/global.module.css'
@@ -32,13 +32,18 @@ function Checkout() {
             }]
         })
 
-        // When session_promise doc is updated, get the session_id
-        session_promise.onSnapshot(async (snap) => {
-            const { session_id } = snap.data();
-            if (session_id) {
-                await stripe.redirectToCheckout({sessionId: session_id})
+        onSnapshot(docRef, async (snap) => {
+            const { error, sessionId } = snap.data();
+            if (error) {
+                console.log('error')
+                alert(error.message)
             }
-        })  
+            if (sessionId) {
+                console.log('sessionId')
+                const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+                stripe.redirectToCheckout({ sessionId })
+            }
+        })
     }
 
     return (
