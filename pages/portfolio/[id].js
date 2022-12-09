@@ -43,7 +43,7 @@ export default function Artwork() {
                     <p>{image.prompt}</p>
                 </div>    
             }
-            <button onClick={() => addImage(image.url)}>Add Image</button>
+            <button onClick={() => addImage({url: image.url})}>Add Image</button>
         </main>
     );
 }

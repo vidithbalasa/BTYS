@@ -16,7 +16,7 @@ export default function Create() {
     async function generateMockup() {
         const generateMockup = httpsCallable(functions, 'create_product');
         await generateMockup({
-            image, 
+            image: image.url, 
             blueprint_id: product.blueprint_id,
             variant_id: product.variant_id,
             printer_id: product.printer_id,
