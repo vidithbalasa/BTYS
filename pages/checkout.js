@@ -22,7 +22,7 @@ function Checkout() {
     const createSession = async () => {
         const checkout_session_ref = collection(firestore, 'users', user.uid, 'checkout_sessions')
 
-        const session_promise = await addDoc(checkout_session_ref, {
+        const docRef = await addDoc(checkout_session_ref, {
             mode: 'payment',
             success_url: success_url,
             cancel_url: cancel_url,
