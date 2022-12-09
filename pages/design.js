@@ -10,18 +10,9 @@ import globalStyles from '../styles/global.module.css';
 
 function Design() {
     const [prompt, setPrompt] = useState('');
-    // const [token, setToken] = useState('');
     const [img, setImg] = useState('');
     const functions = getFunctions(getApp());
     const { user } = useAuth();
-
-    // // Get jwt token on mount
-    // useEffect(() => {
-    //     auth.user.getIdToken().then((token) => {
-    //         setToken(token);
-    //     });
-    //     // console.log('Rendered Page')
-    // }, [auth.user]);
 
     // Call the function to get model prediction
     const callFunction = async () => {
@@ -37,26 +28,30 @@ function Design() {
     }
 
     return (
-        <main className={globalStyles.main}>
-            <h1 className={globalStyles.title}>Create a Design</h1>
-            <div className={styles.promptBox}>
-                <label htmlFor='prompt' className={styles.promptLabel}>Input a prompt</label>
-                <input
-                    type='text'
-                    name='prompt'
-                    id='prompt'
-                    value={prompt}
-                    onChange={(e) => setPrompt(e.target.value)}
-                    className={styles.promptInput}
-                />
-                <button 
-                    onClick={callFunction}
-                    disabled={prompt === ''}
-                    className={styles.promptButton}
-                >Generate Image</button>
-            </div>
-            {img && <Image src={img} alt='Generated Image' className={styles.image} />}
-        </main>
+        <div>
+            <main className={`${globalStyles.main} ${globalStyles.mainAuth}`}>
+                <h1 className={globalStyles.title}>Create a Design</h1>
+                <div className={styles.promptBox}>
+                    <label htmlFor='prompt' className={styles.promptLabel}>Input a prompt</label>
+                    <input
+                        type='text'
+                        name='prompt'
+                        id='prompt'
+                        value={prompt}
+                        onChange={(e) => setPrompt(e.target.value)}
+                        className={styles.promptInput}
+                    />
+                    <button 
+                        onClick={callFunction}
+                        disabled={prompt === ''}
+                        className={styles.promptButton}
+                    >Generate Image</button>
+                </div>
+                {img && <Image src={img} alt='Generated Image' className={styles.image} />}
+                {/* button that console logs user */}
+                <button onClick={() => console.log(user)}>Log User</button>
+            </main>
+        </div>
     );
 }
 

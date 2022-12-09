@@ -4,14 +4,19 @@ import useAuth from '../../src/auth/authContext';
 import Image from 'next/image';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import creationContext from '../../src/context/creationContext';
+import { withProtected } from '../../src/auth/route';
 
-export default function Artwork() {
+function Artwork() {
     const [image, setImage] = useState({});
-    const [catalog, setCatalog] = useState({});
     const router = useRouter();
     const { id } = router.query;
     const auth = useAuth();
     const { addImage } = useContext(creationContext);
+
+    const createMockupFromImage = (image_url) => {
+        addImage({url: image_url});
+        router.push('/create');
+    }
 
     useEffect(() => {
         async function getImage() {
@@ -43,10 +48,12 @@ export default function Artwork() {
                     <p>{image.prompt}</p>
                 </div>    
             }
-            <button onClick={() => addImage({url: image.url})}>Add Image</button>
+            <button onClick={createMockupFromImage}>Generate Product Mockup with Image</button>
         </main>
     );
 }
+
+export default withProtected(Artwork);
 
 // export function getStaticProps() {
 //     async function getCatalog() {
