@@ -27,10 +27,10 @@ export default function CatalogItem({ item, variants }) {
     /* PROD */
 
     const [selected, setSelected] = useState({})
-    // const [validVariants, setValidVariants] = useState([]);
+    const [validVariants, setValidVariants] = useState([]);
     // const [stockIsLoading, setStockIsLoading] = useState(true);
     // const [provider, setProvider] = useState('');
-    const [outOfStock, setOutOfStock] = useState(false);
+    // const [outOfStock, setOutOfStock] = useState(false);
 
     const NUM_IMAGES = images.length;
     const indices = Array.from({ length: NUM_IMAGES }, (value, index) => index);
@@ -104,7 +104,7 @@ export default function CatalogItem({ item, variants }) {
             blueprint_id: blueprint,
             variant_id: variant.id,
             printer_id: provider,
-            variant: variant,
+            // variant: variant,
             image: images[0],
             name: item.name,
         }
@@ -114,7 +114,7 @@ export default function CatalogItem({ item, variants }) {
 
     return (
         <main className={globalStyles.main}>
-            <h1 className={globalStyles.title}>{item.name}</h1>
+            {/* <h1 className={globalStyles.title}>{item.name}</h1> */}
             <div className={styles.box}>
                 <div className={styles.carousel}>
                     <Carousel currentIndex={currentIndex} images={images} />
