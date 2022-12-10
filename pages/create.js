@@ -10,6 +10,7 @@ import { withProtected } from '../src/auth/route';
 // import StripeService from '../src/stripe/stripeService';
 import stripeContext from '../src/stripe/stripeContext';
 import { useRouter } from 'next/router';
+import CheckoutButton from '../components/checkoutButton';
 
 function Create() {
     const { image, product, resetCreation } = useContext(creationContext);
@@ -42,10 +43,6 @@ function Create() {
             })
     }
 
-    const buyNow = async () => {
-        router.push('/checkout')
-    }
-
     // const IMG = 'https://storage.googleapis.com/vidiths_test_bucket/51b14540-fd31-4a29-964e-425c0c54acdd.png'
 
     if (mockup) {
@@ -55,7 +52,15 @@ function Create() {
                 <Image src={mockup.image} alt='mockup' width={img_size} height={img_size} />
                 <div className={styles.buttons}>
                     <button className={`${styles.cartButton} ${styles.mockupButton}`}>Add to Cart</button>
-                    <button className={`${styles.buyNowButton} ${styles.mockupButton}`} onClick={buyNow}>call printify</button>
+                    {/* <button className={`${styles.buyNowButton} ${styles.mockupButton}`} onClick={buyNow}>call printify</button> */}
+                    <CheckoutButton 
+                        buttonStyles={`${styles.buyNowButton} ${styles.mockupButton}`} 
+                        disabled={() => {!product || !image}}
+                        lineItems={[{
+                            quantity: 1, 
+                            price_data: {currency: 'usd', product_data: {name: 'test'}, unit_amount: 1000}
+                        }]}
+                    />
                 </div>
             </div>
         )

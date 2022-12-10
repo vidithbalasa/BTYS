@@ -17,7 +17,7 @@ export default function ItemSelection({ unique, validVariants, selected, selectI
         // if every key in the first validVariant is in selected, then you can create a mockup
         const firstVariant = validVariants[0];
         for (let key in firstVariant) {
-            if (key === 'id') { continue; }
+            if (key === 'variant_id' || key === 'printer_id') { continue; }
             if (!selected[key]) {
                 return false;
             }
