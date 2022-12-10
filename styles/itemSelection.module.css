@@ -60,13 +60,25 @@
     list-style: none;    
 }
 
+.bigSelection {
+    /* Same as selection but a grid w 3 columns */
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "a b c";
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
 /* CREATE BUTTON: should be a prominent button that is gray when disabled and geen when active, big and centered */
 .infoBox {
     /* should be a prominent button that is gray when disabled and geen when active, big and centered */
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
-    align-items: center;
+    /* justify-content: center;
+    align-items: center; */
     gap: 0.5rem;
     margin: 0;
     padding: 0;

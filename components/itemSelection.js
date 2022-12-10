@@ -3,6 +3,7 @@ import styles from '../styles/itemSelection.module.css'
 export default function ItemSelection({ unique, validVariants, selected, selectItem, unselectItem, createMockup }) {
 
     const isDisabled = (key, value) => {
+        if (Object.keys(selected).length === 0) { return true; }
         // if the key is already in selected, then it's not disabled
         if (Object.keys(selected).length == 1 && selected[key]) {
             return false;
@@ -34,7 +35,7 @@ export default function ItemSelection({ unique, validVariants, selected, selectI
                     return (
                         <div key={index}>
                             <h4>{key}</h4>
-                            <div className={styles.selection}>
+                            <div className={unique[key].length > 3 ? styles.bigSelection : styles.selection}>
                                 {
                                     unique[key].map((value, index) => {
                                         return (
