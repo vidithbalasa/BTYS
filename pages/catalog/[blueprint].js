@@ -125,10 +125,8 @@ export default function CatalogItem({ item, variants }) {
                     </div>
                 </div>
                 {
-                    stockIsLoading ? <p>Checking Item Availability...</p> : (
-                        outOfStock ? <p>Item is out of stock</p> : (
-                            <ItemSelection unique={item.unique} selected={selected} validVariants={validVariants} selectItem={selectItem} unselectItem={unselectItem} createMockup={createMockup} />
-                        )
+                    !item.unique ? <p>Item is out of stock</p> : (
+                        <ItemSelection unique={item.unique} selected={selected} validVariants={validVariants} selectItem={selectItem} unselectItem={unselectItem} createMockup={createMockup} />
                     )
                 }
             </div>
