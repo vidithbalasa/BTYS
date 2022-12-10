@@ -14,9 +14,9 @@ import creationContext from '../../src/context/creationContext';
 // import sample_images from '../../public/images.js'
 
 
-export default function CatalogItem({ item }) {
-    const [unique, setUnique] = useState([]);
-    const [variants, setVariants] = useState([]);
+export default function CatalogItem({ item, variants }) {
+    // const [unique, setUnique] = useState(item.unique);
+    // const [variants, setVariants] = useState();
     
     // const [unique, setUnique] = useState(mockUnique);
     // const [variants, setVariants] = useState(mockVariants);
@@ -27,9 +27,9 @@ export default function CatalogItem({ item }) {
     /* PROD */
 
     const [selected, setSelected] = useState({})
-    const [validVariants, setValidVariants] = useState([]);
-    const [stockIsLoading, setStockIsLoading] = useState(true);
-    const [provider, setProvider] = useState('');
+    // const [validVariants, setValidVariants] = useState([]);
+    // const [stockIsLoading, setStockIsLoading] = useState(true);
+    // const [provider, setProvider] = useState('');
     const [outOfStock, setOutOfStock] = useState(false);
 
     const NUM_IMAGES = images.length;
@@ -39,35 +39,35 @@ export default function CatalogItem({ item }) {
     const router = useRouter();
     const { blueprint } = router.query;
     
-    const functions = getFunctions();
-    const { user } = useAuth();
+    // const functions = getFunctions();
+    // const { user } = useAuth();
 
     const { addProduct } = useContext(creationContext);
 
-    useEffect(() => {
-        const getInfo = async () => {
-            // get function from us-central1
-            const getBlueprintInfo = httpsCallable(functions, 'printify_product_info');
-            await getBlueprintInfo({ blueprint_id: blueprint, token: user.accessToken })
-                .then((result) => {
-                    console.log(result.data)
-                    const { unique, variants, provider } = result.data;
-                    if (!provider) {
-                        setOutOfStock(true);
-                        return;
-                    }
-                    setUnique(unique);
-                    setVariants(variants);
-                    setValidVariants(variants);
-                    setProvider(provider);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        }
-        getInfo();
-        setStockIsLoading(false);
-    }, [blueprint]);
+    // useEffect(() => {
+    //     const getInfo = async () => {
+    //         // get function from us-central1
+    //         const getBlueprintInfo = httpsCallable(functions, 'printify_product_info');
+    //         await getBlueprintInfo({ blueprint_id: blueprint, token: user.accessToken })
+    //             .then((result) => {
+    //                 console.log(result.data)
+    //                 const { unique, variants, provider } = result.data;
+    //                 if (!provider) {
+    //                     setOutOfStock(true);
+    //                     return;
+    //                 }
+    //                 setUnique(unique);
+    //                 setVariants(variants);
+    //                 setValidVariants(variants);
+    //                 setProvider(provider);
+    //             })
+    //             .catch((error) => {
+    //                 console.log(error);
+    //             });
+    //     }
+    //     getInfo();
+    //     setStockIsLoading(false);
+    // }, [blueprint]);
 
     useEffect(() => {
         // Go through each variant and put the ones that match selections in validVariants
@@ -114,7 +114,7 @@ export default function CatalogItem({ item }) {
 
     return (
         <main className={globalStyles.main}>
-            {/* <h1 className={globalStyles.title}>{item.name}</h1> */}
+            <h1 className={globalStyles.title}>{item.name}</h1>
             <div className={styles.box}>
                 <div className={styles.carousel}>
                     <Carousel currentIndex={currentIndex} images={images} />
@@ -127,7 +127,7 @@ export default function CatalogItem({ item }) {
                 {
                     stockIsLoading ? <p>Checking Item Availability...</p> : (
                         outOfStock ? <p>Item is out of stock</p> : (
-                            <ItemSelection unique={unique} selected={selected} validVariants={validVariants} selectItem={selectItem} unselectItem={unselectItem} createMockup={createMockup} />
+                            <ItemSelection unique={item.unique} selected={selected} validVariants={validVariants} selectItem={selectItem} unselectItem={unselectItem} createMockup={createMockup} />
                         )
                     )
                 }
@@ -164,12 +164,31 @@ export async function getStaticProps({ params }) {
     // Get the document from the 'printify_products' collection with the name matching the dynamic ID
     const item_doc = doc(firestore, 'printify_products', params.blueprint);
     const item = await getDoc(item_doc);
+    // Get all the data from each document in the 'printers' collection
+    const printers_docs = collection(item_doc, 'printers');
+    const printers = await getDocs(printers_docs);
+    // For each doc, get all the varaints
+    let variants = [];
+    printers.forEach(printer => {
+        let printer_variants = printer.data().variants;
+        // Variants = {[variant_id]: {'color': 'red', 'size': 'small', 'price': 10}, ...}
+        // Turn it into : [{variant_id: '...', 'size': 'small', 'color': 'red', 'price': 10, 'printer_id': '5'}, ...]
+        formatted_variants = Object.keys(printer_variants).map(variant_id => {
+            return {
+                ...printer_variants[variant_id],
+                variant_id: variant_id,
+                printer_id: printer.id
+            }
+        });
+        variants = variants.concat(formatted_variants);
+    });
 
   
     // Return the product data as props
     return {
       props: {
-        item: item.data()
+        item: item.data(),
+        variants: variants
       }
     }
 }

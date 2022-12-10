@@ -11,9 +11,7 @@ function MyApp({ Component, pageProps }) {
     <AuthProvider>
       <AuthStateChanged>
         <CreationProvider>
-          <StripeProvider>
-            <Component {...pageProps} />
-          </StripeProvider>
+          <Component {...pageProps} />
         </CreationProvider>
       </AuthStateChanged>
     </AuthProvider>
