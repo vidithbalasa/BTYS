@@ -20,36 +20,31 @@ function Create() {
     const img_size = 300;
     const db = getFirestore();
 
-    // async function generateMockup() {
-    //     const generateMockup = httpsCallable(functions, 'create_product');
-    //     await generateMockup({
-    //         image: image.url, 
-    //         blueprint_id: product.blueprint_id,
-    //         variant_id: product.variant_id,
-    //         printer_id: product.printer_id,
-    //         token: user.accessToken            
-    //     })
-    //         .then((result) => {
-    //             setMockup({
-    //                 image: result.data.image,
-    //                 product_id: result.data.product_id,
-    //                 price: result.data.price,
-    //                 printer_id: product.printer_id,
-    //                 variant_id: product.variant_id,
-    //                 blueprint_id: product.blueprint_id,
-    //                 name: product.name,
-    //                 prompt: image.prompt
-    //             })
-    //             resetCreation();
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //         })
-    // }
-
-    const generateMockup = () => {
-        console.log(product);
-        console.log(image)
+    async function generateMockup() {
+        const generateMockup = httpsCallable(functions, 'create_product');
+        await generateMockup({
+            image: image.url, 
+            blueprint_id: product.blueprint_id,
+            variant_id: product.variant_id,
+            printer_id: product.printer_id,
+            token: user.accessToken            
+        })
+            .then((result) => {
+                setMockup({
+                    image: result.data.image,
+                    product_id: result.data.product_id,
+                    price: result.data.price,
+                    printer_id: product.printer_id,
+                    variant_id: product.variant_id,
+                    blueprint_id: product.blueprint_id,
+                    name: product.name,
+                    prompt: image.prompt
+                })
+                resetCreation();
+            })
+            .catch((error) => {
+                console.log(error);
+            })
     }
 
     // Function to create line items
