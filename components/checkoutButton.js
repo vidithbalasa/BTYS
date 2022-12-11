@@ -27,11 +27,11 @@ export default function CheckoutButton({ buttonStyles, disabled, text, sessionDa
             mode: 'payment',
             success_url: success_url,
             cancel_url: cancel_url,
-            // ...sessionData
-            line_items: [{
-                price_data: {currency: 'usd', product_data: {name: 'testing'}, unit_amount: 10000},
-                quantity: 1
-            }]
+            ...sessionData
+            // line_items: [{
+            //     price_data: {currency: 'usd', product_data: {name: 'testing'}, unit_amount: 10000},
+            //     quantity: 1
+            // }]
         })
 
         onSnapshot(docRef, async (snap) => {
