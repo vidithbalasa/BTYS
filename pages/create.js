@@ -9,7 +9,6 @@ import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import useAuth from '../src/auth/authContext';
 import { withProtected } from '../src/auth/route';
 // import StripeService from '../src/stripe/stripeService';
-import stripeContext from '../src/stripe/stripeContext';
 import { useRouter } from 'next/router';
 import CheckoutButton from '../components/checkoutButton';
 
@@ -19,8 +18,6 @@ function Create() {
     const functions = getFunctions();
     const { user } = useAuth();
     const img_size = 300;
-    const { stripe } = useContext(stripeContext);
-    const router = useRouter();
     const db = getFirestore();
 
     async function generateMockup() {
@@ -75,7 +72,7 @@ function Create() {
                 type: 'fixed-amount',
                 fixed_amount: {amount: first_item, currency: 'usd'},
                 display_name: 'US Shipping',
-                delivery_estimate: {minimum: {unit: 'business_day', value: ship_time-1}, maximum: {unit: 'business_day', value: ship_time+1}},
+                delivery_estimate: {minimum: {unit: 'business_day', value: ship_time}, maximum: {unit: 'business_day', value: null}},
         }
         return {
             line_items,
@@ -93,7 +90,7 @@ function Create() {
                 <Image src={mockup.image} alt='mockup' width={img_size} height={img_size} />
                 <div className={styles.buttons}>
                     <button className={`${styles.cartButton} ${styles.mockupButton}`}>Add to Cart</button>
-                    <CheckoutButton 
+                    <CheckoutButton
                         buttonStyles={`${styles.buyNowButton} ${styles.mockupButton}`} 
                         disabled={() => {!product || !image}}
                         sessionData={generateSessionData()}
