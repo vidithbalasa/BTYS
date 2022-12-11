@@ -46,7 +46,7 @@ function CatalogItem({ item, variants }) {
     const [selected, setSelected] = useState({})
     const [validVariants, setValidVariants] = useState([]);
 
-    const NUM_IMAGES = images.length;
+    const NUM_IMAGES = item.image_urls.length;
     const indices = Array.from({ length: NUM_IMAGES }, (value, index) => index);
     const [currentIndex, setCurrentIndex] = useCycle(...indices);
 
@@ -101,6 +101,10 @@ function CatalogItem({ item, variants }) {
     return (
         <main className={globalStyles.main}>
             <h1 className={globalStyles.title}>{item.name}</h1>
+            {/* button to console log item */}
+            <button onClick={() => console.log(item)}>log item</button>
+            {/* button to console log variants */}
+            <button onClick={() => console.log(variants)}>log variants</button>
             <div className={styles.box}>
                 <div className={styles.carousel}>
                     <Carousel currentIndex={currentIndex} images={item.image_urls} />
