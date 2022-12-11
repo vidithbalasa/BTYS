@@ -107,7 +107,7 @@ function Create() {
                     <CheckoutButton
                         buttonStyles={`${styles.buyNowButton} ${styles.mockupButton}`} 
                         disabled={() => {!product || !image}}
-                        sessionData={generateSessionData()}
+                        sessionData={generateSessionData}
                         text={'Buy Now'}
                     />
                 </div>
