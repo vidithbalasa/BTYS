@@ -78,22 +78,18 @@ function Create() {
         //         unit_amount: price
         //     }
         // }]
-        const line_items = [{
-            quantity: 1,
-            price_data: {currency: 'usd', unit_amount: price, product_data: {name: 'testing'}}
-        }]
         const shipping_rate_data = {
                 type: 'fixed-amount',
                 fixed_amount: {amount: first_item, currency: 'usd'},
                 display_name: 'US Shipping',
                 delivery_estimate: {minimum: {unit: 'business_day', value: ship_time}, maximum: {unit: 'business_day', value: null}},
         }
-        return {
-            line_items: line_items,
-            // shipping_options: [shipping_rate_data],
-            // shipping_address_collection: {allowed_countries: ['US']},
-        }
     }
+
+    const line_items = [{
+        quantity: 1,
+        price_data: {currency: 'usd', unit_amount: price, product_data: {name: 'testing'}}
+    }]
 
     // const IMG = 'https://storage.googleapis.com/vidiths_test_bucket/51b14540-fd31-4a29-964e-425c0c54acdd.png'
 
@@ -107,7 +103,7 @@ function Create() {
                     <CheckoutButton
                         buttonStyles={`${styles.buyNowButton} ${styles.mockupButton}`} 
                         disabled={() => {!product || !image}}
-                        sessionData={() => generateSessionData()}
+                        line_items={line_items}
                         text={'Buy Now'}
                     />
                 </div>
