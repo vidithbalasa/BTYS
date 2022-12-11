@@ -4,6 +4,7 @@ import globalStyles from '../styles/global.module.css';
 import React, { useState } from 'react';
 // import link from 'next/link';
 import Link from 'next/link';
+import Loader from '../components/loader';
 
 export default function Home(props) {
   return (
@@ -16,7 +17,7 @@ export default function Home(props) {
       <main className={globalStyles.main}>
         <h1>Better Than You Society</h1>
         <p>An AI Powered Stickers Platform.</p>
-        <p>Current Build: {process.env.NODE_ENV}</p>
+        <Loader />
       </main>
     </>
   )

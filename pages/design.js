@@ -9,10 +9,12 @@ import styles from '../styles/design.module.css';
 import globalStyles from '../styles/global.module.css';
 import creationContext from '../src/context/creationContext';
 import { useRouter } from 'next/router';
+import Loader from '../components/loader';
 
 function Design() {
     const [prompt, setPrompt] = useState('');
     const [img, setImg] = useState('');
+    const [loading, setLoading] = useState(false);
     const functions = getFunctions(getApp());
     const { user } = useAuth();
     const { addImage } = useContext(creationContext);
@@ -20,6 +22,7 @@ function Design() {
 
     // Call the function to get model prediction
     const callFunction = async () => {
+        setLoading(true);
         const stableaiCall = httpsCallable(functions, 'stableai-function')
         await stableaiCall({ prompt: prompt, token: user.accessToken })
             .then((result) => {
@@ -29,6 +32,8 @@ function Design() {
             .catch((error) => {
                 console.log(error);
             });
+        setLoading(false);
+        setPrompt('');
     }
 
     const createMockupFromImage = () => {
@@ -52,16 +57,19 @@ function Design() {
                     />
                     <button 
                         onClick={callFunction}
-                        disabled={prompt === ''}
+                        disabled={loading || prompt === ''}
                         className={styles.promptButton}
                     >Generate Image</button>
                 </div>
-                {img && (
+                {img ? (
                     <div>
                         <Image src={img} alt='Generated Image' className={styles.image} height={512} width={512} />
                         <button onClick={createMockupFromImage}>Create Product with Image</button>
                     </div>
-                )}
+                    ) : (
+                        loading && <Loader />
+                    )
+                }
             </main>
         </div>
     );
