@@ -14,16 +14,16 @@ import CheckoutButton from '../components/checkoutButton';
 
 function Create() {
     const { image, product, resetCreation } = useContext(creationContext);
-    // const [mockup, setMockup] = useState({});
-    const [mockup, setMockup] = useState({
-        image: 'https://images-api.printify.com/mockup/639560ca41f1a9570e0d94d6/73217/16992/d4b47b918e9b4a039a9ae89df31c76d8.jpg',
-        product_id: '639560ca41f1a9570e0d94d6',
-        price: 1999,
-        printer_id: '39',
-        variant_id: '86180',
-        blueprint_id: '314',
-        prompt: 'fake prompt'
-    });
+    const [mockup, setMockup] = useState({});
+    // const [mockup, setMockup] = useState({
+    //     image: 'https://images-api.printify.com/mockup/639560ca41f1a9570e0d94d6/73217/16992/d4b47b918e9b4a039a9ae89df31c76d8.jpg',
+    //     product_id: '639560ca41f1a9570e0d94d6',
+    //     price: 1999,
+    //     printer_id: '39',
+    //     variant_id: '86180',
+    //     blueprint_id: '314',
+    //     prompt: 'fake prompt'
+    // });
     const functions = getFunctions();
     const { user } = useAuth();
     const img_size = 300;
@@ -88,7 +88,7 @@ function Create() {
 
     const line_items = [{
         quantity: 1,
-        price_data: {currency: 'usd', unit_amount: price, product_data: {name: 'testing'}}
+        price_data: {currency: 'usd', unit_amount: mockup.price, product_data: {name: `Custom ${mockup.name} - ${mockup.prompt}`}}
     }]
 
     // const IMG = 'https://storage.googleapis.com/vidiths_test_bucket/51b14540-fd31-4a29-964e-425c0c54acdd.png'
