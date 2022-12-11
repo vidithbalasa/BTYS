@@ -65,19 +65,22 @@ function Create() {
         const docSnap = await getDoc(doc_ref);
         // Get shipping price from field: us_shipping_info -> {first_item: number, additional_item: number, ship_time: number}
         const { first_item, ship_time } = docSnap.data().us_shipping_info;
-        // Create line item
+        // // Create line item
+        // const line_items = [{
+        //     quantity: 1,
+        //     price_data: {
+        //         currency: 'usd',
+        //         product_data: {
+        //             images: [image.url],
+        //             metadata: { blueprint_id, printer_id, variant_id, prompt },
+        //             name: `Custom ${mockup.name} - ${prompt}`
+        //         },
+        //         unit_amount: price
+        //     }
+        // }]
         const line_items = [{
             quantity: 1,
-            price_data: {
-                currency: 'usd',
-                product_data: {
-                    images: [image.url],
-                    metadata: { blueprint_id, printer_id, variant_id, prompt },
-                    name: `Custom ${mockup.name} - ${prompt}`
-                },
-                unit_amount: price
-            },
-            currency: 'usd'
+            price_data: {currency: 'usd', unit_amount: price, product_data: {name: `Custom ${mockup.name} - ${prompt}`}}
         }]
         const shipping_rate_data = {
                 type: 'fixed-amount',
