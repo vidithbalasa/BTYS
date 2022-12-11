@@ -88,7 +88,20 @@ function Create() {
 
     const line_items = [{
         quantity: 1,
-        price_data: {currency: 'usd', unit_amount: mockup.price, product_data: {name: `Custom ${mockup.name} - ${mockup.prompt}`}}
+        price_data: {
+            currency: 'usd',
+            unit_amount: mockup.price, 
+            product_data: {
+                name: `Custom ${mockup.name} - ${mockup.prompt}`,
+                images: [mockup.image],
+                metadata: {
+                    blueprint_id: mockup.blueprint_id,
+                    printer_id: mockup.printer_id,
+                    variant_id: mockup.variant_id,
+                    prompt: mockup.prompt
+                }
+            }
+        }
     }]
 
     // const IMG = 'https://storage.googleapis.com/vidiths_test_bucket/51b14540-fd31-4a29-964e-425c0c54acdd.png'
