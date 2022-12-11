@@ -62,8 +62,6 @@ function Design() {
                         <button onClick={createMockupFromImage}>Create Product with Image</button>
                     </div>
                 )}
-                {/* button that console logs user */}
-                <button onClick={() => console.log(user)}>Log User</button>
             </main>
         </div>
     );

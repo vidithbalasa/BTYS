@@ -116,6 +116,10 @@ function CatalogItem({ item, variants }) {
                     )
                 }
             </div>
+            {/* button to console log variants */}
+            <button onClick={() => console.log(validVariants)}>log variants</button>
+            {/* button to console log variants prop */}
+            <button onClick={() => console.log(variants)}>log variants prop</button>
         </main>
     )
 }
