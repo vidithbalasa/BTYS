@@ -71,12 +71,13 @@ function Create() {
             price_data: {
                 currency: 'usd',
                 product_data: {
-                    // images: [image.url],
-                    // metadata: { blueprint_id, printer_id, variant_id, prompt },
+                    images: [image.url],
+                    metadata: { blueprint_id, printer_id, variant_id, prompt },
                     name: `Custom ${mockup.name} - ${prompt}`
                 },
                 unit_amount: price
-            }
+            },
+            currency: 'usd'
         }]
         const shipping_rate_data = {
                 type: 'fixed-amount',
