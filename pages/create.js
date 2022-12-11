@@ -123,7 +123,7 @@ function Create() {
                     }
                 </div>
             </div>
-            <button className={styles.button} onClick={generateMockup}>Generate Mockup</button>
+            <button className={styles.button} onClick={generateMockup} disabled={!product || !image}>Generate Mockup</button>
             {/* button to console log product & image */}
             <button className={styles.button} onClick={() => console.log(product, image)}>Log Product & Image</button>
         </div>
