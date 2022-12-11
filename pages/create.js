@@ -14,7 +14,16 @@ import CheckoutButton from '../components/checkoutButton';
 
 function Create() {
     const { image, product, resetCreation } = useContext(creationContext);
-    const [mockup, setMockup] = useState({});
+    // const [mockup, setMockup] = useState({});
+    const [mockup, setMockup] = useState({
+        image: 'https://images-api.printify.com/mockup/639560ca41f1a9570e0d94d6/73217/16992/d4b47b918e9b4a039a9ae89df31c76d8.jpg',
+        product_id: '639560ca41f1a9570e0d94d6',
+        price: 1999,
+        printer_id: '39',
+        variant_id: '86180',
+        blueprint_id: '314',
+        prompt: 'fake prompt'
+    });
     const functions = getFunctions();
     const { user } = useAuth();
     const img_size = 300;
@@ -62,8 +71,9 @@ function Create() {
             price_data: {
                 currency: 'usd',
                 product_data: {
-                    images: [image.url],
-                    metadata: { blueprint_id, printer_id, variant_id, prompt },
+                    // images: [image.url],
+                    // metadata: { blueprint_id, printer_id, variant_id, prompt },
+                    name: `Custom ${mockup.name} - ${prompt}`
                 },
                 unit_amount: price
             }
@@ -76,8 +86,8 @@ function Create() {
         }
         return {
             line_items,
-            shipping_options: [shipping_rate_data],
-            shipping_address_collection: {allowed_countries: ['US']},
+            // shipping_options: [shipping_rate_data],
+            // shipping_address_collection: {allowed_countries: ['US']},
         }
     }
 
@@ -97,8 +107,6 @@ function Create() {
                         text={'Buy Now'}
                     />
                 </div>
-                {/* button that console logs mockup */}
-                <button className={styles.button} onClick={() => console.log(mockup)}>Log Mockup</button>
             </div>
         )
     }
@@ -124,8 +132,6 @@ function Create() {
                 </div>
             </div>
             <button className={styles.button} onClick={generateMockup} disabled={!product || !image}>Generate Mockup</button>
-            {/* button to console log product & image */}
-            <button className={styles.button} onClick={() => console.log(product, image)}>Log Product & Image</button>
         </div>
     )
 }
