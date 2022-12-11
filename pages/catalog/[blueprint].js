@@ -10,27 +10,41 @@ import { useCycle } from 'framer-motion';
 import Carousel from '../../components/carousel';
 import ItemSelection from '../../components/itemSelection';
 import creationContext from '../../src/context/creationContext';
+import { withProtected } from '../../src/auth/route';
 
 // import sample_images from '../../public/images.js'
+// const mockItem = {
+//     name: 'test item',
+//     unique: {
+//         'color': ["Black", "White", "Red"],
+//         // 'color': ["Black", "White", "Red", "Yellow", "Orange", "Sky Blue", "Ghost Purple", "Cheeto Orange"],
+//         'size': ["S", "M", "L"]
+//     },
+//     image_urls: sample_images
+// }
+// const mockVariants = [
+//     {variant_id: 1, color: 'Black', size: 'S', printer_id: 2},
+//     {variant_id: 3, color: 'Black', size: 'L', printer_id: 2},
+//     {variant_id: 4, color: 'White', size: 'S', printer_id: 2},
+//     {variant_id: 5, color: 'White', size: 'M', printer_id: 2},
+//     {variant_id: 8, color: 'Red', size: 'M', printer_id: 2},
+//     // {variant_id: 9, color: 'Orange', size: 'L', printer_id: 2},
+//     // {variant_id: 10, color: 'Yellow', size: 'S', printer_id: 2},
+//     // {variant_id: 11, color: 'Sky Blue', size: 'M', printer_id: 2},
+//     // {variant_id: 12, color: 'Ghost Purple', size: 'L', printer_id: 2},
+//     // {variant_id: 13, color: 'Cheeto Orange', size: 'S', printer_id: 2},
+// ]
 
 
-export default function CatalogItem({ item, variants }) {
-    // const [unique, setUnique] = useState(item.unique);
-    // const [variants, setVariants] = useState();
-    
-    // const [unique, setUnique] = useState(mockUnique);
+function CatalogItem({ item, variants }) {
+// function CatalogItem() {
+    // const [item, setUnique] = useState(mockItem);
     // const [variants, setVariants] = useState(mockVariants);
-
-    const images = item.image_urls;
-    // const images = sample_images;
 
     /* PROD */
 
     const [selected, setSelected] = useState({})
     const [validVariants, setValidVariants] = useState([]);
-    // const [stockIsLoading, setStockIsLoading] = useState(true);
-    // const [provider, setProvider] = useState('');
-    // const [outOfStock, setOutOfStock] = useState(false);
 
     const NUM_IMAGES = images.length;
     const indices = Array.from({ length: NUM_IMAGES }, (value, index) => index);
@@ -39,35 +53,7 @@ export default function CatalogItem({ item, variants }) {
     const router = useRouter();
     const { blueprint } = router.query;
     
-    // const functions = getFunctions();
-    // const { user } = useAuth();
-
     const { addProduct } = useContext(creationContext);
-
-    // useEffect(() => {
-    //     const getInfo = async () => {
-    //         // get function from us-central1
-    //         const getBlueprintInfo = httpsCallable(functions, 'printify_product_info');
-    //         await getBlueprintInfo({ blueprint_id: blueprint, token: user.accessToken })
-    //             .then((result) => {
-    //                 console.log(result.data)
-    //                 const { unique, variants, provider } = result.data;
-    //                 if (!provider) {
-    //                     setOutOfStock(true);
-    //                     return;
-    //                 }
-    //                 setUnique(unique);
-    //                 setVariants(variants);
-    //                 setValidVariants(variants);
-    //                 setProvider(provider);
-    //             })
-    //             .catch((error) => {
-    //                 console.log(error);
-    //             });
-    //     }
-    //     getInfo();
-    //     setStockIsLoading(false);
-    // }, [blueprint]);
 
     useEffect(() => {
         // Go through each variant and put the ones that match selections in validVariants
@@ -105,7 +91,7 @@ export default function CatalogItem({ item, variants }) {
             variant_id: variant.id,
             printer_id: provider,
             // variant: variant,
-            image: images[0],
+            image: item.image_urls[0],
             name: item.name,
         }
         addProduct(mockup);
@@ -114,10 +100,10 @@ export default function CatalogItem({ item, variants }) {
 
     return (
         <main className={globalStyles.main}>
-            {/* <h1 className={globalStyles.title}>{item.name}</h1> */}
+            <h1 className={globalStyles.title}>{item.name}</h1>
             <div className={styles.box}>
                 <div className={styles.carousel}>
-                    <Carousel currentIndex={currentIndex} images={images} />
+                    <Carousel currentIndex={currentIndex} images={item.image_urls} />
                     <div className={styles.indicators}>
                         <button onClick={() => setCurrentIndex(idx => idx - 1)} className={`${styles.prev} ${styles.button}`}>&#8678;</button>
                         {currentIndex}
@@ -133,6 +119,8 @@ export default function CatalogItem({ item, variants }) {
         </main>
     )
 }
+
+export default withProtected(CatalogItem);
 
 export async function getStaticPaths() {
     // Get a reference to the firestore instance

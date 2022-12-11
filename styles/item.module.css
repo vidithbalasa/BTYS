@@ -48,8 +48,10 @@
     gap: 20%;
 }
 
-@media (max-width: 901px) {
+@media (max-width: 1001px) {
     .box {
         flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 }
