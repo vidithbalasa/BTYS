@@ -5,13 +5,16 @@ import { AuthProvider } from '../src/auth/authContext';
 import AuthStateChanged from '../src/auth/AuthStateChanged';
 import { CreationProvider } from '../src/context/creationContext';
 import { StripeProvider } from '../src/stripe/stripeContext';
+import Navbar from '../components/navbar';
 
 function MyApp({ Component, pageProps }) {
   return (
     <AuthProvider>
       <AuthStateChanged>
         <CreationProvider>
-          <Component {...pageProps} />
+          <Navbar>
+            <Component {...pageProps} />
+          </Navbar>
         </CreationProvider>
       </AuthStateChanged>
     </AuthProvider>

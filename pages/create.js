@@ -11,6 +11,7 @@ import { withProtected } from '../src/auth/route';
 // import StripeService from '../src/stripe/stripeService';
 import { useRouter } from 'next/router';
 import CheckoutButton from '../components/checkoutButton';
+import Loader from '../components/loader';
 
 function Create() {
     const { image, product, resetCreation } = useContext(creationContext);
@@ -24,12 +25,14 @@ function Create() {
     //     blueprint_id: '314',
     //     prompt: 'fake prompt'
     // });
+    const [loading, setLoading] = useState(false);
     const functions = getFunctions();
     const { user } = useAuth();
     const img_size = 300;
     const db = getFirestore();
 
     async function generateMockup() {
+        setLoading(true);
         const generateMockup = httpsCallable(functions, 'create_product');
         await generateMockup({
             image: image.url, 
@@ -49,11 +52,12 @@ function Create() {
                     name: product.name,
                     prompt: image.prompt
                 })
-                resetCreation();
             })
             .catch((error) => {
                 console.log(error);
             })
+        setLoading(false);
+        resetCreation();
     }
 
     // Function to create line items
@@ -115,7 +119,6 @@ function Create() {
                     <button className={`${styles.cartButton} ${styles.mockupButton}`}>Add to Cart</button>
                     <CheckoutButton
                         buttonStyles={`${styles.buyNowButton} ${styles.mockupButton}`} 
-                        disabled={() => {!product || !image}}
                         line_items={line_items}
                         text={'Buy Now'}
                     />
@@ -144,7 +147,8 @@ function Create() {
                     }
                 </div>
             </div>
-            <button className={styles.button} onClick={generateMockup} disabled={!product || !image}>Generate Mockup</button>
+            <button className={styles.button} onClick={generateMockup} disabled={loading || !product || !image}>Generate Mockup</button>
+            {loading && <Loader />}
         </div>
     )
 }
