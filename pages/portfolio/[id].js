@@ -13,8 +13,8 @@ function Artwork() {
     const auth = useAuth();
     const { addImage } = useContext(creationContext);
 
-    const createMockupFromImage = (image_url) => {
-        addImage({url: image_url});
+    const createMockupFromImage = () => {
+        addImage({url: image.url, prompt: image.prompt});
         router.push('/create');
     }
 
