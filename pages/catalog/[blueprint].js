@@ -158,15 +158,16 @@ export async function getStaticProps({ params }) {
     const printers_docs = collection(item_doc, 'print_providers');
     const printers = await getDocs(printers_docs);
     // Turn printers into a format that can be used by the CatalogItem component
-    const variants = printers.docs.map(printer => {
-        const printer_variants = printer.data().variants;
+    const variants = [];
+    for (const printerDoc of printers.docs) {
+        const printer_variants = printerDoc.data().variants;
         for (const variant_id of Object.keys(printer_variants)) {
             const variant = printer_variants[variant_id];
             variant['variant_id'] = variant_id;
-            variant['printer_id'] = printer.id;
-            return variant;
+            variant['printer_id'] = printerDoc.id;
+            variants.push(variant);
         }
-    })
+    }
 
     // Return the product data as props
     return {
