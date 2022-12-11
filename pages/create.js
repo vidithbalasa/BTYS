@@ -80,7 +80,7 @@ function Create() {
         // }]
         const line_items = [{
             quantity: 1,
-            price_data: {currency: 'usd', unit_amount: price, product_data: {name: `Custom ${mockup.name} - ${prompt}`}}
+            price_data: {currency: 'usd', unit_amount: price, product_data: {name: 'testing'}}
         }]
         const shipping_rate_data = {
                 type: 'fixed-amount',
