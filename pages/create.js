@@ -89,7 +89,7 @@ function Create() {
                 delivery_estimate: {minimum: {unit: 'business_day', value: ship_time}, maximum: {unit: 'business_day', value: null}},
         }
         return {
-            line_items,
+            line_items: line_items,
             // shipping_options: [shipping_rate_data],
             // shipping_address_collection: {allowed_countries: ['US']},
         }
