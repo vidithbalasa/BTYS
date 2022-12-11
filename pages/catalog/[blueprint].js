@@ -155,7 +155,7 @@ export async function getStaticProps({ params }) {
     const item_doc = doc(firestore, 'printify_products', params.blueprint);
     const item = await getDoc(item_doc);
     // Get all the data from each document in the 'printers' collection
-    const printers_docs = collection(item_doc, 'printers');
+    const printers_docs = collection(item_doc, 'print_providers');
     const printers = await getDocs(printers_docs);
     // For each doc, get all the varaints
     let variants = [];
