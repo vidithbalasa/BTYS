@@ -17,7 +17,6 @@ export default function Home(props) {
       <main className={globalStyles.main}>
         <h1>Better Than You Society</h1>
         <p>An AI Powered Stickers Platform.</p>
-        <Loader />
       </main>
     </>
   )
