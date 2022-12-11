@@ -58,7 +58,7 @@ function Design() {
                 </div>
                 {img && (
                     <div>
-                        <Image src={img} alt='Generated Image' className={styles.image} />
+                        <Image src={img} alt='Generated Image' className={styles.image} height={512} width={512} />
                         <button onClick={createMockupFromImage}>Create Product with Image</button>
                     </div>
                 )}
