@@ -5,6 +5,7 @@ import creationContext from '../src/context/creationContext';
 import Link from 'next/link';
 import Image from 'next/image';
 import { getFunctions, httpsCallable } from 'firebase/functions';
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import useAuth from '../src/auth/authContext';
 import { withProtected } from '../src/auth/route';
 // import StripeService from '../src/stripe/stripeService';
@@ -20,6 +21,7 @@ function Create() {
     const img_size = 300;
     const { stripe } = useContext(stripeContext);
     const router = useRouter();
+    const db = getFirestore();
 
     async function generateMockup() {
         const generateMockup = httpsCallable(functions, 'create_product');
@@ -34,32 +36,68 @@ function Create() {
                 setMockup({
                     image: result.data.image,
                     product_id: result.data.product_id,
-                    price: result.data.price
+                    price: result.data.price,
+                    printer_id: product.printer_id,
+                    variant_id: product.variant_id,
+                    blueprint_id: product.blueprint_id,
+                    name: product.name,
+                    prompt: image.prompt
                 })
-                // resetCreation();
+                resetCreation();
             })
             .catch((error) => {
                 console.log(error);
             })
     }
 
+    // Function to create line items
+    const generateSessionData = async () => {
+        // Get price & name from mockup
+        const { price, blueprint_id, printer_id, variant_id, prompt } = mockup;
+        // Get shipping info from firestore
+        const doc_ref = doc(db, 'printify_products', blueprint_id, 'print_providers', printer_id)
+        const docSnap = await getDoc(doc_ref);
+        // Get shipping price from field: us_shipping_info -> {first_item: number, additional_item: number, ship_time: number}
+        const { first_item, ship_time } = docSnap.data().us_shipping_info;
+        // Create line item
+        const line_items = [{
+            quantity: 1,
+            price_data: {
+                currency: 'usd',
+                product_data: {
+                    images: [image.url],
+                    metadata: { blueprint_id, printer_id, variant_id, prompt },
+                    price_data: { currency: 'usd', product_data: { name: `Customized ${mockup.name}` }, unit_amount: price }
+                }
+            }
+        }]
+        const shipping_rate_data = {
+                type: 'fixed-amount',
+                fixed_amount: {amount: first_item, currency: 'usd'},
+                display_name: 'US Shipping',
+                delivery_estimate: {minimum: {unit: 'business_day', value: ship_time-1}, maximum: {unit: 'business_day', value: ship_time+1}},
+        }
+        return {
+            line_items,
+            shipping_options: [shipping_rate_data],
+            shipping_address_collection: {allowed_countries: ['US']},
+        }
+    }
+
     // const IMG = 'https://storage.googleapis.com/vidiths_test_bucket/51b14540-fd31-4a29-964e-425c0c54acdd.png'
 
-    if (mockup) {
+    if (Object.keys(mockup).length > 0) {
         return (
             <div className={globalStyles.main}>
                 <h1>Mockup</h1>
                 <Image src={mockup.image} alt='mockup' width={img_size} height={img_size} />
                 <div className={styles.buttons}>
                     <button className={`${styles.cartButton} ${styles.mockupButton}`}>Add to Cart</button>
-                    {/* <button className={`${styles.buyNowButton} ${styles.mockupButton}`} onClick={buyNow}>call printify</button> */}
                     <CheckoutButton 
                         buttonStyles={`${styles.buyNowButton} ${styles.mockupButton}`} 
                         disabled={() => {!product || !image}}
-                        lineItems={[{
-                            quantity: 1, 
-                            price_data: {currency: 'usd', product_data: {name: 'test'}, unit_amount: 1000}
-                        }]}
+                        sessionData={generateSessionData()}
+                        text={'Buy Now'}
                     />
                 </div>
             </div>
@@ -71,13 +109,13 @@ function Create() {
             <h1>Create</h1>
             <div className={styles.boxes}>
                 <div className={`${styles.leftBox} ${styles.box}`}>
-                    {image ? <Image src={image.url} alt='image' width={img_size} height={img_size} /> : (
+                    {image && image.url ? <Image src={image.url} alt='image' width={img_size} height={img_size} /> : (
                             <Link href="/design">Add an Image</Link>
                     )}
                 </div>
                 <div>&#43;</div>
                 <div className={`${styles.rightBox} ${styles.box}`}>
-                    {product ? (
+                    {product && product.image ? (
                         <div className={styles.productBox}>
                             <Image src={product.image} alt='product' width={img_size} height={img_size} />
                             <p className={styles.name}>{product.name}</p>

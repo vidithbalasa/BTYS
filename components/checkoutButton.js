@@ -6,7 +6,7 @@ import globalStyles from '../styles/global.module.css'
 import { withProtected } from "../src/auth/route";
 import { loadStripe } from "@stripe/stripe-js";
 
-export default function CheckoutButton({ lineItems, buttonStyles, disabled }) {
+export default function CheckoutButton({ buttonStyles, disabled, text, sessionData }) {
     /* DEV */
     const success_url = 'http://localhost:3000/success';
     const cancel_url = 'http://localhost:3000/cancel';
@@ -27,7 +27,7 @@ export default function CheckoutButton({ lineItems, buttonStyles, disabled }) {
             mode: 'payment',
             success_url: success_url,
             cancel_url: cancel_url,
-            line_items: lineItems
+            ...sessionData
             // line_items: [{
             //     price_data: {currency: 'usd', product_data: {name: 'testing'}, unit_amount: 10000},
             //     quantity: 1
@@ -53,6 +53,6 @@ export default function CheckoutButton({ lineItems, buttonStyles, disabled }) {
             className={buttonStyles} 
             onClick={createSession}
             disabled={disabled()}
-        >Create Session</button>
+        >{text}</button>
     )
 }

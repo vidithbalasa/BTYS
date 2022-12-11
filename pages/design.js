@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 // import { functions } from '../src/config/firebase.config';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 import { withProtected } from '../src/auth/route';
@@ -7,12 +7,16 @@ import useAuth from '../src/auth/authContext';
 import Image from 'next/image';
 import styles from '../styles/design.module.css';
 import globalStyles from '../styles/global.module.css';
+import creationContext from '../src/context/creationContext';
+import { useRouter } from 'next/router';
 
 function Design() {
     const [prompt, setPrompt] = useState('');
     const [img, setImg] = useState('');
     const functions = getFunctions(getApp());
     const { user } = useAuth();
+    const { addImage } = useContext(creationContext);
+    const router = useRouter();
 
     // Call the function to get model prediction
     const callFunction = async () => {
@@ -25,6 +29,11 @@ function Design() {
             .catch((error) => {
                 console.log(error);
             });
+    }
+
+    const createMockupFromImage = () => {
+        addImage({ url: img, prompt: prompt });
+        router.push('/create');
     }
 
     return (
@@ -47,7 +56,12 @@ function Design() {
                         className={styles.promptButton}
                     >Generate Image</button>
                 </div>
-                {img && <Image src={img} alt='Generated Image' className={styles.image} />}
+                {img && (
+                    <div>
+                        <Image src={img} alt='Generated Image' className={styles.image} />
+                        <button onClick={createMockupFromImage}>Create Product with Image</button>
+                    </div>
+                )}
                 {/* button that console logs user */}
                 <button onClick={() => console.log(user)}>Log User</button>
             </main>
