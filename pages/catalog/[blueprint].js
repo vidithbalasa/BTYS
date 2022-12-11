@@ -88,8 +88,8 @@ function CatalogItem({ item, variants }) {
         const variant = validVariants[0];
         const mockup = {
             blueprint_id: blueprint,
-            variant_id: variant.id,
-            printer_id: provider,
+            variant_id: variant.variant_id,
+            printer_id: variant.printer_id,
             // variant: variant,
             image: item.image_urls[0],
             name: item.name,
