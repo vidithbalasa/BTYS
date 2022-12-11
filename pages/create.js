@@ -67,8 +67,8 @@ function Create() {
                 product_data: {
                     images: [image.url],
                     metadata: { blueprint_id, printer_id, variant_id, prompt },
-                    price_data: { currency: 'usd', product_data: { name: `Customized ${mockup.name}` }, unit_amount: price }
-                }
+                },
+                unit_amount: price
             }
         }]
         const shipping_rate_data = {
@@ -100,6 +100,8 @@ function Create() {
                         text={'Buy Now'}
                     />
                 </div>
+                {/* button that console logs mockup */}
+                <button className={styles.button} onClick={() => console.log(mockup)}>Log Mockup</button>
             </div>
         )
     }
