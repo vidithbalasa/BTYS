@@ -10,7 +10,6 @@ import { getFirestore, collection, getDocs } from 'firebase/firestore';
 
 function Home(props) {
   const [images, setImages] = useState([]);
-  const [loading, setLoading] = useState(true);
   const db = getFirestore();
   
   useEffect(() => {
@@ -22,6 +21,7 @@ function Home(props) {
         setImages((images) => [...images, {url: data.url, prompt: data.prompt}])
       })
     }
+    getImages()
   }, [])
 
   return (
