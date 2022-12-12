@@ -13,12 +13,15 @@ function MyApp({ Component, pageProps }) {
       <AuthStateChanged>
         <CreationProvider>
           {
-            Component.name === 'Home' ? <Component {...pageProps} /> : (
+            Component.displayName === 'Home' ? <Component {...pageProps} /> : (
               <Navbar>
                 <Component {...pageProps} />
               </Navbar>
-            )
+              )
           }
+          {/* <Navbar>
+            <Component {...pageProps} />
+          </Navbar> */}
         </CreationProvider>
       </AuthStateChanged>
     </AuthProvider>
