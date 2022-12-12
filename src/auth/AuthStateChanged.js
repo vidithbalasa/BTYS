@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AuthService from "./AuthService";
 import useAuth from "../auth/authContext";
+import Loader from "../../components/loader";
 
 export default function AuthStateChanged({ children }) {
 	const { setUser } = useAuth();
@@ -15,7 +16,11 @@ export default function AuthStateChanged({ children }) {
 	}, []);
 
 	if (loading) {
-		return <h1>Loading...</h1>;
+		return (
+			<div style={{ position: "absolute", top: "50%", left: "50%", transform: 'translate(-50%, -50%)' }}>
+				<Loader />
+			</div>
+		)
 	}
 
 	return children;

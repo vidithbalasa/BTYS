@@ -9,51 +9,7 @@ import Image from 'next/image';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import Loader from '../components/loader';
 
-// import sample_images from '../public/images';
-
 function Home(props) {
-  // const [images, setImages] = useState([]);
-  // const [loading, setLoading] = useState(true);
-  // const db = getFirestore();
-  
-  // useEffect(() => {
-  //   async function getImages () {
-  //     const colRef = collection(db, 'images')
-  //     const docs = await getDocs(colRef)
-  //     docs.forEach((doc) => {
-  //       let data = doc.data()
-  //       setImages((images) => [...images, {url: data.url, prompt: data.prompt}])
-  //     })
-  //   }
-  //   getImages()
-  //   setLoading(false);
-  // }, [])
-
-  // if (loading) {
-  //   return (
-  //     <div className={styles.main}>
-  //       <Loader />
-  //     </div>
-  //   )
-  // }
-
-  // const sample_prompts = [
-  //   'Testing Prompt Number One',
-  //   'Testing Prompt Number Two With A Longer String',
-  //   'Testing Prompt Number Three With A Much Longer String With Extra Words',
-  //   'Short Prompt 4',
-  //   'Testing Prompt Number Five',
-  //   'Testing Prompt Number Six With A Few Extra Words',
-  //   'Testing Prompt Number Seven With A Few Extra Words And Some More on Top',
-  // ]
-
-  // const images = []
-  // sample_images.forEach((image, i) => {
-  //   images.push({
-  //     prompt: sample_prompts[i],
-  //     url: image
-  //   })
-  // })
 
   return (
     <>
