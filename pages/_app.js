@@ -12,14 +12,9 @@ function MyApp({ Component, pageProps }) {
     <AuthProvider>
       <AuthStateChanged>
         <CreationProvider>
-          {
-            // if component is index page, don't render navbar
-            Component.name.toLowerCase().startsWith('home') ? <Component {...pageProps} /> : (
-              <Navbar>
-                <Component {...pageProps} />
-              </Navbar>
-            )
-          }
+          <Navbar>
+            <Component {...pageProps} />
+          </Navbar>
         </CreationProvider>
       </AuthStateChanged>
     </AuthProvider>

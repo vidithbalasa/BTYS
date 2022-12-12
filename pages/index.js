@@ -43,7 +43,7 @@ function Home(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <HomeBackdrop images={images}>
+      {/* <HomeBackdrop images={images}> */}
         <main className={styles.main}>
           <Image src='/Logo.png.webp' alt="Better Than You Society Logo" width={250} height={250} />
           {/* Button that sends you to design page */}
@@ -53,7 +53,7 @@ function Home(props) {
           {/* button to console log images */}
           <button onClick={() => console.log(images)}>Log Images</button>
         </main>
-      </HomeBackdrop>
+      {/* </HomeBackdrop> */}
     </>
   )
 }
