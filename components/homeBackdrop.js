@@ -5,6 +5,10 @@ import { useEffect } from 'react';
 export default function HomeBackdrop({ children, images }) {
     const image_size = 186
 
+    useEffect(() => {
+        console.log(images)
+    })
+
     const _getCol = () => {
         let row = []
         for (let i = 0; i < 5; i++) {
