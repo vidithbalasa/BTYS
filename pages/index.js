@@ -12,30 +12,30 @@ import Loader from '../components/loader';
 // import sample_images from '../public/images';
 
 function Home(props) {
-  const [images, setImages] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const db = getFirestore();
+  // const [images, setImages] = useState([]);
+  // const [loading, setLoading] = useState(true);
+  // const db = getFirestore();
   
-  useEffect(() => {
-    async function getImages () {
-      const colRef = collection(db, 'images')
-      const docs = await getDocs(colRef)
-      docs.forEach((doc) => {
-        let data = doc.data()
-        setImages((images) => [...images, {url: data.url, prompt: data.prompt}])
-      })
-    }
-    getImages()
-    setLoading(false);
-  }, [])
+  // useEffect(() => {
+  //   async function getImages () {
+  //     const colRef = collection(db, 'images')
+  //     const docs = await getDocs(colRef)
+  //     docs.forEach((doc) => {
+  //       let data = doc.data()
+  //       setImages((images) => [...images, {url: data.url, prompt: data.prompt}])
+  //     })
+  //   }
+  //   getImages()
+  //   setLoading(false);
+  // }, [])
 
-  if (loading) {
-    return (
-      <div className={styles.main}>
-        <Loader />
-      </div>
-    )
-  }
+  // if (loading) {
+  //   return (
+  //     <div className={styles.main}>
+  //       <Loader />
+  //     </div>
+  //   )
+  // }
 
   // const sample_prompts = [
   //   'Testing Prompt Number One',
@@ -63,7 +63,7 @@ function Home(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <HomeBackdrop images={images}>
+      <HomeBackdrop images={props.images}>
         <main className={styles.main}>
           <Image src='/Logo.png.webp' alt="Better Than You Society Logo" width={250} height={250} />
           {/* Button that sends you to design page */}
@@ -79,3 +79,20 @@ function Home(props) {
 Home.displayName = 'Home';
 
 export default Home;
+
+export async function getStaticProps() {
+  const db = getFirestore();
+  const colRef = collection(db, 'images')
+  const docs = await getDocs(colRef)
+  const images = []
+  docs.forEach((doc) => {
+    let data = doc.data()
+    images.push({url: data.url, prompt: data.prompt})
+  })
+
+  return {
+    props: {
+      images
+    }
+  }
+}
