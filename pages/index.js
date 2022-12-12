@@ -14,15 +14,14 @@ function Home(props) {
   const db = getFirestore();
   
   useEffect(() => {
-    const colRef = collection(db, 'images')
-    const docs = getDocs(colRef)
-    docs.then((snapshot) => {
-      snapshot.forEach((doc) => {
+    async function getImages () {
+      const colRef = collection(db, 'images')
+      const docs = await getDocs(colRef)
+      docs.forEach((doc) => {
         let data = doc.data()
         setImages((images) => [...images, {url: data.url, prompt: data.prompt}])
       })
-    })
-    setLoading(false);
+    }
   }, [])
 
   return (
@@ -40,6 +39,8 @@ function Home(props) {
           <Link href="/design">
             <button className={styles.button}>Click Here</button>
           </Link>
+          {/* button to console log images */}
+          <button onClick={() => console.log(images)}>Log Images</button>
         </main>
       </HomeBackdrop>
     </>
