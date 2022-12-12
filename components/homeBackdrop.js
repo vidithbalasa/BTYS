@@ -7,10 +7,6 @@ export default function HomeBackdrop({ children, images }) {
     // const images = sample_images
     const image_size = 186
 
-    useEffect(() => {
-        console.log(images)
-    })
-
     const _getCol = () => {
         let row = []
         for (let i = 0; i < 5; i++) {
@@ -46,6 +42,10 @@ export default function HomeBackdrop({ children, images }) {
             )
         }
         return cols
+    }
+
+    if (!images) {
+        return children
     }
     
     return (
