@@ -1,10 +1,8 @@
 import styles from '../styles/homeBackdrop.module.css';
-// import sample_images from '../public/images';
 import Image from 'next/image';
 import { useEffect } from 'react';
 
 export default function HomeBackdrop({ children, images }) {
-    // const images = sample_images
     const image_size = 186
 
     const _getCol = () => {
@@ -13,7 +11,7 @@ export default function HomeBackdrop({ children, images }) {
             const { url, prompt } = images[i]
             // random hegiht between 131 and 231
             // let height = Math.floor(Math.random() * 100) + 131
-            let hasPrompt = Math.random() >= 0.3
+            let hasPrompt = Math.random() >= 0.4
             let height = hasPrompt ? image_size + 50 : image_size
             // let height = 131
             row.push(
@@ -34,9 +32,11 @@ export default function HomeBackdrop({ children, images }) {
 
     const getCols = (numCols) => {
         let cols = []
+        // random translation between 20 and 50
+        let randomTranslate = Math.floor(Math.random() * 30) + 20
         for (let i = 0; i < numCols; i++) {
             cols.push(
-                <div key={i} className={styles.imageCol}>
+                <div key={i} className={styles.imageCol} style={{transform: `translateY(-${randomTranslate}%)`}}>
                     { _getCol() }
                 </div>
             )
@@ -44,7 +44,7 @@ export default function HomeBackdrop({ children, images }) {
         return cols
     }
 
-    return children
+    // return children
     
     return (
         <>
