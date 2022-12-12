@@ -1,38 +1,32 @@
 .imageContainer {
     /* border: 5px solid #949494; */
     border: 2px solid #949494;
-    width: 131px;
-    margin-top: 15px;
     transform: translateY(-50px);
     border-radius: 15px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    /* justify-content: center;
+    align-items: center; */
     background-color: black;
     overflow: hidden;
+    transform: translateX(-50%);
 }
 
 /* each child should be offset below the other */
 .imageContainer:nth-child(n) {
-    top: 300px * (n - 1);
-    margin-top: 15px;
+    margin-top: 15px; 
 }
 
-.imageCol {
-    display: flex;
-    flex-direction: row;
-    gap: 50px;
-}
+/* .imageCol { } */
 
 .imagesBox {
-    /* overflow: hidden; */
+    overflow: hidden;
     height: 100%;
     position: absolute;
-    width: 131px;
     display: flex;
     flex-direction: row;
-    gap: 50px;
+    gap: 30px;
+    width: 100%;
 }
 
 .prompt {
@@ -41,6 +35,7 @@
     font-size: 0.7rem;
     margin-top: 10px;
     color: #949494;
+    /* color: white; */
 }
 
 .boxItems {
@@ -59,5 +54,5 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background-color: rgba(0, 0, 0, 0.75);
+    background-color: rgba(0, 0, 0, 0.85);
 }
