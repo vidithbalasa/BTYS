@@ -17,10 +17,10 @@ export default function Navbar({ children }) {
                 </div>
                 <div className={styles.right}>
                     <div className={styles.links}>
-                        <Link href='/catalog'>Catalog</Link>
-                        <Link href='/design'>Design</Link>
-                        <Link href='/create'>Create</Link>
-                        <Link href='/portfolio'>Portfolio</Link>
+                        <Link href='/catalog'><h4>Catalog</h4></Link>
+                        <Link href='/design'><h4>Design</h4></Link>
+                        <Link href='/create'><h4>Create</h4></Link>
+                        <Link href='/portfolio'><h4>Portfolio</h4></Link>
                     </div>
                 </div>
             </div>

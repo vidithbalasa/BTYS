@@ -1,0 +1,63 @@
+.imageContainer {
+    /* border: 5px solid #949494; */
+    border: 2px solid #949494;
+    width: 131px;
+    margin-top: 15px;
+    transform: translateY(-50px);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    overflow: hidden;
+}
+
+/* each child should be offset below the other */
+.imageContainer:nth-child(n) {
+    top: 300px * (n - 1);
+    margin-top: 15px;
+}
+
+.imageCol {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+}
+
+.imagesBox {
+    /* overflow: hidden; */
+    height: 100%;
+    position: absolute;
+    width: 131px;
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+}
+
+.prompt {
+    width: 80%;
+    text-align: center;
+    font-size: 0.7rem;
+    margin-top: 10px;
+    color: #949494;
+}
+
+.boxItems {
+    position: absolute;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.75);
+}

@@ -105,6 +105,7 @@ function CatalogItem({ item, variants }) {
                 <div className={styles.carousel}>
                     <Carousel currentIndex={currentIndex} images={item.image_urls} />
                     <div className={styles.indicators}>
+                        {/* button to decrease current index */}
                         <button onClick={() => setCurrentIndex(idx => idx - 1)} className={`${styles.prev} ${styles.button}`}>&#8678;</button>
                         {currentIndex}
                         <button onClick={() => setCurrentIndex(idx => idx + 1)} className={`${styles.next} ${styles.button}`}>&#8680;</button>
