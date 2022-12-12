@@ -9,6 +9,8 @@ import Image from 'next/image';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import Loader from '../components/loader';
 
+// import sample_images from '../public/images';
+
 function Home(props) {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -35,6 +37,24 @@ function Home(props) {
     )
   }
 
+  // const sample_prompts = [
+  //   'Testing Prompt Number One',
+  //   'Testing Prompt Number Two With A Longer String',
+  //   'Testing Prompt Number Three With A Much Longer String With Extra Words',
+  //   'Short Prompt 4',
+  //   'Testing Prompt Number Five',
+  //   'Testing Prompt Number Six With A Few Extra Words',
+  //   'Testing Prompt Number Seven With A Few Extra Words And Some More on Top',
+  // ]
+
+  // const images = []
+  // sample_images.forEach((image, i) => {
+  //   images.push({
+  //     prompt: sample_prompts[i],
+  //     url: image
+  //   })
+  // })
+
   return (
     <>
       <Head>
@@ -43,17 +63,15 @@ function Home(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/* <HomeBackdrop images={images}> */}
+      <HomeBackdrop images={images}>
         <main className={styles.main}>
           <Image src='/Logo.png.webp' alt="Better Than You Society Logo" width={250} height={250} />
           {/* Button that sends you to design page */}
           <Link href="/design">
             <button className={styles.button}>Click Here</button>
           </Link>
-          {/* button to console log images */}
-          <button onClick={() => console.log(images)}>Log Images</button>
         </main>
-      {/* </HomeBackdrop> */}
+      </HomeBackdrop>
     </>
   )
 }
