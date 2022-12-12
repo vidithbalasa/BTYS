@@ -57,15 +57,15 @@ export default function HomeBackdrop({ children, images }) {
         </>
     )
     
-    return (
-        <>
-            <div className={styles.imagesBox}>
-                { getCols(10) }
-                {/* <div>{ _getCol() }</div> */}
-            </div>
-            <div className={styles.wrapper}>
-                {children}
-            </div>
-        </>
-    )
+    // return (
+    //     <>
+    //         <div className={styles.imagesBox}>
+    //             { getCols(10) }
+    //             {/* <div>{ _getCol() }</div> */}
+    //         </div>
+    //         <div className={styles.wrapper}>
+    //             {children}
+    //         </div>
+    //     </>
+    // )
 }

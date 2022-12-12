@@ -81,6 +81,7 @@ Home.displayName = 'Home';
 export default Home;
 
 export async function getStaticProps() {
+  const db = getFirestore();
   const colRef = collection(db, 'images')
   const docs = await getDocs(colRef)
   const images = []
