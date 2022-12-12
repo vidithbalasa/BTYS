@@ -44,9 +44,7 @@ export default function HomeBackdrop({ children, images }) {
         return cols
     }
 
-    if (!images) {
-        return children
-    }
+    return children
     
     return (
         <>
