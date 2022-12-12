@@ -7,9 +7,11 @@ import Link from 'next/link';
 import HomeBackdrop from '../components/homeBackdrop';
 import Image from 'next/image';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import Loader from '../components/loader';
 
 function Home(props) {
   const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(true);
   const db = getFirestore();
   
   useEffect(() => {
@@ -22,7 +24,16 @@ function Home(props) {
       })
     }
     getImages()
+    setLoading(false);
   }, [])
+
+  if (loading) {
+    return (
+      <div className={styles.main}>
+        <Loader />
+      </div>
+    )
+  }
 
   return (
     <>

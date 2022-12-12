@@ -14,7 +14,7 @@ function MyApp({ Component, pageProps }) {
         <CreationProvider>
           {
             // if component is index page, don't render navbar
-            Component.name === 'Home' ? <Component {...pageProps} /> : (
+            Component.name.toLowerCase().startsWith('home') ? <Component {...pageProps} /> : (
               <Navbar>
                 <Component {...pageProps} />
               </Navbar>
