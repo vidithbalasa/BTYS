@@ -48,24 +48,23 @@ export default function HomeBackdrop({ children, images }) {
         return cols
     }
 
-    // return children
-    return (
-        <>
-            {children}
-            {/* button to console log images */}
-            <button onClick={() => console.log(images)}>Log Images</button>
-        </>
-    )
-    
+    // // return children
     // return (
     //     <>
-    //         <div className={styles.imagesBox}>
-    //             { getCols(10) }
-    //             {/* <div>{ _getCol() }</div> */}
-    //         </div>
-    //         <div className={styles.wrapper}>
-    //             {children}
-    //         </div>
+    //         {children}
+    //         {/* button to console log images */}
+    //         <button onClick={() => console.log(images)}>Log Images</button>
     //     </>
     // )
+    
+    return (
+        <>
+            <div className={styles.imagesBox}>
+                { getCols(10) }
+            </div>
+            <div className={styles.wrapper}>
+                {children}
+            </div>
+        </>
+    )
 }
