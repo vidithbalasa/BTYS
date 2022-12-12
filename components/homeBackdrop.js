@@ -45,6 +45,13 @@ export default function HomeBackdrop({ children, images }) {
     }
 
     // return children
+    return (
+        <>
+            {children}
+            {/* button to console log images */}
+            <button onClick={() => console.log(images)}>Log Images</button>
+        </>
+    )
     
     return (
         <>

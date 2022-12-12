@@ -70,8 +70,6 @@ function Home(props) {
           <Link href="/design">
             <button className={styles.button}>Click Here</button>
           </Link>
-          {/* button to console log images */}
-          <button onClick={() => console.log(images)}>Log Images</button>
         </main>
       </HomeBackdrop>
     </>
