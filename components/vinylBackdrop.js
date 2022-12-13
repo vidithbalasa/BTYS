@@ -19,7 +19,7 @@ export default function VinylBackdrop({ children }) {
         {x: 125, y: 564},
         {x: 900, y: 200},
         {x: 1231, y: 186},
-        {x: 80, y: 100, right: true},
+        {x: 80, y: 50, right: true},
         {x: 400, y: 75, bottom: true},
         {x: 40, y: 350, right: true},
         {x: 1050, y: 60},
