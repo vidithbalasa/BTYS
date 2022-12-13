@@ -10,6 +10,8 @@ import globalStyles from '../styles/global.module.css';
 import creationContext from '../src/context/creationContext';
 import { useRouter } from 'next/router';
 import Loader from '../components/loader';
+import VinylBackdrop from '../components/vinylBackdrop';
+// import backdropStyles from '../styles/vinylBackdrop.module.css';
 
 function Design() {
     const [prompt, setPrompt] = useState('');
@@ -42,11 +44,9 @@ function Design() {
     }
 
     return (
-        <div>
+        <>
             <main className={`${globalStyles.main} ${globalStyles.mainAuth}`}>
-                <h1 className={globalStyles.title}>Create a Design</h1>
                 <div className={styles.promptBox}>
-                    <label htmlFor='prompt' className={styles.promptLabel}>Input a prompt</label>
                     <input
                         type='text'
                         name='prompt'
@@ -54,12 +54,12 @@ function Design() {
                         value={prompt}
                         onChange={(e) => setPrompt(e.target.value)}
                         className={styles.promptInput}
-                    />
+                        />
                     <button 
                         onClick={callFunction}
                         disabled={loading || prompt === ''}
                         className={styles.promptButton}
-                    >Generate Image</button>
+                        >Generate Image</button>
                 </div>
                 {img ? (
                     <div>
@@ -68,10 +68,10 @@ function Design() {
                     </div>
                     ) : (
                         loading && <Loader />
-                    )
-                }
+                        )
+                    }
             </main>
-        </div>
+        </>
     );
 }
 

@@ -1,0 +1,30 @@
+/*
+    Create a component that overlays the logo behind the
+    content. It should have a black 50% opacity background
+    and the logo should be centered in the middle of the
+    screen.
+*/
+
+.backdrop {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(30, 30, 30, 0.5);
+    overflow: hidden;
+    z-index: 1;
+}
+
+.logoBox {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.logosContainer {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 0;
+}
