@@ -29,13 +29,13 @@ export default function Explore () {
             await getDoc(docRef).then((doc) => {
                 if (doc.exists()) {
                     let data = doc.data()
-                    imageNames = data.images
-                    colRef = collection(firestore, 'images')
+                    let imageNames = data.images
+                    let colRef = collection(firestore, 'images')
                     imageNames.slice(0,4).forEach((imageName) => {
                         getDoc(doc(colRef, imageName)).then((doc) => {
                             if (doc.exists()) {
-                                let data = doc.data()
-                                setImages(images => [...images, {url: data.url, prompt: data.prompt}])
+                                let imageData = doc.data()
+                                setImages(images => [...images, {url: imageData.url, prompt: imageData.prompt}])
                             } else {
                                 console.error('Error getting image')
                             }
