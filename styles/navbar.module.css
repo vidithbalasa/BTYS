@@ -1,33 +1,30 @@
-.bar {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 1rem;
-    border-bottom: 1px solid white;
-    z-index: 999;
-}
-
-.left {
-    flex: 1;
-}
-
-.right {
-    flex: 1;
-    float: right;
-}
-
 .links {
-    float: right;
     display: flex;
     flex-direction: row;
     gap: 5rem;
+    float: right;
+    margin-right: 50px;
+    margin-top: 50px;
 }
 
 .links a {
     text-decoration: none;
-    color: white;
+    color: #b1b1b1;
     font-size: 1rem;
     font-weight: 500;
     z-index: 999;
+}
+
+.logo {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    /* don't impact anything else */
+    transform: translateX(-50%);
+    z-index: 999;
+}
+
+.content {
+    width: 100vw;
+    margin-top: 200px;
 }
