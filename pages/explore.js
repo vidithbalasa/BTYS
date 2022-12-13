@@ -27,22 +27,14 @@ export default function Explore () {
             const images = []
             const docRef = doc(firestore, 'users', user.uid)
             await getDoc(docRef).then((doc) => {
-                if (doc.exists()) {
-                    let data = doc.data()
-                    let imageNames = data.images
-                } else {
-                    console.error('No Images to Display')
-                }
-            })
-            let colRef = collection(firestore, 'images')
-            imageNames.slice(0,4).forEach((imageName) => {
-                getDoc(doc(colRef, imageName)).then((doc) => {
-                    if (doc.exists()) {
+                let data = doc.data();
+                const imageNames = data.images;
+                let colRef = collection(firestore, 'images')
+                imageNames.slice(0,4).forEach((imageName) => {
+                    getDoc(doc(colRef, imageName)).then((doc) => {
                         let imageData = doc.data()
                         images.push({ur: imageData.url, prompt: imageData.prompt})
-                    } else {
-                        console.error('Error getting image')
-                    }
+                    })
                 })
             })
             return images
