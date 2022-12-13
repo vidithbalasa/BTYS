@@ -86,7 +86,7 @@ function ResponsiveNavbar({ links }) {
                         </a></Link>
                     </div>
                     <Link href='/explore'><a>
-                        <h4 className={router.pathname==='/explore' && styles.active}>Create</h4>    
+                        <h4 className={router.pathname==='/explore' && styles.active}>Explore</h4>    
                     </a></Link>
                 </div>
                 
