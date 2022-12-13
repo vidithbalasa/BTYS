@@ -83,6 +83,9 @@
     width: 100vw;
     gap: 8vh;
     z-index: 902;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .responsiveLinkBox a {

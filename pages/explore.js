@@ -17,11 +17,12 @@ export default function Explore () {
     const [mine, setMine] = useState(false);
     const [loading, setLoading] = useState(true)
     const [images, setImages] = useState([]);
+    // const [numImages, setNumImages] = useState(0);
     const tooShort = useMediaQuery('(max-height: 650px)');
     const notWideEnough = useMediaQuery('(max-width: 1100px)');
     const smallScreen = useMediaQuery('(max-width: 700px)');
-    const numImages = 4-(2*(tooShort||notWideEnough))-(1*smallScreen)
     const firestore = getFirestore();
+    const numImages = 4-(2*(tooShort||notWideEnough))-(1*smallScreen)
     const { user } = useAuth();
 
     // const prompts = [
