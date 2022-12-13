@@ -1,0 +1,23 @@
+.toggle {
+    width: 80px;
+    font-weight: 900;
+    height: 30px;
+    color: black;
+    border: none;
+}
+
+.leftToggle {
+    border-radius: 50px 0 0 50px;
+    border-right: 1px solid black;
+}
+
+.rightToggle {
+    border-radius: 0 50px 50px 0;
+}
+
+.toggleBox {
+    position: absolute;
+    left: 70px;
+    top: 130px;
+    border: none;
+}

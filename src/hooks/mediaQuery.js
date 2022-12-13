@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 
-const useMediaQuery = (width) => {
+const useMediaQuery = (query) => {
     const [targetReached, setTargetReached] = useState(false);
   
     const updateTarget = useCallback((e) => {
@@ -12,7 +12,7 @@ const useMediaQuery = (width) => {
     }, []);
   
     useEffect(() => {
-      const media = window.matchMedia(`(max-width: ${width}px)`);
+      const media = window.matchMedia(query);
       media.addEventListener("change", updateTarget);
   
       // Check on mount (callback is not called until a change occurs)

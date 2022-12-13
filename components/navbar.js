@@ -8,13 +8,14 @@ import useMediaQuery from '../src/hooks/mediaQuery';
 import { useRouter } from 'next/router';
 
 export default function Navbar({ children }) {
-    const smallScreen = useMediaQuery(975);
+    // const smallScreen = useMediaQuery(975);
+    const smallScreen = useMediaQuery('(max-width: 975px)');
     const router = useRouter();
     const iconSize = 30;
 
     const links = [
         { displayName: "Design", ref: "/design" },
-        { displayName: "Create", ref: "/create" },
+        { displayName: "Explore", ref: "/explore" },
         {customLink: (
             <Link href='/cart'><a>
                 <div className={styles.cart}>
@@ -84,8 +85,8 @@ function ResponsiveNavbar({ links }) {
                             </div>
                         </a></Link>
                     </div>
-                    <Link href='/create'><a>
-                        <h4 className={router.pathname==='/create' && styles.active}>Create</h4>    
+                    <Link href='/explore'><a>
+                        <h4 className={router.pathname==='/explore' && styles.active}>Create</h4>    
                     </a></Link>
                 </div>
                 
