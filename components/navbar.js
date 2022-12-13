@@ -62,7 +62,6 @@ function ResponsiveNavbar({ links }) {
             <motion.div variants={{ open: { display: "flex" }, closed: { display: "none" } }} className={styles.responsiveItems}>
             </motion.div>
             <motion.div className={`${styles.barBox} ${!expanded && styles.stationedBarBox} ${expanded && styles.closeBox}`} onClick={() => setExpanded(!expanded)}>
-                {/* Horizontal bars that turn into an X when expanded */}
                 <motion.div className={styles.bar} variants={{ open: { rotate: 45, y: 5 }, closed: { rotate: 0, y: 0 } }} />
                 <motion.div className={styles.bar} variants={{ open: { opacity: 0 }, closed: { opacity: 1 } }} transition={{ duration: 0 }} />
                 <motion.div className={styles.bar} variants={{ open: { rotate: -45, y: -5 }, closed: { rotate: 0, y: 0 } }} />
