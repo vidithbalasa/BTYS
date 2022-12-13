@@ -15,6 +15,7 @@ export default function Explore () {
     // const IMG = 'https://storage.googleapis.com/vidiths_test_bucket/51b14540-fd31-4a29-964e-425c0c54acdd.png'
     const [mine, setMine] = useState(false);
     const [images, setImages] = useState([]);
+    const [loading, setLoading] = useState(true)
     const tooShort = useMediaQuery('(max-height: 650px)');
     const notWideEnough = useMediaQuery('(max-width: 1100px)');
     const smallScreen = useMediaQuery('(max-width: 700px)');
@@ -24,23 +25,24 @@ export default function Explore () {
     
     useEffect(() => {
         async function getImages() {
-            const images = []
+            const userImageObjects = []
             const docRef = doc(firestore, 'users', user.uid)
             const docPromise = await getDoc(docRef)
             const userData = docPromise.data()
-            console.log(userData)
             const userImages = userData.images
-            console.log(userImages)
-            console.log()
             for (const image of userImages) {
                 const imageRef = doc(firestore, 'images', image)
                 const imageData = await getDoc(imageRef)
-                images.push(imageData.data())
+                userImageObjects.push(imageData.data())
             }
-            return images
+            return userImageObjects;
         };
-        setImages(getImages());
-        console.log(images);
+        getImages().then((userImageObjects) => {
+            setImages(userImageObjects)
+            console.log(userImageObjects)
+            console.log(images)
+            setLoading(false)
+        })
     }, [user])
 
     return (
@@ -49,7 +51,7 @@ export default function Explore () {
             {mine
                 ? (
                     <div className={styles.imagesContainer}>
-                        {
+                        {!loading &&
                             images.slice(0,numImages).map((image, index) => (
                                 <ImageDisplay key={index} hit={{url: image.url, prompt: image.prompt}} smallScreen={smallScreen} />
                             ))
