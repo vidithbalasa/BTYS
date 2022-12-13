@@ -1,7 +1,7 @@
 .links {
     display: flex;
     flex-direction: row;
-    gap: 5rem;
+    gap: 3rem;
     float: right;
     margin-right: 50px;
     margin-top: 50px;
@@ -13,6 +13,19 @@
     font-size: 1rem;
     font-weight: 500;
     z-index: 999;
+}
+
+.links .cart {
+    width: 30px;
+    height: 30px;
+    margin-top: 10px;
+    z-index: 999;
+}
+
+.links .profile {
+    width: 30px;
+    height: 30px;
+    margin-top: 10px;
 }
 
 .logo {
@@ -69,7 +82,7 @@
     left: 0;
     width: 100vw;
     height: 200px;
-    background-color: rgb(0,0,0,0.7);
+    background-color: rgb(0,0,0,0.5);
     backdrop-filter: blur(5px);
 }
 
@@ -81,7 +94,8 @@
     transform: translateX(-50%);
     z-index: 999;
     margin-top: calc(200px - 4rem);
-    gap: calc(100vw * 0.2)
+    gap: calc(100vw * 0.2);
+    justify-content: space-around;
 }
 
 .responsiveLinkBox a {
@@ -90,4 +104,23 @@
     font-weight: 500;
     z-index: 999;
     color: #B1B1B1;
+}
+
+.responsiveLinkBox .cart {
+    width: 35px;
+    height: 35px;
+    margin-top: 10px;
+    z-index: 999;
+}
+
+.responsiveLinkBox .profile {
+    width: 35px;
+    height: 35px;
+    margin-top: 10px;
+}
+
+.responsiveIcons {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
 }
