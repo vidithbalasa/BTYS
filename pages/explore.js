@@ -21,32 +21,33 @@ export default function Explore () {
     const numImages = 4-(2*(tooShort||notWideEnough))-(1*smallScreen)
     const firestore = getFirestore();
     const { user } = useAuth();
-
+    
     useEffect(() => {
         async function getImages() {
-            const docRef = doc(firestore, 'users', user.uid)
             const images = []
+            const docRef = doc(firestore, 'users', user.uid)
             await getDoc(docRef).then((doc) => {
                 if (doc.exists()) {
                     let data = doc.data()
                     let imageNames = data.images
-                    let colRef = collection(firestore, 'images')
-                    imageNames.slice(0,numImages).forEach((imageName) => {
-                        getDoc(doc(colRef, imageName)).then((doc) => {
-                            if (doc.exists()) {
-                                let imageData = doc.data()
-                                setImages(images => [...images, {url: imageData.url, prompt: imageData.prompt}])
-                            } else {
-                                console.error('Error getting image')
-                            }
-                        })
-                    })
                 } else {
                     console.error('No Images to Display')
                 }
             })
+            let colRef = collection(firestore, 'images')
+            imageNames.slice(0,4).forEach((imageName) => {
+                getDoc(doc(colRef, imageName)).then((doc) => {
+                    if (doc.exists()) {
+                        let imageData = doc.data()
+                        images.push({ur: imageData.url, prompt: imageData.prompt})
+                    } else {
+                        console.error('Error getting image')
+                    }
+                })
+            })
+            return images
         };
-        getImages();
+        setImages(getImages());
     }, [user])
 
     return (
