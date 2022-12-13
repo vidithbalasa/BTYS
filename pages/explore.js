@@ -26,8 +26,12 @@ export default function Explore () {
         async function getImages() {
             const images = []
             const docRef = doc(firestore, 'users', user.uid)
-            const userImageData = await getDoc(docRef)
-            const userImages = userImageData.data().images
+            const docPromise = await getDoc(docRef)
+            const userData = docPromise.data()
+            console.log(userData)
+            const userImages = userData.images
+            console.log(userImages)
+            console.log()
             for (const image of userImages) {
                 const imageRef = doc(firestore, 'images', image)
                 const imageData = await getDoc(imageRef)
