@@ -11,6 +11,7 @@ import creationContext from '../src/context/creationContext';
 import { useRouter } from 'next/router';
 import Loader from '../components/loader';
 import { motion } from 'framer-motion';
+import ExpandableButton from '../components/expandableButton';
 
 function Design() {
     const [prompt, setPrompt] = useState('');
@@ -21,23 +22,25 @@ function Design() {
     const { addImage } = useContext(creationContext);
     const router = useRouter();
     const image_size = 384;
+    const iconSize = 30;
 
-    // const IMG = 'https://storage.googleapis.com/vidiths_test_bucket/51b14540-fd31-4a29-964e-425c0c54acdd.png'
+    const IMG = 'https://storage.googleapis.com/vidiths_test_bucket/51b14540-fd31-4a29-964e-425c0c54acdd.png'
 
     // Call the function to get model prediction
     const callFunction = async () => {
         setLoading(true);
         setImg('');
 
-        const stableaiCall = httpsCallable(functions, 'stableai-function')
-        await stableaiCall({ prompt: prompt, token: user.accessToken })
-            .then((result) => {
-                const img_url = result.data;
-                setImg(img_url);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        // const stableaiCall = httpsCallable(functions, 'stableai-function')
+        // await stableaiCall({ prompt: prompt, token: user.accessToken })
+        //     .then((result) => {
+        //         const img_url = result.data;
+        //         setImg(img_url);
+        //     })
+        //     .catch((error) => {
+        //         console.log(error);
+        //     });
+        setImg(IMG);
 
         setLoading(false);
         setPrompt('');
@@ -78,10 +81,14 @@ function Design() {
                         </div>
                         <>
                             <motion.button className={`${styles.circle} ${styles.topCircle}`} whileTap={{ scale: 0.9 }}>
-                                <img src='/shopping-cart-black.svg' alt='Shopping Bag' className={styles.icon}/>
+                                <div className={styles.icon}>
+                                    <Image src='/shopping-cart-black.svg' alt='Shopping Cart' width={iconSize} height={iconSize} />
+                                </div>
                             </motion.button>
                             <motion.button className={`${styles.circle} ${styles.bottomCircle}`} whileTap={{ scale: 0.9 }}>
-                                <img src='/credit-card.svg' alt='Credit Card' className={styles.icon} />
+                                <div className={styles.icon}>
+                                    <Image src='/credit-card.svg' alt='Credit Card' width={iconSize} height={iconSize} />
+                                </div>
                             </motion.button>
                         </>
                     </>

@@ -1,0 +1,30 @@
+.circle {
+    background-color: #D9D9D9;
+    border-radius: 15%;
+    border: none;
+    cursor: pointer;
+}
+
+.circle:hover {
+    width: 130px;
+    height: 50px;
+    border-radius: 5px;
+    color: black;
+    color: transparent;
+    display: flex;
+    align-items: center;
+}
+
+.circle:hover::after {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 14px;
+    color: black;
+    width: 100%;
+    content: var(--text);
+    font-weight: 900;
+}
+
+.circle:hover .icon {
+    width: 90%;
+    height: 90%;
+}
