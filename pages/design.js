@@ -31,16 +31,15 @@ function Design() {
         setLoading(true);
         setImg('');
 
-        // const stableaiCall = httpsCallable(functions, 'stableai-function')
-        // await stableaiCall({ prompt: prompt, token: user.accessToken })
-        //     .then((result) => {
-        //         const img_url = result.data;
-        //         setImg(img_url);
-        //     })
-        //     .catch((error) => {
-        //         console.log(error);
-        //     });
-        setImg(IMG);
+        const stableaiCall = httpsCallable(functions, 'stableai-function')
+        await stableaiCall({ prompt: prompt, token: user.accessToken })
+            .then((result) => {
+                const img_url = result.data;
+                setImg(img_url);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
 
         setLoading(false);
         setPrompt('');
