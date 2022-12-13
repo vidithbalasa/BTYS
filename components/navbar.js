@@ -8,12 +8,26 @@ import useMediaQuery from '../src/hooks/mediaQuery';
 import { useRouter } from 'next/router';
 
 export default function Navbar({ children }) {
-    const smallScreen = useMediaQuery(1000);
+    const smallScreen = useMediaQuery(975);
+    const router = useRouter();
 
     const links = [
         { displayName: "Design", ref: "/design" },
         { displayName: "Create", ref: "/create" },
-        { displayName: "Portfolio", ref: "/portfolio" },
+        {customLink: (
+            <Link href='/cart'><a>
+                <img 
+                    src={router.pathname==='/cart' ? '/shopping-cart-white.svg' : '/shopping-cart-b1b1b1.svg'}
+                    alt='Shopping Cart' className={styles.cart} />    
+            </a></Link>
+        )},
+        {customLink: (
+            <Link href='/profile'><a>
+                <img 
+                    src={router.pathname==='/profile' ? '/user-circle-white.svg' : '/user-circle-b1b1b1.svg'}
+                    alt='User Profile' className={styles.profile} />    
+            </a></Link>
+        )}
     ]
 
     return (
@@ -37,7 +51,7 @@ export default function Navbar({ children }) {
 }
 
 function ResponsiveNavbar({ links }) {
-    // Nav bar that starts as an icon in the top right and expands when clicked
+    const router = useRouter();
     const [expanded, setExpanded] = useState(false);
 
     return (
@@ -50,7 +64,26 @@ function ResponsiveNavbar({ links }) {
                 <motion.div className={styles.bar} variants={{ open: { opacity: 0 }, closed: { opacity: 1 } }} transition={{ duration: 0 }} />
                 <motion.div className={styles.bar} variants={{ open: { rotate: -45, y: -5 }, closed: { rotate: 0, y: 0 } }} />
             </motion.div>
-            {expanded && <LinkDisplay links={links} boxClass={styles.responsiveLinkBox} />}
+            {/* {expanded && <LinkDisplay links={links} boxClass={styles.responsiveLinkBox} />} */}
+            {expanded &&
+                <div className={styles.responsiveLinkBox}>
+                    <Link href='/design'><a>
+                        <h4 className={router.pathname==='/design' && styles.active}>Design</h4>
+                    </a></Link>
+                    <div className={styles.responsiveIcons}>
+                        <Link href='/cart'><a>
+                            <img src={router.pathname==='/cart' ? '/shopping-cart-white.svg' : '/shopping-cart-b1b1b1.svg'} alt='Shopping Cart' className={styles.cart} />
+                        </a></Link>
+                        <Link href='/profile'><a>
+                            <img src={router.pathname==='/profile' ? '/user-circle-white.svg' : '/user-circle-b1b1b1.svg'} alt='User Profile' className={styles.profile} />    
+                        </a></Link>
+                    </div>
+                    <Link href='/create'><a>
+                        <h4 className={router.pathname==='/create' && styles.active}>Create</h4>    
+                    </a></Link>
+                </div>
+                
+            }
         </motion.nav>
     )
 }
@@ -63,10 +96,13 @@ function LinkDisplay({ links, boxClass }) {
             {
                 links.map((link, index) => {
                     return (
-                        // if current endpoint is same as link, add active class
-                        <Link href={link.ref} key={index}><a>
-                            <h4 className={router.pathname===link.ref && styles.active}>{link.displayName}</h4>
-                        </a></Link>
+                        link.customLink
+                            ? link.customLink
+                            : (
+                                <Link href={link.ref} key={index}><a>
+                                    <h4 className={router.pathname===link.ref && styles.active}>{link.displayName}</h4>
+                                </a></Link>
+                            )
                     )
                 })
             }

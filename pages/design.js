@@ -78,7 +78,7 @@ function Design() {
                         </div>
                         <>
                             <motion.button className={`${styles.circle} ${styles.topCircle}`} whileTap={{ scale: 0.9 }}>
-                                <img src='/shopping-cart.svg' alt='Shopping Bag' className={styles.icon}/>
+                                <img src='/shopping-cart-black.svg' alt='Shopping Bag' className={styles.icon}/>
                             </motion.button>
                             <motion.button className={`${styles.circle} ${styles.bottomCircle}`} whileTap={{ scale: 0.9 }}>
                                 <img src='/credit-card.svg' alt='Credit Card' className={styles.icon} />
