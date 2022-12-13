@@ -36,6 +36,7 @@ export default function Explore () {
             return images
         };
         setImages(getImages());
+        console.log(images);
     }, [user])
 
     return (
