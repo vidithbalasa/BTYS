@@ -33,32 +33,3 @@ p {
     background: black;
   }
 }
-
-.ais-Hits-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  list-style: none;
-  place-items: center;
-  grid-gap: 1%;
-}
-
-.ais-SearchBox-input {
-  width: calc(100vw * 0.3)
-}
-
-.ais-SearchBox {
-  place-self: center;
-}
-
-.ais-Highlight-nonHighlighted {
-    text-decoration: none;
-    color: white;
-    display: inline-block;
-}
-
-.ais-Highlight-highlighted {
-  text-decoration: none;
-  color: #00719e;
-  display: inline-block;
-  font-style: normal;
-}

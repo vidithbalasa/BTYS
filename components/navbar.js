@@ -8,17 +8,21 @@ import useMediaQuery from '../src/hooks/mediaQuery';
 import { useRouter } from 'next/router';
 
 export default function Navbar({ children }) {
-    const smallScreen = useMediaQuery(975);
+    // const smallScreen = useMediaQuery(975);
+    const smallScreen = useMediaQuery('(max-width: 975px)');
     const router = useRouter();
+    const iconSize = 30;
 
     const links = [
         { displayName: "Design", ref: "/design" },
-        { displayName: "Create", ref: "/create" },
+        { displayName: "Explore", ref: "/explore" },
         {customLink: (
             <Link href='/cart'><a>
-                <img 
-                    src={router.pathname==='/cart' ? '/shopping-cart-white.svg' : '/shopping-cart-b1b1b1.svg'}
-                    alt='Shopping Cart' className={styles.cart} />    
+                <div className={styles.cart}>
+                    <Image
+                        src={router.pathname==='/cart' ? '/shopping-cart-white.svg' : '/shopping-cart-b1b1b1.svg'}
+                        alt='Shopping Cart' width={iconSize} height={iconSize}  />    
+                </div>
             </a></Link>
         )},
         {customLink: (
@@ -37,11 +41,9 @@ export default function Navbar({ children }) {
                 : <LinkDisplay links={links} boxClass={styles.links} />
             }
             <div className={styles.logo}>
-                <Link href='/'>
-                    <a>
+                <Link href='/'><a>
                         <Image src='/Logo.png' alt='Better Than You Society Logo' width={200} height={200} />
-                    </a>
-                </Link>
+                </a></Link>
             </div>
             <div className={styles.content}>
                 {children}
@@ -53,6 +55,7 @@ export default function Navbar({ children }) {
 function ResponsiveNavbar({ links }) {
     const router = useRouter();
     const [expanded, setExpanded] = useState(false);
+    const iconSize = 35;
 
     return (
         <motion.nav initial={false} animate={expanded ? "open" : "closed"} className={styles.responsiveNav}>
@@ -72,14 +75,18 @@ function ResponsiveNavbar({ links }) {
                     </a></Link>
                     <div className={styles.responsiveIcons}>
                         <Link href='/cart'><a>
-                            <img src={router.pathname==='/cart' ? '/shopping-cart-white.svg' : '/shopping-cart-b1b1b1.svg'} alt='Shopping Cart' className={styles.cart} />
+                            <div className={styles.cart}>
+                                <Image src={router.pathname==='/cart' ? '/shopping-cart-white.svg' : '/shopping-cart-b1b1b1.svg'} alt='Shopping Cart' height={iconSize} width={iconSize} />
+                            </div>
                         </a></Link>
                         <Link href='/profile'><a>
-                            <img src={router.pathname==='/profile' ? '/user-circle-white.svg' : '/user-circle-b1b1b1.svg'} alt='User Profile' className={styles.profile} />    
+                            <div className={styles.profile}>
+                                <Image src={router.pathname==='/profile' ? '/user-circle-white.svg' : '/user-circle-b1b1b1.svg'} alt='User Profile'  height={iconSize} width={iconSize} />    
+                            </div>
                         </a></Link>
                     </div>
-                    <Link href='/create'><a>
-                        <h4 className={router.pathname==='/create' && styles.active}>Create</h4>    
+                    <Link href='/explore'><a>
+                        <h4 className={router.pathname==='/explore' && styles.active}>Create</h4>    
                     </a></Link>
                 </div>
                 
