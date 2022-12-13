@@ -22,32 +22,32 @@ export default function Explore () {
     const firestore = getFirestore();
     const { user } = useAuth();
 
-    useEffect(() => {
-        async function getImages() {
-            const docRef = doc(firestore, 'users', user.uid)
-            const images = []
-            await getDoc(docRef).then((doc) => {
-                if (doc.exists()) {
-                    data = doc.data()
-                    imageNames = data.images
-                    colRef = collection(firestore, 'images')
-                    imageNames.slice(0,4).forEach((imageName) => {
-                        getDoc(doc(colRef, imageName)).then((doc) => {
-                            if (doc.exists()) {
-                                data = doc.data()
-                                setImages(images => [...images, {url: data.url, prompt: data.prompt}])
-                            } else {
-                                console.error('Error getting image')
-                            }
-                        })
-                    })
-                } else {
-                    console.error('No Images to Display')
-                }
-            })
-        };
-        getImages();
-    }, [user])
+    // useEffect(() => {
+    //     async function getImages() {
+    //         const docRef = doc(firestore, 'users', user.uid)
+    //         const images = []
+    //         await getDoc(docRef).then((doc) => {
+    //             if (doc.exists()) {
+    //                 let data = doc.data()
+    //                 imageNames = data.images
+    //                 colRef = collection(firestore, 'images')
+    //                 imageNames.slice(0,4).forEach((imageName) => {
+    //                     getDoc(doc(colRef, imageName)).then((doc) => {
+    //                         if (doc.exists()) {
+    //                             let data = doc.data()
+    //                             setImages(images => [...images, {url: data.url, prompt: data.prompt}])
+    //                         } else {
+    //                             console.error('Error getting image')
+    //                         }
+    //                     })
+    //                 })
+    //             } else {
+    //                 console.error('No Images to Display')
+    //             }
+    //         })
+    //     };
+    //     getImages();
+    // }, [user])
 
     return (
         <main className={styles.main}>

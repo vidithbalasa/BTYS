@@ -9,6 +9,8 @@ import Image from 'next/image';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import Loader from '../components/loader';
 
+import sample_images from '../public/images';
+
 function Home(props) {
 
   return (
@@ -21,7 +23,10 @@ function Home(props) {
 
       <HomeBackdrop images={props.images}>
         <main className={styles.main}>
-          <Image src='/Logo.png' alt="Better Than You Society Logo" width={250} height={250} />
+          <div>
+            <Image src='/Logo.png' alt="Better Than You Society Logo" width={250} height={250} />
+          </div>
+          <p className={styles.text}>Create AI Art. Buy it as a Sticker.</p>
           {/* Button that sends you to design page */}
           <Link href="/design">
             <button className={styles.button}>Click Here</button>
