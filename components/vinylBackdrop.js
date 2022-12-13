@@ -21,6 +21,9 @@ export default function VinylBackdrop({ children }) {
         {x: 1231, y: 186},
         {x: 80, y: 100, right: true},
         {x: 400, y: 75, bottom: true},
+        {x: 40, y: 350, right: true},
+        {x: 1050, y: 60},
+        {x: 450, y: 300}
     ]
 
     const logoCount = logoPositions.length;

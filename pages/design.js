@@ -53,16 +53,16 @@ function Design() {
                         className={styles.promptInput}
                         placeholder='Enter a Prompt Here'
                         />
-                    <button 
+                    {prompt && <button 
                         onClick={callFunction}
-                        disabled={loading || prompt === ''}
+                        disabled={loading}
                         className={styles.promptButton}
                     >
                         {loading 
                             ? <div className={styles.loader}><Loader /></div> 
                             :'Generate an Image'
                         }
-                    </button>
+                    </button>}
                 </div>
                 {img && (
                     <div className={styles.imageBox}>
