@@ -5,7 +5,7 @@ import useMediaQuery from '../src/hooks/mediaQuery';
 import { searchClient } from '../src/config/firebase.config';
 import { InstantSearch, SearchBox, Hits, Pagination, Highlight, Configure } from 'react-instantsearch-dom';
 import Toggle from "../components/toggle";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { getFirestore, doc, getDoc, collection } from "firebase/firestore";
 import useAuth from "../src/auth/authContext";
 
 // import sample_images from '../public/images';
@@ -31,7 +31,7 @@ export default function Explore () {
                     let data = doc.data()
                     let imageNames = data.images
                     let colRef = collection(firestore, 'images')
-                    imageNames.slice(0,4).forEach((imageName) => {
+                    imageNames.slice(0,numImages).forEach((imageName) => {
                         getDoc(doc(colRef, imageName)).then((doc) => {
                             if (doc.exists()) {
                                 let imageData = doc.data()
