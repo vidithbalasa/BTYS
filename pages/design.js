@@ -10,8 +10,6 @@ import globalStyles from '../styles/global.module.css';
 import creationContext from '../src/context/creationContext';
 import { useRouter } from 'next/router';
 import Loader from '../components/loader';
-import VinylBackdrop from '../components/vinylBackdrop';
-// import backdropStyles from '../styles/vinylBackdrop.module.css';
 
 function Design() {
     const [prompt, setPrompt] = useState('');
@@ -21,10 +19,14 @@ function Design() {
     const { user } = useAuth();
     const { addImage } = useContext(creationContext);
     const router = useRouter();
+    const image_size = 384;
+
+    // const IMG = 'https://storage.googleapis.com/vidiths_test_bucket/51b14540-fd31-4a29-964e-425c0c54acdd.png'
 
     // Call the function to get model prediction
     const callFunction = async () => {
         setLoading(true);
+        setImg('');
         const stableaiCall = httpsCallable(functions, 'stableai-function')
         await stableaiCall({ prompt: prompt, token: user.accessToken })
             .then((result) => {
@@ -38,11 +40,6 @@ function Design() {
         setPrompt('');
     }
 
-    const createMockupFromImage = () => {
-        addImage({ url: img, prompt: prompt });
-        router.push('/create');
-    }
-
     return (
         <>
             <main className={`${globalStyles.main} ${globalStyles.mainAuth}`}>
@@ -54,22 +51,24 @@ function Design() {
                         value={prompt}
                         onChange={(e) => setPrompt(e.target.value)}
                         className={styles.promptInput}
+                        placeholder='Enter a Prompt Here'
                         />
                     <button 
                         onClick={callFunction}
                         disabled={loading || prompt === ''}
                         className={styles.promptButton}
-                        >Generate Image</button>
+                    >
+                        {loading 
+                            ? <div className={styles.loader}><Loader /></div> 
+                            :'Generate an Image'
+                        }
+                    </button>
                 </div>
-                {img ? (
-                    <div>
-                        <Image src={img} alt='Generated Image' className={styles.image} height={512} width={512} />
-                        <button onClick={createMockupFromImage}>Create Product with Image</button>
+                {img && (
+                    <div className={styles.imageBox}>
+                        <Image src={img} alt='Generated Image' className={styles.image} height={image_size} width={image_size} />
                     </div>
-                    ) : (
-                        loading && <Loader />
-                        )
-                    }
+                )} 
             </main>
         </>
     );
