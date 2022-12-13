@@ -10,6 +10,7 @@ import globalStyles from '../styles/global.module.css';
 import creationContext from '../src/context/creationContext';
 import { useRouter } from 'next/router';
 import Loader from '../components/loader';
+import { motion } from 'framer-motion';
 
 function Design() {
     const [prompt, setPrompt] = useState('');
@@ -27,6 +28,7 @@ function Design() {
     const callFunction = async () => {
         setLoading(true);
         setImg('');
+
         const stableaiCall = httpsCallable(functions, 'stableai-function')
         await stableaiCall({ prompt: prompt, token: user.accessToken })
             .then((result) => {
@@ -36,6 +38,7 @@ function Design() {
             .catch((error) => {
                 console.log(error);
             });
+
         setLoading(false);
         setPrompt('');
     }
@@ -53,21 +56,35 @@ function Design() {
                         className={styles.promptInput}
                         placeholder='Enter a Prompt Here'
                         />
-                    {prompt && <button 
+                    {prompt && <motion.button 
                         onClick={callFunction}
                         disabled={loading}
                         className={styles.promptButton}
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
                     >
                         {loading 
                             ? <div className={styles.loader}><Loader /></div> 
                             :'Generate an Image'
                         }
-                    </button>}
+                    </motion.button>}
+                    {loading && <div className={styles.note}>Generating an image takes up to 30 seconds</div>}
                 </div>
                 {img && (
-                    <div className={styles.imageBox}>
-                        <Image src={img} alt='Generated Image' className={styles.image} height={image_size} width={image_size} />
-                    </div>
+                    <>
+                        <div className={styles.imageBox}>
+                            <Image src={img} alt='Generated Image' className={styles.image} height={image_size} width={image_size} />
+                        </div>
+                        <>
+                            <motion.button className={`${styles.circle} ${styles.topCircle}`} whileTap={{ scale: 0.9 }}>
+                                <img src='/shopping-cart.svg' alt='Shopping Bag' className={styles.icon}/>
+                            </motion.button>
+                            <motion.button className={`${styles.circle} ${styles.bottomCircle}`} whileTap={{ scale: 0.9 }}>
+                                <img src='/credit-card.svg' alt='Credit Card' className={styles.icon} />
+                            </motion.button>
+                        </>
+                    </>
                 )} 
             </main>
         </>
