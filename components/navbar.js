@@ -8,7 +8,6 @@ import useMediaQuery from '../src/hooks/mediaQuery';
 import { useRouter } from 'next/router';
 
 export default function Navbar({ children }) {
-    // const smallScreen = useMediaQuery(975);
     const smallScreen = useMediaQuery('(max-width: 975px)');
     const router = useRouter();
     const iconSize = 30;
