@@ -55,7 +55,7 @@ export default function Navbar({ children }) {
 function ResponsiveNavbar({ links }) {
     const router = useRouter();
     const [expanded, setExpanded] = useState(false);
-    const iconSize = 35;
+    const iconSize = 65;
 
     return (
         <motion.nav initial={false} animate={expanded ? "open" : "closed"} className={styles.responsiveNav}>
@@ -67,29 +67,33 @@ function ResponsiveNavbar({ links }) {
                 <motion.div className={styles.bar} variants={{ open: { opacity: 0 }, closed: { opacity: 1 } }} transition={{ duration: 0 }} />
                 <motion.div className={styles.bar} variants={{ open: { rotate: -45, y: -5 }, closed: { rotate: 0, y: 0 } }} />
             </motion.div>
-            {/* {expanded && <LinkDisplay links={links} boxClass={styles.responsiveLinkBox} />} */}
             {expanded &&
-                <div className={styles.responsiveLinkBox}>
-                    <Link href='/design'><a>
-                        <h4 className={router.pathname==='/design' && styles.active}>Design</h4>
-                    </a></Link>
-                    <div className={styles.responsiveIcons}>
-                        <Link href='/cart'><a>
-                            <div className={styles.cart}>
-                                <Image src={router.pathname==='/cart' ? '/shopping-cart-white.svg' : '/shopping-cart-b1b1b1.svg'} alt='Shopping Cart' height={iconSize} width={iconSize} />
-                            </div>
+                <>
+                    <div className={styles.responsiveLinkBox}>
+                        <Link href='/design'><a>
+                            <h4 className={router.pathname==='/design' && styles.active}>Design</h4>
                         </a></Link>
-                        <Link href='/profile'><a>
-                            <div className={styles.profile}>
-                                <Image src={router.pathname==='/profile' ? '/user-circle-white.svg' : '/user-circle-b1b1b1.svg'} alt='User Profile'  height={iconSize} width={iconSize} />    
-                            </div>
+                        <Link href='/explore'><a>
+                            <h4 className={router.pathname==='/explore' && styles.active}>Explore</h4>    
                         </a></Link>
+                        <Link href='/about'><a>
+                            <h4 className={router.pathname==='/about' && styles.active}>About</h4>    
+                        </a></Link>
+                        <div className={styles.responsiveIcons}>
+                            <Link href='/cart'><a>
+                                <div className={styles.cart}>
+                                    <Image src={router.pathname==='/cart' ? '/shopping-cart-white.svg' : '/shopping-cart-b1b1b1.svg'} alt='Shopping Cart' height={iconSize} width={iconSize} />
+                                </div>
+                            </a></Link>
+                            <Link href='/profile'><a>
+                                <div className={styles.profile}>
+                                    <Image src={router.pathname==='/profile' ? '/user-circle-white.svg' : '/user-circle-b1b1b1.svg'} alt='User Profile'  height={iconSize} width={iconSize} />    
+                                </div>
+                            </a></Link>
+                        </div>
                     </div>
-                    <Link href='/explore'><a>
-                        <h4 className={router.pathname==='/explore' && styles.active}>Explore</h4>    
-                    </a></Link>
-                </div>
-                
+                    <div className={styles.responsiveWrapper}> </div>    
+                </>
             }
         </motion.nav>
     )
