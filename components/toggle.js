@@ -34,7 +34,7 @@ export default function Toggle({ state1Name, state2Name, setState, state }) {
                 onClick={() => setState(!state)}
                 animate={{ 
                     backgroundColor: state ? "#D9D9D9" : "#767676",
-                    color: state ? "black" : "#505050"
+                    color: state ? "#000000" : "#505050"
                 }}
                 className={`${styles.toggle} ${styles.leftToggle}`}
             >
@@ -46,7 +46,7 @@ export default function Toggle({ state1Name, state2Name, setState, state }) {
                 onClick={() => setState(!state)}
                 animate={{ 
                     backgroundColor: !state ? "#D9D9D9" : "#767676",
-                    color: !state ? "black" : "#505050"
+                    color: !state ? "#000000" : "#505050"
                 }}
                 className={`${styles.toggle} ${styles.rightToggle}`}
             >

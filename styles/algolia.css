@@ -7,17 +7,13 @@
     border-radius: 4px;
     padding: 5px;
     background-color: transparent;
-    width: 500px;
-    height: 100%;
+    width: clamp(280px, 50%, 500px);
+    height: 26px;
     text-align: center;
     font-family: 'Roboto Mono', monospace;
+    transform: translateX(-50%);
     font-size: 1rem;
-}
-
-@media screen and (max-width: 550px) {
-    .ais-SearchBox-input {
-        width: 300px;
-    }
+    box-sizing: content-box;
 }
 
 .ais-SearchBox-input:focus {
@@ -28,8 +24,10 @@
     position: absolute;
     top: 200px;
     left: 50%;
-    transform: translateX(-50%);
-    height: 26px;
+    height: 100%;
+    width: 100%;
+    /* display: flex;
+    justify-content: center; */
 }
 
 .ais-Hits-list {
@@ -38,7 +36,6 @@
     row-gap: 1rem;
     column-gap: 0rem;
     padding: 0;
-    /* center items */
     justify-items: center;
 }
 
@@ -53,6 +50,7 @@
 
 .ais-Hits {
     padding-top: 50px;
+    /* margin-top: 10px; */
 }
 
 /* get rid of bullet point for ais-Hits-item */
