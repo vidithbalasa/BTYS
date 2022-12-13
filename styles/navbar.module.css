@@ -9,7 +9,7 @@
 
 .links a {
     text-decoration: none;
-    color: #b1b1b1;
+    color: #B1B1B1;
     font-size: 1rem;
     font-weight: 500;
     z-index: 999;
@@ -28,6 +28,10 @@
     margin-top: 200px;
 }
 
+.active {
+    color: white;
+}
+
 /* Responsive Nav */
 .responsiveNav {
     float: right;
@@ -35,7 +39,6 @@
 }
 
 .bar {
-    /* styling for horizontal bars */
     width: 25px;
     height: 5px;
     background-color: #B1B1B1;
@@ -83,8 +86,8 @@
 
 .responsiveLinkBox a {
     text-decoration: none;
-    color: white;
     font-size: 1.2rem;
     font-weight: 500;
     z-index: 999;
+    color: #B1B1B1;
 }

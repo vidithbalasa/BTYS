@@ -5,6 +5,7 @@ import VinylBackdrop from './vinylBackdrop';
 import { motion, AnimatePresence  } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import useMediaQuery from '../src/hooks/mediaQuery';
+import { useRouter } from 'next/router';
 
 export default function Navbar({ children }) {
     const smallScreen = useMediaQuery(1000);
@@ -55,12 +56,17 @@ function ResponsiveNavbar({ links }) {
 }
 
 function LinkDisplay({ links, boxClass }) {
+    const router = useRouter();
+
     return (
         <div className={boxClass}>
             {
                 links.map((link, index) => {
                     return (
-                        <Link href={link.ref} key={index}><a><h4>{link.displayName}</h4></a></Link>
+                        // if current endpoint is same as link, add active class
+                        <Link href={link.ref} key={index}><a>
+                            <h4 className={router.pathname===link.ref && styles.active}>{link.displayName}</h4>
+                        </a></Link>
                     )
                 })
             }
