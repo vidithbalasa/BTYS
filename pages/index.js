@@ -9,7 +9,7 @@ import Image from 'next/image';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import Loader from '../components/loader';
 
-import sample_images from '../public/images';
+// import sample_images from '../public/images';
 
 function Home(props) {
 

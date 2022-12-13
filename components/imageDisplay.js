@@ -7,12 +7,6 @@ import ExpandableButton from './expandableButton';
 export default function ImageDisplay({ hit }) {
     const smallScreen = useMediaQuery('(max-width: 700px)')
     const imageSize = smallScreen ? 256 : 160;
-    // if (hit) {
-    //     let { url, prompt } = hit
-    //     let image = url
-    //     console.log(hit)
-    // }
-
     const { url, prompt } = hit
 
     return (
