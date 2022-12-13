@@ -19,12 +19,72 @@
     position: absolute;
     top: 0;
     left: 50%;
-    /* don't impact anything else */
     transform: translateX(-50%);
-    z-index: 999;
+    z-index: 901;
 }
 
 .content {
     width: 100vw;
     margin-top: 200px;
+}
+
+/* Responsive Nav */
+.responsiveNav {
+    float: right;
+    flex: 1;
+}
+
+.bar {
+    /* styling for horizontal bars */
+    width: 25px;
+    height: 5px;
+    background-color: #B1B1B1;
+}
+
+.barBox {
+    z-index: 999;
+    margin-top: 75px;
+    margin-right: 50px;
+}
+
+.stationedBarBox {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+}
+
+.closeBox {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.responsiveItems {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 200px;
+    background-color: rgb(0,0,0,0.7);
+    backdrop-filter: blur(5px);
+}
+
+.responsiveLinkBox {
+    display: flex;
+    left: 0;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999;
+    margin-top: calc(200px - 4rem);
+    gap: calc(100vw * 0.2)
+}
+
+.responsiveLinkBox a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 500;
+    z-index: 999;
 }
