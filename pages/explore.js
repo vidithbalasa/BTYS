@@ -6,6 +6,7 @@ import { searchClient } from '../src/config/firebase.config';
 import { InstantSearch, SearchBox, Hits, Pagination, Highlight, Configure } from 'react-instantsearch-dom';
 import Toggle from "../components/toggle";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
+import useAuth from "../src/auth/authContext";
 
 // import sample_images from '../public/images';
 // import Search from "../components/search";
