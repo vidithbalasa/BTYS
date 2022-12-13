@@ -21,7 +21,7 @@ function Home(props) {
 
       <HomeBackdrop images={props.images}>
         <main className={styles.main}>
-          <Image src='/Logo.png.webp' alt="Better Than You Society Logo" width={250} height={250} />
+          <Image src='/Logo.png' alt="Better Than You Society Logo" width={250} height={250} />
           {/* Button that sends you to design page */}
           <Link href="/design">
             <button className={styles.button}>Click Here</button>
