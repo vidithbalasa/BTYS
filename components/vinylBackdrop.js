@@ -1,4 +1,4 @@
-import styles from '../styles/VinylBackdrop.module.css';
+import styles from '../styles/vinylBackdrop.module.css';
 import Image from 'next/image';
 
 export default function VinylBackdrop({ children }) {
