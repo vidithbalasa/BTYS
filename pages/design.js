@@ -10,8 +10,6 @@ import globalStyles from '../styles/global.module.css';
 import creationContext from '../src/context/creationContext';
 import { useRouter } from 'next/router';
 import Loader from '../components/loader';
-import VinylBackdrop from '../components/vinylBackdrop';
-// import backdropStyles from '../styles/vinylBackdrop.module.css';
 
 function Design() {
     const [prompt, setPrompt] = useState('');
@@ -23,33 +21,23 @@ function Design() {
     const router = useRouter();
     const image_size = 384;
 
-    const IMG = 'https://storage.googleapis.com/vidiths_test_bucket/51b14540-fd31-4a29-964e-425c0c54acdd.png'
+    // const IMG = 'https://storage.googleapis.com/vidiths_test_bucket/51b14540-fd31-4a29-964e-425c0c54acdd.png'
 
     // Call the function to get model prediction
     const callFunction = async () => {
         setLoading(true);
         setImg('');
-        // const stableaiCall = httpsCallable(functions, 'stableai-function')
-        // await stableaiCall({ prompt: prompt, token: user.accessToken })
-        //     .then((result) => {
-        //         const img_url = result.data;
-        //         setImg(img_url);
-        //     })
-        //     .catch((error) => {
-        //         console.log(error);
-        //     });
-
-        // sleep for 3 seconds then sem image to IMG
-        await new Promise(r => setTimeout(r, 3000));
-        setImg(IMG);
-
+        const stableaiCall = httpsCallable(functions, 'stableai-function')
+        await stableaiCall({ prompt: prompt, token: user.accessToken })
+            .then((result) => {
+                const img_url = result.data;
+                setImg(img_url);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
         setLoading(false);
         setPrompt('');
-    }
-
-    const createMockupFromImage = () => {
-        addImage({ url: img, prompt: prompt });
-        router.push('/create');
     }
 
     return (
