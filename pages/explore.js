@@ -34,12 +34,12 @@ export default function Explore () {
             }
             return userImageObjects;
         };
-        // getImages().then((userImageObjects) => {
-        //     setImages(userImageObjects)
-        //     console.log(userImageObjects)
-        //     console.log(images)
-        //     setLoading(false)
-        // })
+        getImages().then((userImageObjects) => {
+            setImages(userImageObjects)
+            console.log(userImageObjects)
+            console.log(images)
+            setLoading(false)
+        })
     }, [user])
 
     return (
