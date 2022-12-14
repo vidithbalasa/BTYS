@@ -21,7 +21,8 @@ export default function ImageDisplay({ hit }) {
                 images: [url],
             },
             unit_amount: 800,
-        }
+        },
+        quantity: 1,
     }]
 
     return (
