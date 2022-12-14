@@ -9,45 +9,16 @@ import Toggle from "../components/toggle";
 import { getFirestore, doc, getDoc, collection } from "firebase/firestore";
 import useAuth from "../src/auth/authContext";
 
-// import sample_images from '../public/images';
-// import Search from "../components/search";
-
 export default function Explore () {
-    // const IMG = 'https://storage.googleapis.com/vidiths_test_bucket/51b14540-fd31-4a29-964e-425c0c54acdd.png'
     const [mine, setMine] = useState(false);
     const [loading, setLoading] = useState(true)
     const [images, setImages] = useState([]);
-    // const [numImages, setNumImages] = useState(0);
     const tooShort = useMediaQuery('(max-height: 650px)');
     const notWideEnough = useMediaQuery('(max-width: 1100px)');
     const smallScreen = useMediaQuery('(max-width: 700px)');
     const firestore = getFirestore();
     const numImages = 4-(2*(tooShort||notWideEnough))-(1*smallScreen)
     const { user } = useAuth();
-
-    // const prompts = [
-    //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    //     'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    //     'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-    //     'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    //     'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    //     'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-    //     'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    // ]
-    
-    // useEffect(() => {
-    //     const images = [0,1,2,3].map((i) => {
-    //         return {
-    //             url: sample_images[i],
-    //             prompt: prompts[i]
-    //         }
-    //     })
-    //     setImages(images)
-    //     setLoading(false);
-    // }, [])
-
     
     useEffect(() => {
         async function getImages() {
@@ -63,12 +34,12 @@ export default function Explore () {
             }
             return userImageObjects;
         };
-        getImages().then((userImageObjects) => {
-            setImages(userImageObjects)
-            console.log(userImageObjects)
-            console.log(images)
-            setLoading(false)
-        })
+        // getImages().then((userImageObjects) => {
+        //     setImages(userImageObjects)
+        //     console.log(userImageObjects)
+        //     console.log(images)
+        //     setLoading(false)
+        // })
     }, [user])
 
     return (
@@ -102,14 +73,3 @@ export default function Explore () {
         </main>
     )
 }
-
-// export async function getStaticProps() {
-//     const firestore = getFirestore();
-    
-
-//     return {
-//         props: {
-//             images
-//         }
-//     }
-// }
