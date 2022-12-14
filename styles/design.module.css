@@ -42,6 +42,7 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    outline: none;
 }
 
 .promptButton:disabled {

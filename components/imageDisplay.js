@@ -3,11 +3,26 @@ import styles from '../styles/imageDisplay.module.css';
 import globalStyles from '../styles/global.module.css';
 import useMediaQuery from '../src/hooks/mediaQuery';
 import ExpandableButton from './expandableButton';
+import createSession from '../src/utils/checkout';
+import { getFirestore } from 'firebase/firestore';
+import useAuth from '../src/auth/authContext';
 
 export default function ImageDisplay({ hit }) {
     const smallScreen = useMediaQuery('(max-width: 700px)')
     const imageSize = smallScreen ? 256 : 160;
     const { url, prompt } = hit
+    const firestore = getFirestore();
+    const { user } = useAuth();
+    const line_items = [{
+        price_data: {
+            currency: 'usd',
+            product_data: {
+                name: prompt,
+                images: [url],
+            },
+            unit_amount: 800,
+        }
+    }]
 
     return (
         <main className={styles.main}>
@@ -27,7 +42,7 @@ export default function ImageDisplay({ hit }) {
             </div>
             <div className={styles.hoverWrapper}>
                 <ExpandableButton icon='/shopping-cart-black.svg' text='Add to Cart' iconSize={40} />
-                <ExpandableButton icon='/credit-card.svg' text='Buy Now' iconSize={40} />
+                <ExpandableButton icon='/credit-card.svg' text='Buy Now' iconSize={40} onClick={() => createSession(firestore, user, line_items)} />
             </div>
         </main>
     )
