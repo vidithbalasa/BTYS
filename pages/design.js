@@ -19,7 +19,7 @@ function Design() {
     const [prompt, setPrompt] = useState('');
     const [img, setImg] = useState('');
     const [loading, setLoading] = useState(false);
-    const [imageObject, setImageObject] = useState({});
+    const [imageObject, setImageObject] = useState({line_items: [], additionalData: {}});
     const functions = getFunctions(getApp());
     const { user } = useAuth();
     const firestore = getFirestore();
@@ -43,7 +43,7 @@ function Design() {
                 console.log(error);
             });
 
-        setImageObject({
+        setImageObject(() => {return {
             line_items: [{
                 price_data: {
                     currency: 'usd',
@@ -59,7 +59,7 @@ function Design() {
                     '0_image': img,
                 }
             }
-        })
+        }})
 
         setPrompt('');
         setLoading(false);
