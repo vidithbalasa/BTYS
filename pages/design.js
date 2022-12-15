@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 import Loader from '../components/loader';
 import { motion } from 'framer-motion';
 import ExpandableButton from '../components/expandableButton';
+import createSession from '../src/utils/checkout';
 
 function Design() {
     const [prompt, setPrompt] = useState('');
@@ -24,12 +25,13 @@ function Design() {
     const image_size = 384;
     const iconSize = 30;
 
-    const IMG = 'https://storage.googleapis.com/vidiths_test_bucket/51b14540-fd31-4a29-964e-425c0c54acdd.png'
+    // const IMG = 'https://storage.googleapis.com/vidiths_test_bucket/51b14540-fd31-4a29-964e-425c0c54acdd.png'
 
     // Call the function to get model prediction
     const callFunction = async () => {
         setLoading(true);
         setImg('');
+        const [imageObject, setImageObject] = useState({line_items: null, metadata: null});
 
         const stableaiCall = httpsCallable(functions, 'stableai-function')
         await stableaiCall({ prompt: prompt, token: user.accessToken })
@@ -43,6 +45,21 @@ function Design() {
 
         setLoading(false);
         setPrompt('');
+        setImageObject({
+            line_items: [{
+                price_data: {
+                    currency: 'usd',
+                    product_data: { name: prompt, images: [img] },
+                    unit_amount: 800,
+                },
+                quantity: 1,
+            }],
+            metadata: {
+                'uid': user.uid,
+                '0_name': prompt,
+                '0_image': img,
+            }
+        })
     }
 
     return (
@@ -84,11 +101,12 @@ function Design() {
                                     <Image src='/shopping-cart-black.svg' alt='Shopping Cart' width={iconSize} height={iconSize} />
                                 </div>
                             </motion.button>
-                            <motion.button className={`${styles.circle} ${styles.bottomCircle}`} whileTap={{ scale: 0.9 }}>
+                            <ExpandableButton icon={'/credit-card.svg'} iconSize={iconSize} onClick={() => {}} style={`${styles.circle} ${styles.bottomCircle}`} />
+                            {/* <motion.button className={`${styles.circle} ${styles.bottomCircle}`} whileTap={{ scale: 0.9 }}>
                                 <div className={styles.icon}>
                                     <Image src='/credit-card.svg' alt='Credit Card' width={iconSize} height={iconSize} />
                                 </div>
-                            </motion.button>
+                            </motion.button> */}
                         </>
                     </>
                 )} 
