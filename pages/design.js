@@ -19,7 +19,7 @@ function Design() {
     const [prompt, setPrompt] = useState('');
     const [img, setImg] = useState('');
     const [loading, setLoading] = useState(false);
-    const [imageObject, setImageObject] = useState({line_items: [], additionalData: {}});
+    const [imageObject, setImageObject] = useState({});
     const functions = getFunctions(getApp());
     const { user } = useAuth();
     const firestore = getFirestore();
@@ -83,10 +83,9 @@ function Design() {
                         disabled={loading || prompt === ''}
                         className={styles.promptButton}
                         initial={{ opacity: 0, y: 50 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}
+                        animate={{ opacity: 1, y: 0, transition: { duration: 0.5 } }}
                         whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
+                        whileTap={{ scale: 0.9, transition: { duration: 0.01 } }}
                     >
                         {loading 
                             ? <div className={styles.loader}><Loader /></div> 
