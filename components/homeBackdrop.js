@@ -8,11 +8,11 @@ export default function HomeBackdrop({ children, images }) {
     const _getCol = (col) => {
         let row = []
         for (let i = 0; i < 5; i++) {
-            let imageIdx = i * 5 + col
+            let imageIdx = col * 5 + i
             const { url, prompt } = imageIdx >= images.length ? images[i] : images[imageIdx]
             // random hegiht between 131 and 231
             // let height = Math.floor(Math.random() * 100) + 131
-            let hasPrompt = Math.random() >= 0.4
+            let hasPrompt = Math.random() >= 0.5
             let height = hasPrompt ? image_size + 50 : image_size
             // let height = 131
             row.push(
