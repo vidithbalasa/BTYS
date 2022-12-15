@@ -109,8 +109,7 @@ function Design() {
                                 icon={'/credit-card.svg'} iconSize={iconSize} 
                                 onClick={() => createSession(
                                     firestore, user, 
-                                    line_items=imageObject.line_items, 
-                                    additionalData=imageObject.additionalData
+                                    imageObject.line_items, imageObject.additionalData
                                 )} 
                                 style={`${styles.circle} ${styles.bottomCircle}`} 
                             />
