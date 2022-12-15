@@ -16,8 +16,7 @@ export default function ImageDisplay({ hit }) {
     const line_items = [{
         price_data: {
             currency: 'usd',
-            // product_data: { name: prompt, images: [url] },
-            product_data: { name: prompt, images: ['https://storage.googleapis.com/vidiths_test_bucket/Soccer.jpg'] },
+            product_data: { name: prompt, images: [url] },
             unit_amount: 800,
         },
         quantity: 1,
