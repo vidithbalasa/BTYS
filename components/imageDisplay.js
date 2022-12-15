@@ -17,7 +17,7 @@ export default function ImageDisplay({ hit }) {
         price_data: {
             currency: 'usd',
             // product_data: { name: prompt, images: [url] },
-            product_data: { name: prompt, images: ['https://storage.googleapis.com/vidiths_test_bucket/Fox.jpeg'] },
+            product_data: { name: prompt, images: ['https://storage.googleapis.com/vidiths_test_bucket/Soccer.jpg'] },
             unit_amount: 800,
         },
         quantity: 1,
