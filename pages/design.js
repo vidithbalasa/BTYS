@@ -38,28 +38,20 @@ function Design() {
             .then((result) => {
                 const img_url = result.data;
                 setImg(img_url);
+                setImageObject(() => {return {
+                    line_items: [{
+                        price_data: {
+                            currency: 'usd', unit_amount: 800,
+                            product_data: { name: prompt, images: [img_url] },
+                        },
+                        quantity: 1,
+                    }],
+                    additionalData: { metadata: { 'uid': user.uid, '0_name': prompt, '0_image': img } }
+                }})
             })
             .catch((error) => {
                 console.log(error);
             });
-
-        setImageObject(() => {return {
-            line_items: [{
-                price_data: {
-                    currency: 'usd',
-                    product_data: { name: prompt, images: [img] },
-                    unit_amount: 800,
-                },
-                quantity: 1,
-            }],
-            additionalData: {
-                metadata: {
-                    'uid': user.uid,
-                    '0_name': prompt,
-                    '0_image': img,
-                }
-            }
-        }})
 
         setPrompt('');
         setLoading(false);
