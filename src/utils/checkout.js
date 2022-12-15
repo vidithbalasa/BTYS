@@ -6,7 +6,7 @@ export default async function createSession (firestore, user, line_items, additi
 
         const docRef = await addDoc(checkout_session_ref, {
             mode: 'payment',
-            success_url: window.location.origin,
+            success_url: 'https://btys.vercel.app/success?session_id={CHECKOUT_SESSION_ID}',
             cancel_url: window.location.origin,
             line_items,
             ...additionalData
