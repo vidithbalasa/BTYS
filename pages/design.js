@@ -9,6 +9,7 @@ import styles from '../styles/design.module.css';
 import globalStyles from '../styles/global.module.css';
 import creationContext from '../src/context/creationContext';
 import { useRouter } from 'next/router';
+import { getFirestore } from 'firebase/firestore';
 import Loader from '../components/loader';
 import { motion } from 'framer-motion';
 import ExpandableButton from '../components/expandableButton';
@@ -18,10 +19,10 @@ function Design() {
     const [prompt, setPrompt] = useState('');
     const [img, setImg] = useState('');
     const [loading, setLoading] = useState(false);
+    const [imageObject, setImageObject] = useState({line_items: null, additionalData: {}});
     const functions = getFunctions(getApp());
     const { user } = useAuth();
-    const { addImage } = useContext(creationContext);
-    const router = useRouter();
+    const firestore = getFirestore();
     const image_size = 384;
     const iconSize = 30;
 
@@ -31,7 +32,6 @@ function Design() {
     const callFunction = async () => {
         setLoading(true);
         setImg('');
-        const [imageObject, setImageObject] = useState({line_items: null, metadata: null});
 
         const stableaiCall = httpsCallable(functions, 'stableai-function')
         await stableaiCall({ prompt: prompt, token: user.accessToken })
@@ -54,10 +54,12 @@ function Design() {
                 },
                 quantity: 1,
             }],
-            metadata: {
-                'uid': user.uid,
-                '0_name': prompt,
-                '0_image': img,
+            additionalData: {
+                metadata: {
+                    'uid': user.uid,
+                    '0_name': prompt,
+                    '0_image': img,
+                }
             }
         })
     }
@@ -101,7 +103,7 @@ function Design() {
                                     <Image src='/shopping-cart-black.svg' alt='Shopping Cart' width={iconSize} height={iconSize} />
                                 </div>
                             </motion.button>
-                            <ExpandableButton icon={'/credit-card.svg'} iconSize={iconSize} onClick={() => {}} style={`${styles.circle} ${styles.bottomCircle}`} />
+                            <ExpandableButton icon={'/credit-card.svg'} iconSize={iconSize} onClick={() => createSession(firestore, user, ...imageObject)} style={`${styles.circle} ${styles.bottomCircle}`} />
                             {/* <motion.button className={`${styles.circle} ${styles.bottomCircle}`} whileTap={{ scale: 0.9 }}>
                                 <div className={styles.icon}>
                                     <Image src='/credit-card.svg' alt='Credit Card' width={iconSize} height={iconSize} />
