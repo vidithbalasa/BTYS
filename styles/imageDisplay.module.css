@@ -47,7 +47,7 @@
 @media screen and (max-width: 700px) {
     .main {
         --width: 300px;
-        --height: 400px;
+        --height: 390px;
     }
 
     .imageContainer {
@@ -65,15 +65,20 @@
     .image {
         padding-top: 56px;
     }
+
+    .prompt {
+        overflow: hidden;
+        padding-bottom: 92px;
+        line-height: 1.25;
+    }
 }
 
 
 .prompt {
     color: black;
     width: 50%;
-    font-size: 1.5rem;
+    font-size: 24px;
     font-weight: 150;
-    /* height: 180px; */
     text-align: center;
 }
 

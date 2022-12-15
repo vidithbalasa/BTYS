@@ -6,6 +6,7 @@ import ExpandableButton from './expandableButton';
 import createSession from '../src/utils/checkout';
 import { getFirestore } from 'firebase/firestore';
 import useAuth from '../src/auth/authContext';
+import { useEffect } from 'react';
 
 export default function ImageDisplay({ hit }) {
     const smallScreen = useMediaQuery('(max-width: 700px)')
@@ -23,11 +24,18 @@ export default function ImageDisplay({ hit }) {
     }]
     const additionalData = {
         metadata: {
-            'uid': user.uid,
+            'uid': user ? user.uid : `guest_${Math.random().toString(36).substring(7)}`,
             '0_name': prompt,
             '0_image': url,
         }
     }
+
+    useEffect(() => {
+        if (!user) return;
+        // add uid to metadata
+        additionalData.metadata.uid = user.uid;
+        console.log(additionalData)
+    }, [user])
 
     return (
         <main className={styles.main}>
@@ -39,8 +47,8 @@ export default function ImageDisplay({ hit }) {
                     {
                         prompt.length > 100
                         ? smallScreen
-                        ? prompt.slice(0, 40) + '...'
-                        : prompt.slice(0, 60) + '...'
+                            ? prompt.slice(0, 60) + '...'
+                            : prompt.slice(0, 80) + '...'
                         : prompt
                     }
                 </h4>
