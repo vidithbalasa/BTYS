@@ -23,6 +23,7 @@ export default function ImageDisplay({ hit }) {
     }]
     const additionalData = {
         metadata: {
+            'uid': user.uid,
             '0_name': prompt,
             '0_image': url,
         }
