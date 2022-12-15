@@ -84,6 +84,8 @@ function Design() {
                         initial={{ opacity: 0, y: 50 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
                     >
                         {loading 
                             ? <div className={styles.loader}><Loader /></div> 
@@ -103,7 +105,15 @@ function Design() {
                                     <Image src='/shopping-cart-black.svg' alt='Shopping Cart' width={iconSize} height={iconSize} />
                                 </div>
                             </motion.button>
-                            <ExpandableButton icon={'/credit-card.svg'} iconSize={iconSize} onClick={() => createSession(firestore, user, ...imageObject)} style={`${styles.circle} ${styles.bottomCircle}`} />
+                            <ExpandableButton 
+                                icon={'/credit-card.svg'} iconSize={iconSize} 
+                                onClick={() => createSession(
+                                    firestore, user, 
+                                    line_items=imageObject.line_items, 
+                                    additionalData=imageObject.additionalData
+                                )} 
+                                style={`${styles.circle} ${styles.bottomCircle}`} 
+                            />
                             {/* <motion.button className={`${styles.circle} ${styles.bottomCircle}`} whileTap={{ scale: 0.9 }}>
                                 <div className={styles.icon}>
                                     <Image src='/credit-card.svg' alt='Credit Card' width={iconSize} height={iconSize} />
