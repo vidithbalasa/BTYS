@@ -19,7 +19,7 @@ function Design() {
     const [prompt, setPrompt] = useState('');
     const [img, setImg] = useState('');
     const [loading, setLoading] = useState(false);
-    const [imageObject, setImageObject] = useState({line_items: null, additionalData: {}});
+    const [imageObject, setImageObject] = useState({line_items: [], additionalData: {}});
     const functions = getFunctions(getApp());
     const { user } = useAuth();
     const firestore = getFirestore();
@@ -43,8 +43,6 @@ function Design() {
                 console.log(error);
             });
 
-        setLoading(false);
-        setPrompt('');
         setImageObject({
             line_items: [{
                 price_data: {
@@ -62,6 +60,9 @@ function Design() {
                 }
             }
         })
+
+        setPrompt('');
+        setLoading(false);
     }
 
     return (
@@ -79,7 +80,7 @@ function Design() {
                         />
                     {prompt && <motion.button 
                         onClick={callFunction}
-                        disabled={loading}
+                        disabled={loading || prompt === ''}
                         className={styles.promptButton}
                         initial={{ opacity: 0, y: 50 }}
                         animate={{ opacity: 1, y: 0 }}

@@ -5,10 +5,11 @@ import { useEffect } from 'react';
 export default function HomeBackdrop({ children, images }) {
     const image_size = 186
 
-    const _getCol = () => {
+    const _getCol = (col) => {
         let row = []
         for (let i = 0; i < 5; i++) {
-            const { url, prompt } = images[i]
+            let imageIdx = i * 5 + col
+            const { url, prompt } = imageIdx >= images.length ? images[i] : images[imageIdx]
             // random hegiht between 131 and 231
             // let height = Math.floor(Math.random() * 100) + 131
             let hasPrompt = Math.random() >= 0.4
@@ -37,7 +38,7 @@ export default function HomeBackdrop({ children, images }) {
         for (let i = 0; i < numCols; i++) {
             cols.push(
                 <div key={i} className={styles.imageCol} style={{transform: `translateY(-${randomTranslate}%)`}}>
-                    { _getCol() }
+                    { _getCol(i) }
                 </div>
             )
         }
