@@ -5,46 +5,53 @@
     width: 100%;
     height: 100%;
     z-index: 0;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(6px);
 }
 
 .modal {
-    /* opaque purple background with relative sizing */
-    background-color: rgb(103, 4, 103);
-    width: 30%;
-    height: 15%;
+    background-color: #3A3A3A;
+    width: 450px;
+    height: 140px;
     border-radius: 10px;
-    /* flexbox for centering */
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    /* z-index to ensure it's on top of the background */
-    z-index: 1;
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) !important; /* !important to override the default transform */
+    transform: translate(-50%, -50%) !important;
+}
+
+.modal h1 {
+    font-weight: 300;
+}
+
+@media screen and (max-width: 460px) {
+    .modal {
+        width: 340px;
+        height: 130px;
+    }
 }
 
 .loginButton {
-    /* flexbox for centering */
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     gap: 1rem;
-    /* opaque purple background with relative sizing */
-    background-color: rgba(145, 4, 145, 0.5);
+    background-color: #D9D9D9;
     width: 80%;
     height: auto;
     border-radius: 10px;
-    /* z-index to ensure it's on top of the background */
-    z-index: 1;
     position: relative;
+    color: black;
+    width: 83%;
+    height: 35px;
+    border: none;
 }
 
-.loginButton:hover {
-    /* opaque purple background with relative sizing */
-    background-color: rgba(219, 5, 219, 0.8);
+.buttonText {
+    font-size: 16px;
+    font-weight: 300;
 }

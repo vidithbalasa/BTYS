@@ -24,9 +24,10 @@ export function withProtected(Component) {
 		if (!auth.user) {
 			// return <LoginModal children={<Component {...props} />} />;
 			return (
-				<LoginModal>
+				<>
 					<Component auth={auth} {...props} />
-				</LoginModal>
+					<LoginModal message="This Page is Protected" />
+				</>
 			)
 		}
 		return <Component auth={auth} {...props} />;

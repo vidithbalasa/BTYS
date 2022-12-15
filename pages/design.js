@@ -14,12 +14,16 @@ import Loader from '../components/loader';
 import { motion } from 'framer-motion';
 import ExpandableButton from '../components/expandableButton';
 import createSession from '../src/utils/checkout';
+import LoginModal from '../components/loginModal';
 
 function Design() {
-    const [prompt, setPrompt] = useState('');
+    const router = useRouter();
+    const { prompt: queryPrompt } = router.query;
+    const [prompt, setPrompt] = useState(queryPrompt || '');
     const [img, setImg] = useState('');
     const [loading, setLoading] = useState(false);
     const [imageObject, setImageObject] = useState({line_items: [], additionalData: {}});
+    const [loginRequired, setLoginRequired] = useState(false);
     const functions = getFunctions(getApp());
     const { user } = useAuth();
     const firestore = getFirestore();
@@ -30,6 +34,10 @@ function Design() {
 
     // Call the function to get model prediction
     const callFunction = async () => {
+        if (!user) {
+            setLoginRequired(true);
+            return;
+        }
         setLoading(true);
         setImg('');
 
@@ -105,18 +113,14 @@ function Design() {
                                 )} 
                                 style={`${styles.circle} ${styles.bottomCircle}`} 
                             />
-                            {/* <motion.button className={`${styles.circle} ${styles.bottomCircle}`} whileTap={{ scale: 0.9 }}>
-                                <div className={styles.icon}>
-                                    <Image src='/credit-card.svg' alt='Credit Card' width={iconSize} height={iconSize} />
-                                </div>
-                            </motion.button> */}
                         </>
                     </>
                 )} 
             </main>
+            {loginRequired && <LoginModal setShowLogin={setLoginRequired} />}
         </>
     );
 }
 
-export default withProtected(Design);
-// export default Design;
+// export default withProtected(Design);
+export default Design;
