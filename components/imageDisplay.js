@@ -16,14 +16,19 @@ export default function ImageDisplay({ hit }) {
     const line_items = [{
         price_data: {
             currency: 'usd',
-            product_data: {
-                name: prompt,
-                images: [url],
-            },
+            product_data: { name: prompt, images: [url] },
             unit_amount: 800,
         },
         quantity: 1,
     }]
+    const additionalData = {
+        metadata: {
+            items: [{
+                name: prompt,
+                image: url,
+            }]
+        }
+    }
 
     return (
         <main className={styles.main}>
@@ -43,7 +48,7 @@ export default function ImageDisplay({ hit }) {
             </div>
             <div className={styles.hoverWrapper}>
                 <ExpandableButton icon='/shopping-cart-black.svg' text='Add to Cart' iconSize={40} />
-                <ExpandableButton icon='/credit-card.svg' text='Buy Now' iconSize={40} onClick={() => createSession(firestore, user, line_items)} />
+                <ExpandableButton icon='/credit-card.svg' text='Buy Now' iconSize={40} onClick={() => createSession(firestore, user, line_items, additionalData)} />
             </div>
         </main>
     )
