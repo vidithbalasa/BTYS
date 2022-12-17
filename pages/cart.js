@@ -1,6 +1,6 @@
 import { withProtected } from "../src/auth/route"
 import styles from '../styles/cart.module.css';
-import { getFirestore, collection, getDocs, document } from "firebase/firestore";
+import { getFirestore, collection, getDocs, document, getDoc } from "firebase/firestore";
 import useAuth from "../src/auth/authContext";
 import { useEffect, useState } from "react";
 import Loader from "../components/loader";
@@ -31,7 +31,15 @@ function Cart() {
             const firestore = getFirestore();
             const cartRef = collection(firestore, 'users', user.uid, 'cart');
             const cartItems = await getDocs(cartRef);
-            const cartItemsArray = cartItems.docs.map(doc => (doc.data()));
+            const cartItemsArray = [];
+            for (const imageDoc of cartItems.docs) {
+                const data = imageDoc.data();
+                const { quantity, size } = data;
+                const imageRef = data.image;
+                const imageData = await getDoc(imageRef);
+                const { url, prompt } = imageData.data();
+                cartItemsArray.push({url, prompt, quantity, size});
+            }
             return cartItemsArray
         }
         getCartItems()
