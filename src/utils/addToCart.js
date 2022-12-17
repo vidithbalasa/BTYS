@@ -8,6 +8,6 @@ export default async function addToCart(firestore, user, image, prompt) {
         prompt: prompt,
         image: image,
         // Add firestore server timestamp
-        created_at: firestore.FieldValue.serverTimestamp()
+        // created_at: firestore.FieldValue.serverTimestamp()
     })
 }
