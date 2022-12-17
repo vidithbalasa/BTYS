@@ -9,45 +9,45 @@ import CartDisplay from "../components/cartDisplay";
 
 function Cart() {
     const { user } = useAuth();
-    const [loading, setLoading] = useState(true);
-    const [cartItems, setCartItems] = useState([]);
+    // const [loading, setLoading] = useState(true);
+    // const [cartItems, setCartItems] = useState([]);
     const imageSize = 192;
     // const firestore = getFirestore();
     
-    // const samplePrompts = [
-    //     'lorem ipsum dolor sit amet',
-    //     'consectetur adipiscing elit',
-    //     'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
-    //     'ut enim ad minim veniam',
-    // ]
-    // const [loading, setLoading] = useState(false);
-    // const cartItems = [{url: sampleImages[0], prompt: samplePrompts[0]}]
+    const samplePrompts = [
+        'lorem ipsum dolor sit amet. consectetur adipiscing elit. sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ut enim ad minim veniam',
+        'consectetur adipiscing elit',
+        'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+        'ut enim ad minim veniam',
+    ]
+    const [loading, setLoading] = useState(false);
+    const cartItems = [{url: sampleImages[0], prompt: samplePrompts[0]}]
 
     
 
-    useEffect(() => {
-        const getCartItems = async () => {
-            // Get all items from cart
-            const firestore = getFirestore();
-            const cartRef = collection(firestore, 'users', user.uid, 'cart');
-            const cartItems = await getDocs(cartRef);
-            const cartItemsArray = [];
-            for (const imageDoc of cartItems.docs) {
-                const data = imageDoc.data();
-                const { quantity, size } = data;
-                const imageRef = data.image;
-                const imageData = await getDoc(imageRef);
-                const { url, prompt } = imageData.data();
-                cartItemsArray.push({url, prompt, quantity, size});
-            }
-            return cartItemsArray
-        }
-        getCartItems()
-            .then(items => {
-                setCartItems(items);
-                setLoading(false);
-            })
-    }, [user])
+    // useEffect(() => {
+    //     const getCartItems = async () => {
+    //         // Get all items from cart
+    //         const firestore = getFirestore();
+    //         const cartRef = collection(firestore, 'users', user.uid, 'cart');
+    //         const cartItems = await getDocs(cartRef);
+    //         const cartItemsArray = [];
+    //         for (const imageDoc of cartItems.docs) {
+    //             const data = imageDoc.data();
+    //             const { quantity, size } = data;
+    //             const imageRef = data.image;
+    //             const imageData = await getDoc(imageRef);
+    //             const { url, prompt } = imageData.data();
+    //             cartItemsArray.push({url, prompt, quantity, size});
+    //         }
+    //         return cartItemsArray
+    //     }
+    //     getCartItems()
+    //         .then(items => {
+    //             setCartItems(items);
+    //             setLoading(false);
+    //         })
+    // }, [user])
 
     if (loading) return <div className={styles.loader}><Loader /></div>
 
