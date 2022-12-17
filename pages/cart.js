@@ -12,7 +12,7 @@ function Cart() {
     const [loading, setLoading] = useState(true);
     const [cartItems, setCartItems] = useState([]);
     const imageSize = 192;
-    const firestore = getFirestore();
+    // const firestore = getFirestore();
     
     // const samplePrompts = [
     //     'lorem ipsum dolor sit amet',
@@ -31,7 +31,7 @@ function Cart() {
             const firestore = getFirestore();
             const cartRef = collection(firestore, 'users', user.uid, 'cart');
             const cartItems = await getDocs(cartRef);
-            const cartItemsArray = cartItems.docs.map(doc => ({id: doc.id, ...doc.data()}));
+            const cartItemsArray = cartItems.docs.map(doc => (doc.data()));
             return cartItemsArray
         }
         getCartItems()

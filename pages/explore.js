@@ -36,7 +36,11 @@ export default function Explore () {
         for (const imageRef of userImages) {
             // const imageRef = doc(firestore, 'images', image)
             const imageData = await getDoc(imageRef)
-            userImageObjects.push(imageData.data())
+            userImageObjects.push({
+                ...imageData.data(),
+                // get image id
+                id: imageData.id
+            })
         }
         setImages(userImageObjects);
         setLoading(false);
@@ -67,7 +71,7 @@ export default function Explore () {
                                 {loading
                                     ? <div className={styles.loader}><Loader /></div>
                                     : images.slice(0,numImages).map((image, index) => (
-                                        <ImageDisplay key={index} hit={{url: image.url, prompt: image.prompt}} smallScreen={smallScreen} />
+                                        <ImageDisplay key={index} hit={{url: image.url, prompt: image.prompt, id: image.id}} smallScreen={smallScreen} />
                                         ))
                                     }
                             </div>
