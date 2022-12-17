@@ -4,6 +4,7 @@ import globalStyles from '../styles/global.module.css';
 import useMediaQuery from '../src/hooks/mediaQuery';
 import ExpandableButton from './expandableButton';
 import createSession from '../src/utils/checkout';
+import addToCart from '../src/utils/addToCart';
 import { getFirestore } from 'firebase/firestore';
 import useAuth from '../src/auth/authContext';
 import { useEffect } from 'react';
@@ -34,7 +35,7 @@ export default function ImageDisplay({ hit }) {
         if (!user) return;
         // add uid to metadata
         additionalData.metadata.uid = user.uid;
-        console.log(additionalData)
+        // console.log(additionalData)
     }, [user])
 
     return (
@@ -54,7 +55,7 @@ export default function ImageDisplay({ hit }) {
                 </h4>
             </div>
             <div className={styles.hoverWrapper}>
-                <ExpandableButton icon='/shopping-cart-black.svg' text='Add to Cart' iconSize={40} />
+                <ExpandableButton icon='/shopping-cart-black.svg' text='Add to Cart' iconSize={40} onClick={() => addToCart(firestore, user, url, prompt)} />
                 <ExpandableButton icon='/credit-card.svg' text='Buy Now' iconSize={40} onClick={() => createSession(firestore, user, line_items, additionalData)} />
             </div>
         </main>
