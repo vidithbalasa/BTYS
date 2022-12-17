@@ -38,6 +38,10 @@ export default function ImageDisplay({ hit }) {
         // console.log(additionalData)
     }, [user])
 
+    useEffect(() => {
+        console.log(hit)
+    })
+
     return (
         <main className={styles.main}>
             <div className={styles.imageContainer}>
