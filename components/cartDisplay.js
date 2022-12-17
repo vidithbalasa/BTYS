@@ -51,8 +51,8 @@ export default function CartDisplay({ url, prompt, imageSize }) {
                                 className={styles.sizeInput}
                             >
                                 {
-                                    Object.keys(stickerVariants).map((key) => {
-                                        return <option value={key}>{stickerVariants[key]}</option>
+                                    Object.keys(stickerVariants).map((key, index) => {
+                                        return <option value={key} key={index}>{stickerVariants[key]}</option>
                                     })
                                 }
                             </select>
