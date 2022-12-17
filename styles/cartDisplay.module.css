@@ -1,0 +1,29 @@
+.image {
+    padding-top: 0;
+}
+
+@media screen and (min-width: 699px) {
+    .image {
+        padding-left: 5vw;
+    }
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2vh;
+}
+
+.prompt {
+    padding: 0;
+    margin-block: 0;
+}
+
+.selection {
+    width: 100;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
