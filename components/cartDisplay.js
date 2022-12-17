@@ -1,4 +1,5 @@
 import imageDisplayStyles from '../styles/imageDisplay.module.css';
+import styles from '../styles/cartDisplay.module.css';
 import Image from 'next/image';
 
 export default function CartDisplay({ url, prompt, imageSize }) {
