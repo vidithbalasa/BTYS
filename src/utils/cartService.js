@@ -1,9 +1,10 @@
 import { collection, addDoc } from "firebase/firestore";
 
-export async function addToCart(firestore, user, image, prompt) {
+export async function addToCart(firestore, user, imageId) {
     const cartRef = collection(firestore, 'users', user.uid, 'cart')
+    const imageRef = doc(firestore, 'images', imageId)
     const docRef = await addDoc(cartRef, {
-        prompt, image, size: '2x2', quantity: 1
+        image: imageRef, size: '2"x2"', quantity: 1
     })
 }
 
