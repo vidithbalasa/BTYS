@@ -4,7 +4,7 @@ import globalStyles from '../styles/global.module.css';
 import useMediaQuery from '../src/hooks/mediaQuery';
 import ExpandableButton from './expandableButton';
 import createSession from '../src/utils/checkout';
-import addToCart from '../src/utils/addToCart';
+import { addToCart } from '../src/utils/cartService';
 import { getFirestore } from 'firebase/firestore';
 import useAuth from '../src/auth/authContext';
 import { useEffect } from 'react';

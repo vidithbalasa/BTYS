@@ -7,13 +7,14 @@ function Profile() {
 
     return (
         <>
-            <motion.button
+            <button
                 className={styles.deleteButton}
-                whileHover={{ boxShadow: '0 0 0 0.5rem rgba(255, 0, 0, 0.5)' }}
+                // whileHover={{ scale: 1.2 }}
+                // whileTap={{ scale: 0.9 }}
             >
                 Delete Account
-            </motion.button>
-            <p className={styles.warning}>This Action is Permanent</p>
+            </button>
+            <p className={styles.warning}>This Action is Permanent !</p>
         </>
     )
 }

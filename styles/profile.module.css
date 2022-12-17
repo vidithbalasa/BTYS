@@ -15,6 +15,17 @@
     cursor: pointer;
 }
 
+.deleteButton:hover {
+    /* scale it evently */
+    transform: translate(-50%, -50%) scale(1.14);
+}
+
+/* when delete button is clciked */
+.deleteButton:active {
+    /* scale it evently */
+    transform: translate(-50%, -50%) scale(1);
+}
+
 .warning {
     position: absolute;
     top: calc(50% + 20px);
