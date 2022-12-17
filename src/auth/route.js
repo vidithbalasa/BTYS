@@ -19,14 +19,14 @@ export function withPublic(Component) {
 export function withProtected(Component) {
 	return function WithProtected(props) {
 		const auth = useAuth();
-		const router = useRouter();
+		const [showLogin, setShowLogin] = React.useState(true);
 
 		if (!auth.user) {
 			// return <LoginModal children={<Component {...props} />} />;
 			return (
 				<>
 					<Component auth={auth} {...props} />
-					<LoginModal message="This Page is Protected" />
+					{showLogin && <LoginModal message="This Page is Protected" setShowLogin={setShowLogin} />}
 				</>
 			)
 		}

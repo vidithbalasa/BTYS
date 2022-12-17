@@ -34,7 +34,7 @@ export default function HomeBackdrop({ children, images }) {
     const getCols = (numCols) => {
         let cols = []
         // random translation between 20 and 50
-        let randomTranslate = Math.floor(Math.random() * 30) + 20
+        let randomTranslate = Math.floor(Math.random() * 30)
         for (let i = 0; i < numCols; i++) {
             cols.push(
                 <div key={i} className={styles.imageCol} style={{transform: `translateY(-${randomTranslate}%)`}}>
