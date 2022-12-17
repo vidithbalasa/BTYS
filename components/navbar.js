@@ -6,11 +6,13 @@ import { motion, AnimatePresence  } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import useMediaQuery from '../src/hooks/mediaQuery';
 import { useRouter } from 'next/router';
+import useAuth from '../src/auth/authContext';
 
 export default function Navbar({ children }) {
     const smallScreen = useMediaQuery('(max-width: 975px)');
     const router = useRouter();
     const iconSize = 30;
+    const { user } = useAuth();
 
     const links = [
         { displayName: "Design", ref: "/design" },
@@ -26,9 +28,17 @@ export default function Navbar({ children }) {
         )},
         {customLink: (
             <Link href='/profile'><a>
-                <img 
-                    src={router.pathname==='/profile' ? '/user-circle-white.svg' : '/user-circle-b1b1b1.svg'}
-                    alt='User Profile' className={styles.profile} />    
+                {user
+                    ? (
+                        <img 
+                            src={router.pathname==='/profile' ? '/user-circle-white.svg' : '/user-circle-b1b1b1.svg'}
+                            alt='User Profile' className={styles.profile} />    
+                    ) : (
+                        <img
+                            src='/user-times-gray.svg'
+                            alt='User Profile' className={styles.profile} />
+                    )
+                }
             </a></Link>
         )}
     ]

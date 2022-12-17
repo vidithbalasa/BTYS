@@ -20,8 +20,26 @@ export default function Explore () {
     const notWideEnough = useMediaQuery('(max-width: 1100px)');
     const smallScreen = useMediaQuery('(max-width: 700px)');
     const firestore = getFirestore();
-    const numImages = 4-(2*(tooShort||notWideEnough))-(1*smallScreen)
+    // const numImages = 4-(2*(tooShort))-(1*smallScreen)
+    const [numImages, setNumImages] = useState(0);
     const { user } = useAuth();
+    // Get the current height and width of the window
+    const [windowDimensions, setWindowDimensions] = useState({
+        height: window.innerHeight,
+        width: window.innerWidth
+    });
+
+    useEffect(() => {
+        // update numImages on window resize
+        // Total number of 500 x 210px images that can fit on the screen (excluding the 400px search & nav bar)
+        if (smallScreen) {
+            const numRows = Math.floor((windowDimensions.height-250)/390)
+            setNumImages(numRows)
+        } else {
+            const totImages = Math.floor((windowDimensions.width-100)/500) * Math.floor((windowDimensions.height-250)/210)
+            setNumImages(totImages)
+        }
+    }, [windowDimensions])
 
     async function getImages() {
         const userImageObjects = []

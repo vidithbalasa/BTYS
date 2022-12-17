@@ -32,6 +32,10 @@
         width: 340px;
         height: 130px;
     }
+
+    .modal h1 {
+        font-size: 24px;
+    }
 }
 
 .loginButton {
