@@ -1,7 +1,20 @@
-.imageContainer {
+.main {
+    /* Variables */
+    --lightColor: #D9D9D9;
     --width: 500px;
     --height: 210px;
 
+    /* Styles */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    width: var(--width);
+    height: var(--height);
+}
+
+.imageContainer {
     background-color: #D9D9D9;
     display: flex;
     flex-direction: row;
@@ -29,19 +42,50 @@
     margin-block: 0;
 }
 
-@media screen and (min-width: 699px) {
+@media screen and (min-width: 700px) {
     .image {
         padding-left: 1vw;
     }
 }
 
-@media screen and (max-width: 700px) {
-    .imageContainer {
+@media screen and (max-width: 699px) {
+    .main {
         --width: 300px;
         --height: 390px;
+    }
 
+    .banner {
+        font-size: 20px;
+    }
+
+    .imageContainer {
         flex-direction: column;
-        align-items: center;
+    }
+}
+
+@media screen and (max-width: 500px) and (max-height: 830px) {
+    .main {
+        --width: 320px;
+        --height: 120px;
+
+        padding-top: 12vh;
+    }
+
+    .imageContainer {
+        flex-direction: row;
+    }
+
+    .image {
+        width: 80%;
+        padding-left: 3vw;
+    }
+
+    .prompt {
+        font-size: 16px;
+    }
+
+    .selection label {
+        font-size: 14px;
     }
 }
 
@@ -69,4 +113,8 @@
 .selection div {
     display: flex;
     gap: 10px;
+}
+
+.selection input, .selection select {
+    outline: none;
 }
