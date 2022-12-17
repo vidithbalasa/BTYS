@@ -1,11 +1,10 @@
-import imageDisplayStyles from '../styles/imageDisplay.module.css';
 import styles from '../styles/cartDisplay.module.css';
 import Image from 'next/image';
 import stickerVariants from '../src/utils/stickerVariants';
 
 export default function CartDisplay({ url, prompt, imageSize }) {
     return (
-        <main className={imageDisplayStyles.main}>
+        <main className={styles.main}>
             <div className={styles.imageContainer}>
                 <div className={styles.image}>
                     <Image src={url} alt={prompt} width={imageSize} height={imageSize} />

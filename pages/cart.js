@@ -12,7 +12,6 @@ function Cart() {
     // const [loading, setLoading] = useState(true);
     // const [cartItems, setCartItems] = useState([]);
     const imageSize = 192;
-    // const firestore = getFirestore();
     
     const samplePrompts = [
         'lorem ipsum dolor sit amet. consectetur adipiscing elit. sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ut enim ad minim veniam',
@@ -27,7 +26,6 @@ function Cart() {
 
     // useEffect(() => {
     //     const getCartItems = async () => {
-    //         // Get all items from cart
     //         const firestore = getFirestore();
     //         const cartRef = collection(firestore, 'users', user.uid, 'cart');
     //         const cartItems = await getDocs(cartRef);
