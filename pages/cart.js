@@ -1,14 +1,29 @@
 import { withProtected } from "../src/auth/route"
 import styles from '../styles/cart.module.css';
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getFirestore, collection, getDocs, document } from "firebase/firestore";
 import useAuth from "../src/auth/authContext";
 import { useEffect, useState } from "react";
 import Loader from "../components/loader";
+import sampleImages from '../public/sampleImages';
+import CartDisplay from "../components/cartDisplay";
 
 function Cart() {
     const { user } = useAuth();
     const [loading, setLoading] = useState(true);
     const [cartItems, setCartItems] = useState([]);
+    const imageSize = 192;
+    const firestore = getFirestore();
+    
+    // const samplePrompts = [
+    //     'lorem ipsum dolor sit amet',
+    //     'consectetur adipiscing elit',
+    //     'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    //     'ut enim ad minim veniam',
+    // ]
+    // const [loading, setLoading] = useState(false);
+    // const cartItems = [{url: sampleImages[0], prompt: samplePrompts[0]}]
+
+    
 
     useEffect(() => {
         const getCartItems = async () => {
@@ -16,7 +31,7 @@ function Cart() {
             const firestore = getFirestore();
             const cartRef = collection(firestore, 'users', user.uid, 'cart');
             const cartItems = await getDocs(cartRef);
-            const cartItemsArray = cartItems.docs.map(doc => doc.data());
+            const cartItemsArray = cartItems.docs.map(doc => ({id: doc.id, ...doc.data()}));
             return cartItemsArray
         }
         getCartItems()
@@ -31,9 +46,23 @@ function Cart() {
     return (
         <>
             <main className={styles.main}>
-                <h1 className={styles.title}>Cart</h1>
-                {/* button to console log cart items */}
-                <button onClick={() => console.log(cartItems)}>Log Cart Items</button>
+                <div className={styles.banner}>
+                    <h3 className={styles.banner}>$8 Stickers</h3>
+                    <h3 className={styles.banner}>Free Shipping (US Only)</h3>
+                </div>
+                <div className={styles.checkout}>
+                    <h3 className={styles.price}>Total: {`$${cartItems.length * 8}.00`}</h3>
+                    <button className={styles.checkoutButton}>Check Out</button>
+                </div>
+                <div className={styles.imagesBox}>
+                    {
+                        cartItems.map((item, i) => {
+                            return (
+                                <CartDisplay url={item.url} prompt={item.prompt} key={i} imageSize={imageSize} />
+                            )
+                        })
+                    }
+                </div>
             </main>
         </>
     )

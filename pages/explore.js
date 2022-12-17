@@ -33,8 +33,8 @@ export default function Explore () {
         const docPromise = await getDoc(docRef)
         const userData = docPromise.data()
         const userImages = userData.images
-        for (const image of userImages) {
-            const imageRef = doc(firestore, 'images', image)
+        for (const imageRef of userImages) {
+            // const imageRef = doc(firestore, 'images', image)
             const imageData = await getDoc(imageRef)
             userImageObjects.push(imageData.data())
         }
