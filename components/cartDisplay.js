@@ -1,6 +1,7 @@
 import imageDisplayStyles from '../styles/imageDisplay.module.css';
 import styles from '../styles/cartDisplay.module.css';
 import Image from 'next/image';
+import stickerVariants from '../src/utils/stickerVariants';
 
 export default function CartDisplay({ url, prompt, imageSize }) {
     return (
@@ -37,7 +38,24 @@ export default function CartDisplay({ url, prompt, imageSize }) {
                                 defaultValue='1'
                                 className={styles.quantityInput}
                             />
-                            {/* input selection for size: [2x2, 3x3, 4x4, 6x6] */}
+                            {/* drop down input selection for size: [2x2, 3x3, 4x4, 6x6] */}
+                            <label
+                                htmlFor='size'
+                                className={styles.sizeLabel}
+                            >
+                                Size
+                            </label>
+                            <select
+                                name='size'
+                                id='size'
+                                className={styles.sizeInput}
+                            >
+                                {
+                                    Object.keys(stickerVariants).map((key, index) => {
+                                        return <option value={key} key={index}>{stickerVariants[key]}</option>
+                                    })
+                                }
+                            </select>
                         </div>
                     </div>
                 </div>
