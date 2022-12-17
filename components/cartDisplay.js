@@ -6,18 +6,16 @@ import stickerVariants from '../src/utils/stickerVariants';
 export default function CartDisplay({ url, prompt, imageSize }) {
     return (
         <main className={imageDisplayStyles.main}>
-            <div className={imageDisplayStyles.imageContainer}>
-                <div className={imageDisplayStyles.image}>
+            <div className={styles.imageContainer}>
+                <div className={styles.image}>
                     <Image src={url} alt={prompt} width={imageSize} height={imageSize} />
                 </div>
                 <div className={styles.info}>
-                    <h4 className={imageDisplayStyles.prompt}>
+                    <h4 className={styles.prompt}>
                         {
-                            prompt.length > 100
-                            ? smallScreen
-                                ? prompt.slice(0, 60) + '...'
-                                : prompt.slice(0, 80) + '...'
-                            : prompt
+                            prompt.length > 80
+                                ? prompt.slice(0, 80) + '...'
+                                : prompt
                         }
                     </h4>
                     <div className={styles.selection}>
@@ -27,7 +25,7 @@ export default function CartDisplay({ url, prompt, imageSize }) {
                                 htmlFor='quantity'
                                 className={styles.quantityLabel}
                             >
-                                Quantity
+                                Quantity: 
                             </label>
                             <input
                                 type='number'
@@ -38,12 +36,14 @@ export default function CartDisplay({ url, prompt, imageSize }) {
                                 defaultValue='1'
                                 className={styles.quantityInput}
                             />
+                        </div>
+                        <div className={styles.size}>
                             {/* drop down input selection for size: [2x2, 3x3, 4x4, 6x6] */}
                             <label
                                 htmlFor='size'
                                 className={styles.sizeLabel}
                             >
-                                Size
+                                Size:
                             </label>
                             <select
                                 name='size'
