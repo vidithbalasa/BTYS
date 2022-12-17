@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import Loader from "../components/loader";
 import sampleImages from '../public/sampleImages';
 import CartDisplay from "../components/cartDisplay";
-import styles from '../styles/cart.module.css';
 
 function Cart() {
     const { user } = useAuth();
