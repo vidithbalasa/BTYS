@@ -12,7 +12,7 @@ import { useEffect } from 'react';
 export default function ImageDisplay({ hit }) {
     const smallScreen = useMediaQuery('(max-width: 700px)')
     const imageSize = smallScreen ? 256 : 160;
-    const { url, prompt } = hit
+    const { url, prompt, id } = hit
     const firestore = getFirestore();
     const { user } = useAuth();
     const line_items = [{
@@ -55,7 +55,7 @@ export default function ImageDisplay({ hit }) {
                 </h4>
             </div>
             <div className={styles.hoverWrapper}>
-                <ExpandableButton icon='/shopping-cart-black.svg' text='Add to Cart' iconSize={40} onClick={() => addToCart(firestore, user, url, prompt)} />
+                <ExpandableButton icon='/shopping-cart-black.svg' text='Add to Cart' iconSize={40} onClick={() => addToCart(firestore, user, id)} />
                 <ExpandableButton icon='/credit-card.svg' text='Buy Now' iconSize={40} onClick={() => createSession(firestore, user, line_items, additionalData)} />
             </div>
         </main>
