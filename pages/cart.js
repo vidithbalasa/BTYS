@@ -69,8 +69,7 @@ function Cart() {
                         cartItems.map((item, i) => {
                             return (
                                 <CartDisplay 
-                                    url={item.url} prompt={item.prompt}
-                                    itemId={item.id} updateItem={updateItem}
+                                    item={item} updateItem={updateItem}
                                     key={i} imageSize={imageSize} 
                                 />
                             )
