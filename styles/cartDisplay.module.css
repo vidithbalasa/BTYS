@@ -79,6 +79,7 @@
 
     .image {
         padding-left: 2vw;
+        width: 150px;
     }
 
     .prompt {
@@ -87,6 +88,14 @@
 
     .selection label {
         font-size: 14px;
+    }
+
+    .selection div {
+        gap: 5px;
+    }
+
+    .selection input, .selection select {
+        max-height: 20px;
     }
 }
 
