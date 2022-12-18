@@ -15,7 +15,6 @@ function Cart() {
     const smallScreen = useMediaQuery('(max-width: 600px)');
     const [loading, setLoading] = useState(true);
     const [cartItems, setCartItems] = useState([]);
-    const { line_items, metadata }  = getCartSessionInfo(firestore, user);
     const imageSize = smallScreen ? 150 : 192;
     const firestore = getFirestore();
     const [checkoutLoad, setCheckoutLoad] = useState(false);
@@ -24,6 +23,7 @@ function Cart() {
     }
     const checkoutCart = async () => {
         setCheckoutLoad(true);
+        const { line_items, metadata }  = await getCartSessionInfo(firestore, user);
         await createSession(firestore, user, line_items, { metadata })
         setCheckoutLoad(false);
     }
