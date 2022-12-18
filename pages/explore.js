@@ -71,7 +71,7 @@ export default function Explore () {
                                 {loading
                                     ? <div className={styles.loader}><Loader /></div>
                                     : images.slice(0,numImages).map((image, index) => (
-                                        <ImageDisplay key={index} hit={{url: image.url, prompt: image.prompt, objectId: image.id}} smallScreen={smallScreen} />
+                                        <ImageDisplay key={index} hit={{url: image.url, prompt: image.prompt, objectID: image.id}} smallScreen={smallScreen} />
                                         ))
                                     }
                             </div>
