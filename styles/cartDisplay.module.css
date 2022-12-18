@@ -27,9 +27,6 @@
 
 .image {
     padding-top: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 100%;
 }
 
@@ -61,6 +58,12 @@
     .imageContainer {
         flex-direction: column;
     }
+
+    .image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
 
 @media screen and (max-width: 500px) and (max-height: 830px) {
@@ -73,11 +76,11 @@
 
     .imageContainer {
         flex-direction: row;
+        gap: 10px
     }
 
     .image {
-        width: 80%;
-        padding-left: 3vw;
+        padding-left: 2vw;
     }
 
     .prompt {
