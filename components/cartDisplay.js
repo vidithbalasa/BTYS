@@ -34,6 +34,7 @@ export default function CartDisplay({ url, prompt, imageSize, itemId, updateItem
                                 max='10'
                                 defaultValue='1'
                                 className={styles.quantityInput}
+                                onChange={(e) => updateItem(itemId, {quantity: e.target.value})}
                             />
                         </div>
                         <div className={styles.size}>

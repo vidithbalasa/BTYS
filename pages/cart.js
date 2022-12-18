@@ -14,7 +14,7 @@ function Cart() {
     const [cartItems, setCartItems] = useState([]);
     const imageSize = 192;
     const firestore = getFirestore();
-    const updateItem = async (update, itemId) => {
+    const updateItem = async (itemId, update) => {
         await updateCartItem(firestore, user, itemId, update)
     }
     
