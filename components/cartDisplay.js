@@ -7,14 +7,14 @@ export default function CartDisplay({ item, imageSize, updateItem }) {
         <main className={styles.main}>
             <div className={styles.imageContainer}>
                 <div className={styles.image}>
-                    <Image src={url} alt={prompt} width={imageSize} height={imageSize} />
+                    <Image src={item.url} alt={item.prompt} width={imageSize} height={imageSize} />
                 </div>
                 <div className={styles.info}>
                     <h4 className={styles.prompt}>
                         {
-                            prompt.length > 80
-                                ? prompt.slice(0, 80) + '...'
-                                : prompt
+                            item.prompt.length > 80
+                                ? item.prompt.slice(0, 80) + '...'
+                                : item.prompt
                         }
                     </h4>
                     <div className={styles.selection}>
