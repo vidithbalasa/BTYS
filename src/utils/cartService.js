@@ -1,4 +1,4 @@
-import { collection, addDoc, doc, updateDoc } from "firebase/firestore";
+import { collection, addDoc, doc, updateDoc, getDocs, getDoc } from "firebase/firestore";
 
 export async function addToCart(firestore, user, imageId) {
     const cartRef = collection(firestore, 'users', user.uid, 'cart')

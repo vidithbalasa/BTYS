@@ -2,7 +2,7 @@ import styles from '../styles/cartDisplay.module.css';
 import Image from 'next/image';
 import stickerVariants from '../src/utils/stickerVariants';
 
-export default function CartDisplay({ item, imageSize, updateItem }) {
+export default function CartDisplay({ item, imageSize, updateItem, smallScreen }) {
     return (
         <main className={styles.main}>
             <div className={styles.imageContainer}>
@@ -12,9 +12,11 @@ export default function CartDisplay({ item, imageSize, updateItem }) {
                 <div className={styles.info}>
                     <h4 className={styles.prompt}>
                         {
-                            item.prompt.length > 80
-                                ? item.prompt.slice(0, 80) + '...'
-                                : item.prompt
+                            smallScreen
+                                ? item.prompt.length > 40
+                                    ? item.prompt.slice(0, 40) + '...' : item.prompt
+                                : item.prompt.length > 80
+                                    ? item.prompt.slice(0, 80) + '...' : item.prompt
                         }
                     </h4>
                     <div className={styles.selection}>
