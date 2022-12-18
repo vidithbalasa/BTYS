@@ -70,13 +70,11 @@
     .main {
         --width: 320px;
         --height: 120px;
-
-        padding-top: 12vh;
     }
 
     .imageContainer {
         flex-direction: row;
-        gap: 10px
+        gap: 10px;
     }
 
     .image {
