@@ -1,8 +1,7 @@
-import { getFirestore, collection, addDoc, onSnapshot } from "firebase/firestore";
+import { collection, addDoc, onSnapshot } from "firebase/firestore";
 import { loadStripe } from "@stripe/stripe-js";
-import stickerVariants from "./stickerVariants";
 
-export default async function createSession (firestore, user, line_items, additionalData={}) {
+export default async function createSession (firestore, user, line_items, additionalData, setLoading) {
     const checkout_session_ref = collection(firestore, 'users', user.uid, 'checkout_sessions')
 
     const docRef = await addDoc(checkout_session_ref, {
@@ -10,11 +9,19 @@ export default async function createSession (firestore, user, line_items, additi
         success_url: 'https://btys.vercel.app/success?session_id={CHECKOUT_SESSION_ID}',
         cancel_url: window.location.origin,
         line_items,
-        ...additionalData
-        // line_items: [{
-        //     price_data: {currency: 'usd', product_data: {name: 'testing'}, unit_amount: 10000},
-        //     quantity: 1
-        // }]
+        ...additionalData,
+        shipping_address_collection: {"allowed_countries": ["US"]},
+        shipping_options: [
+            {"shipping_rate_data": {
+                "type": "fixed_amount",
+                "fixed_amount": {"amount": 0, "currency": "usd"},
+                "display_name": "Free shipping",
+                "delivery_estimate": {
+                    "minimum": {"unit": "business_day", "value": 5},
+                    "maximum": {"unit": "business_day", "value": 7},
+                }
+            }}
+        ],
     })
 
     onSnapshot(docRef, async (snap) => {
@@ -29,4 +36,6 @@ export default async function createSession (firestore, user, line_items, additi
             stripe.redirectToCheckout({ sessionId })
         }
     })
+
+    setLoading(false)
 }

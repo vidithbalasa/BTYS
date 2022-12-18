@@ -9,6 +9,7 @@ import CartDisplay from "../components/cartDisplay";
 import { updateCartItem, getCartSessionInfo } from "../src/utils/cartService";
 import createSession from "../src/utils/checkout";
 import useMediaQuery from "../src/hooks/mediaQuery";
+import globalStyles from '../styles/global.module.css';
 
 function Cart() {
     const { user } = useAuth();
@@ -24,8 +25,7 @@ function Cart() {
     const checkoutCart = async () => {
         setCheckoutLoad(true);
         const { line_items, metadata }  = await getCartSessionInfo(firestore, user);
-        await createSession(firestore, user, line_items, { metadata })
-        setCheckoutLoad(false);
+        await createSession(firestore, user, line_items, { metadata }, setCheckoutLoad)
     }
     
     // const samplePrompts = [
@@ -89,11 +89,7 @@ function Cart() {
                     }
                 </div>
             </main>
-            {checkoutLoad && 
-                <div className={styles.checkoutLoad}>
-                    <Loader />
-                </div>
-            }
+            {checkoutLoad && <div className={globalStyles.checkoutLoader}><Loader /></div>}
         </>
     )
 }

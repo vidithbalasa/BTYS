@@ -8,8 +8,10 @@ import { addToCart } from '../src/utils/cartService';
 import { getFirestore } from 'firebase/firestore';
 import useAuth from '../src/auth/authContext';
 import { useEffect } from 'react';
+import Loader from './loader';
 
 export default function ImageDisplay({ hit }) {
+    const [checkoutLoad, setCheckoutLoad] = useState(false);
     const smallScreen = useMediaQuery('(max-width: 700px)')
     const imageSize = smallScreen ? 256 : 160;
     const { url, prompt, objectID } = hit
@@ -39,25 +41,31 @@ export default function ImageDisplay({ hit }) {
     }, [user])
 
     return (
-        <main className={styles.main}>
-            <div className={styles.imageContainer}>
-                <div className={styles.image}>
-                    <Image src={url} alt={prompt} width={imageSize} height={imageSize} />
+        <>
+            <main className={styles.main}>
+                <div className={styles.imageContainer}>
+                    <div className={styles.image}>
+                        <Image src={url} alt={prompt} width={imageSize} height={imageSize} />
+                    </div>
+                    <h4 className={styles.prompt}>
+                        {
+                            prompt.length > 100
+                            ? smallScreen
+                                ? prompt.slice(0, 60) + '...'
+                                : prompt.slice(0, 80) + '...'
+                            : prompt
+                        }
+                    </h4>
                 </div>
-                <h4 className={styles.prompt}>
-                    {
-                        prompt.length > 100
-                        ? smallScreen
-                            ? prompt.slice(0, 60) + '...'
-                            : prompt.slice(0, 80) + '...'
-                        : prompt
-                    }
-                </h4>
-            </div>
-            <div className={styles.hoverWrapper}>
-                <ExpandableButton icon='/shopping-cart-black.svg' text='Add to Cart' iconSize={40} onClick={() => addToCart(firestore, user, objectID)} />
-                <ExpandableButton icon='/credit-card.svg' text='Buy Now' iconSize={40} onClick={() => createSession(firestore, user, line_items, additionalData)} />
-            </div>
-        </main>
+                <div className={styles.hoverWrapper}>
+                    <ExpandableButton icon='/shopping-cart-black.svg' text='Add to Cart' iconSize={40} onClick={() => addToCart(firestore, user, objectID)} />
+                    <ExpandableButton icon='/credit-card.svg' text='Buy Now' iconSize={40} onClick={() => {
+                        setCheckoutLoad(true);
+                        createSession(firestore, user, line_items, additionalData, setCheckoutLoad)
+                    }} />
+                </div>
+            </main>
+            {checkoutLoad && <div className={globalStyles.checkoutLoader}><Loader /></div>}
+        </>
     )
 }
