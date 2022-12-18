@@ -82,7 +82,7 @@ function Cart() {
                             return (
                                 <CartDisplay 
                                     item={item} updateItem={updateItem}
-                                    key={i} imageSize={imageSize} 
+                                    key={i} imageSize={imageSize} smallScreen={smallScreen}
                                 />
                             )
                         })
