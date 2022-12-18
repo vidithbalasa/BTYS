@@ -23,6 +23,7 @@ export default function ImageDisplay({ hit }) {
             product_data: { name: prompt, images: [url] },
             unit_amount: 800,
         },
+        adjustable_quantity: {enabled: true, minimum: 1, maximum: 10},
         quantity: 1,
     }]
     const additionalData = {

@@ -33,6 +33,7 @@ export async function getCartSessionInfo(firestore, user) {
                 product_data: { name: imageName, images: [image.url] },
                 unit_amount: 800,
             },
+            adjustable_quantity: {enabled: true, minimum: 1, maximum: 10},
             quantity: item.quantity,
         })
         metadata[`${i}_name`] = imageName
