@@ -23,11 +23,16 @@
     border-radius: 5px;
     width: var(--width);
     height: var(--height);
+    overflow: hidden;
 }
 
 .image {
     padding-top: 0;
     width: 100%;
+    position: sticky;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .prompt {
@@ -79,7 +84,7 @@
 
     .image {
         padding-left: 2vw;
-        width: 150px;
+        max-width: 100px;
     }
 
     .prompt {
