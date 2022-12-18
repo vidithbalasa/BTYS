@@ -7,7 +7,6 @@ import useAuth from '../src/auth/authContext';
 import Image from 'next/image';
 import styles from '../styles/design.module.css';
 import globalStyles from '../styles/global.module.css';
-import creationContext from '../src/context/creationContext';
 import { useRouter } from 'next/router';
 import { getFirestore } from 'firebase/firestore';
 import Loader from '../components/loader';

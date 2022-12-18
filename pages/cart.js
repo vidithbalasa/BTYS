@@ -6,16 +6,24 @@ import { useEffect, useState } from "react";
 import Loader from "../components/loader";
 import sampleImages from '../public/sampleImages';
 import CartDisplay from "../components/cartDisplay";
-import { updateCartItem } from "../src/utils/cartService";
+import { updateCartItem, getCartSessionInfo } from "../src/utils/cartService";
+import createSession from "../src/utils/checkout";
 
 function Cart() {
     const { user } = useAuth();
     const [loading, setLoading] = useState(true);
     const [cartItems, setCartItems] = useState([]);
+    const { line_items, metadata }  = getCartSessionInfo(firestore, user);
     const imageSize = 192;
     const firestore = getFirestore();
+    const [checkoutLoad, setCheckoutLoad] = useState(false);
     const updateItem = async (itemId, update) => {
-        await updateCartItem(firestore, user, itemId, update)
+        await updateCartItem(firestore, user, itemId, update);
+    }
+    const checkoutCart = async () => {
+        setCheckoutLoad(true);
+        await createSession(firestore, user, line_items, { metadata })
+        setCheckoutLoad(false);
     }
     
     // const samplePrompts = [
@@ -30,8 +38,6 @@ function Cart() {
     // for (let i = 0; i < 10; i++) {
     //     cartItems.push({url: sampleImages[i], prompt: samplePrompts[i % 4], quantity: 1, size: '2x2', id: i})
     // }
-
-    
 
     useEffect(() => {
         const getCartItems = async () => {
@@ -66,7 +72,7 @@ function Cart() {
                 </div>
                 <div className={styles.checkout}>
                     <h3 className={styles.price}>Total: {`$${cartItems.length * 8}.00`}</h3>
-                    <button className={styles.checkoutButton}>Check Out</button>
+                    <button className={styles.checkoutButton} onClick={checkoutCart}>Check Out</button>
                 </div>
                 <div className={styles.imagesBox}>
                     {
@@ -81,6 +87,11 @@ function Cart() {
                     }
                 </div>
             </main>
+            {checkoutLoad && 
+                <div className={styles.checkoutLoad}>
+                    <Loader />
+                </div>
+            }
         </>
     )
 }

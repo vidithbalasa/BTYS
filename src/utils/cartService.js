@@ -13,16 +13,30 @@ export async function updateCartItem (firestore, user, cartItemId, update) {
     const docRef = await updateDoc(cartRef, update)
 }
 
-// // create a function that spits out a function that lets you change the values 
-    // // for a specific cart item
-    // const changeCartItem = (index) => {
-    //     return (index, quantity, size) => {
-    //         // update the cart item in firestore
-    //         const colDoc = document(firestore, 'users', user.uid, 'cart', cartItems[index].id);
-    //         const update = {
-    //             quantity: quantity,
-    //             size: size,
-    //         }
-    //         // update the cart item in state
-    //     }
-    // }
+
+export async function getCartSessionInfo(firestore, user) {
+    // Get all items from cart
+    const cartRef = collection(firestore, 'users', user.uid, 'cart')
+    const cartItems = await getDocs(cartRef)
+    // Create line items from cart items
+    const line_items = []
+    const metadata = {}
+    let i = 0
+    for (const itemDoc of cartItems.docs) {
+        const item = itemDoc.data()
+        const imageDoc = await getDoc(item.image)
+        const image = imageDoc.data()
+        const imageName = `${image.prompt} (${stickerVariants[item.size]} sticker)`
+        line_items.push({
+            price_data: {
+                currency: 'usd',
+                product_data: { name: imageName, images: [image.url] },
+                unit_amount: 800,
+            },
+            quantity: item.quantity,
+        })
+        metadata[`${i}_name`] = imageName
+        metadata[`${i}_image`] = image.url
+    }
+    return { line_items, metadata }
+}
