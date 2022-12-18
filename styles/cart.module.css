@@ -62,8 +62,11 @@
 .imagesBox {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: start;
     align-items: center;
+    padding-top: 10vh;
+    gap: 3vw;
+    /* make it scrollable */
     overflow: scroll;
-    padding-top: 5vw;
+    width: 100%;
 }

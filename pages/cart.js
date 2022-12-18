@@ -25,7 +25,11 @@ function Cart() {
     //     'ut enim ad minim veniam',
     // ]
     // const [loading, setLoading] = useState(false);
-    // const cartItems = [{url: sampleImages[0], prompt: samplePrompts[0]}]
+    // // const cartItems = [{url: sampleImages[0], prompt: samplePrompts[0]}]
+    // const cartItems = []
+    // for (let i = 0; i < 10; i++) {
+    //     cartItems.push({url: sampleImages[i], prompt: samplePrompts[i % 4], quantity: 1, size: '2x2', id: i})
+    // }
 
     
 
