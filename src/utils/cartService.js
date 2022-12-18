@@ -1,4 +1,5 @@
 import { collection, addDoc, doc, updateDoc, getDocs, getDoc } from "firebase/firestore";
+import stickerVariants from "./stickerVariants";
 
 export async function addToCart(firestore, user, imageId) {
     const cartRef = collection(firestore, 'users', user.uid, 'cart')
@@ -12,7 +13,6 @@ export async function updateCartItem (firestore, user, cartItemId, update) {
     const cartRef = doc(firestore, 'users', user.uid, 'cart', cartItemId)
     const docRef = await updateDoc(cartRef, update)
 }
-
 
 export async function getCartSessionInfo(firestore, user) {
     // Get all items from cart
