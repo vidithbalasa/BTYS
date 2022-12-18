@@ -2,7 +2,7 @@ import styles from '../styles/cartDisplay.module.css';
 import Image from 'next/image';
 import stickerVariants from '../src/utils/stickerVariants';
 
-export default function CartDisplay({ url, prompt, imageSize }) {
+export default function CartDisplay({ url, prompt, imageSize, itemId, updateItem }) {
     return (
         <main className={styles.main}>
             <div className={styles.imageContainer}>
@@ -48,6 +48,7 @@ export default function CartDisplay({ url, prompt, imageSize }) {
                                 name='size'
                                 id='size'
                                 className={styles.sizeInput}
+                                onChange={(e) => updateItem(itemId, {size: e.target.value})}
                             >
                                 {
                                     Object.keys(stickerVariants).map((key, index) => {
