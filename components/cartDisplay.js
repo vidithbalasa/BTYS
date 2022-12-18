@@ -2,7 +2,7 @@ import styles from '../styles/cartDisplay.module.css';
 import Image from 'next/image';
 import stickerVariants from '../src/utils/stickerVariants';
 
-export default function CartDisplay({ url, prompt, imageSize, itemId, updateItem }) {
+export default function CartDisplay({ item, imageSize, updateItem }) {
     return (
         <main className={styles.main}>
             <div className={styles.imageContainer}>
@@ -32,9 +32,9 @@ export default function CartDisplay({ url, prompt, imageSize, itemId, updateItem
                                 id='quantity'
                                 min='1'
                                 max='10'
-                                defaultValue='1'
+                                defaultValue={item.quantity}
                                 className={styles.quantityInput}
-                                onChange={(e) => updateItem(itemId, {quantity: e.target.value})}
+                                onChange={(e) => updateItem(item.id, {quantity: e.target.value})}
                             />
                         </div>
                         <div className={styles.size}>
@@ -49,7 +49,8 @@ export default function CartDisplay({ url, prompt, imageSize, itemId, updateItem
                                 name='size'
                                 id='size'
                                 className={styles.sizeInput}
-                                onChange={(e) => updateItem(itemId, {size: e.target.value})}
+                                onChange={(e) => updateItem(item.id, {size: e.target.value})}
+                                defaultValue={item.size}
                             >
                                 {
                                     Object.keys(stickerVariants).map((key, index) => {
