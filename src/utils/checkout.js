@@ -1,4 +1,4 @@
-import { collection, addDoc, onSnapshot, doc } from "firebase/firestore";
+import { collection, addDoc, onSnapshot, doc, setDoc } from "firebase/firestore";
 import { loadStripe } from "@stripe/stripe-js";
 
 export default async function createSession (firestore, user, line_items, additionalData, setLoading) {
@@ -26,7 +26,7 @@ export default async function createSession (firestore, user, line_items, additi
 
     // create document named TEST_SESSION and add data to it
     const docRef = doc(firestore, 'users', user.uid, 'checkout_sessions', 'TEST_SESSION');
-    await addDoc(docRef, {
+    await setDoc(docRef, {
         mode: 'payment',
         success_url: 'https://btys.vercel.app/success?session_id={CHECKOUT_SESSION_ID}',
         cancel_url: window.location.origin,
@@ -45,6 +45,7 @@ export default async function createSession (firestore, user, line_items, additi
         line_items,
         ...additionalData,
     });
+
 
     onSnapshot(docRef, async (snap) => {
         const { error, sessionId } = snap.data();
