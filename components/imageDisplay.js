@@ -7,7 +7,7 @@ import createSession from '../src/utils/checkout';
 import { addToCart } from '../src/utils/cartService';
 import { getFirestore } from 'firebase/firestore';
 import useAuth from '../src/auth/authContext';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Loader from './loader';
 
 export default function ImageDisplay({ hit }) {
