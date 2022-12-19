@@ -22,6 +22,7 @@ function Design() {
     const [img, setImg] = useState('');
     const [loading, setLoading] = useState(false);
     const [imageObject, setImageObject] = useState({line_items: [], additionalData: {}});
+    const [checkoutLoad, setCheckoutLoad] = useState(false);
     const [loginRequired, setLoginRequired] = useState(false);
     const functions = getFunctions(getApp());
     const { user } = useAuth();
@@ -106,10 +107,14 @@ function Design() {
                             </motion.button>
                             <ExpandableButton 
                                 icon={'/credit-card.svg'} iconSize={iconSize} 
-                                onClick={() => createSession(
-                                    firestore, user, 
-                                    imageObject.line_items, imageObject.additionalData
-                                )} 
+                                onClick={() => {
+                                    setCheckoutLoad(true);
+                                    createSession(
+                                        firestore, user, 
+                                        imageObject.line_items, imageObject.additionalData,
+                                        setCheckoutLoad
+                                    );
+                                }}
                                 style={`${styles.circle} ${styles.bottomCircle}`} 
                             />
                         </>
@@ -117,6 +122,7 @@ function Design() {
                 )} 
             </main>
             {loginRequired && <LoginModal setShowLogin={setLoginRequired} />}
+            {checkoutLoad && <div className={globalStyles.checkoutLoader}><Loader /></div>}
         </>
     );
 }
