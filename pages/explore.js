@@ -16,8 +16,6 @@ export default function Explore () {
     const [loading, setLoading] = useState(true);
     const [images, setImages] = useState([]);
     const [loginRequired, setLoginRequired] = useState(false);
-    const tooShort = useMediaQuery('(max-height: 650px)');
-    const notWideEnough = useMediaQuery('(max-width: 1100px)');
     const smallScreen = useMediaQuery('(max-width: 700px)');
     const firestore = getFirestore();
     const numImages = (

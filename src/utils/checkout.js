@@ -27,11 +27,9 @@ export default async function createSession (firestore, user, line_items, additi
     onSnapshot(docRef, async (snap) => {
         const { error, sessionId } = snap.data();
         if (error) {
-            console.log('error')
             alert(error.message)
         }
         if (sessionId) {
-            console.log('sessionId')
             const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
             stripe.redirectToCheckout({ sessionId })
         }
