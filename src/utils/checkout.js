@@ -9,7 +9,8 @@ export default async function createSession (firestore, user, line_items, additi
         success_url: 'https://btys.vercel.app/success?session_id={CHECKOUT_SESSION_ID}',
         cancel_url: window.location.origin,
         shipping_address_collection: {"allowed_countries": ["US"]},
-        shipping_options: [{shipping_rate: "shr_1MGrdnKnHHz9C6fwaktLyliA"}],
+        collect_shipping_address: true,
+        // shipping_options: [{shipping_rate: "shr_1MGrdnKnHHz9C6fwaktLyliA"}],
         line_items,
         ...additionalData,
     })
