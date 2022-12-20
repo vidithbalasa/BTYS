@@ -7,11 +7,13 @@ import createSession from '../src/utils/checkout';
 import { addToCart } from '../src/utils/cartService';
 import { getFirestore } from 'firebase/firestore';
 import useAuth from '../src/auth/authContext';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Loader from './loader';
+import LoginModal from './loginModal';
 
 export default function ImageDisplay({ hit }) {
     const [checkoutLoad, setCheckoutLoad] = useState(false);
+    const [login, setLogin] = useState(false);
     const smallScreen = useMediaQuery('(max-width: 700px)')
     const imageSize = smallScreen ? 256 : 160;
     const { url, prompt, objectID } = hit
@@ -28,7 +30,7 @@ export default function ImageDisplay({ hit }) {
     }]
     const additionalData = {
         metadata: {
-            'uid': user ? user.uid : `guest_${Math.random().toString(36).substring(7)}`,
+            uid: user ? user.uid : `guest_${Math.random().toString(36).substring(7)}`,
             '0_name': prompt,
             '0_image': url,
         }
@@ -40,6 +42,17 @@ export default function ImageDisplay({ hit }) {
         additionalData.metadata.uid = user.uid;
         // console.log(additionalData)
     }, [user])
+
+    const buyNowCallback = useCallback(() => {
+        if (!user) { setLogin(true); return; }
+        setCheckoutLoad(true);
+        createSession(firestore, additionalData.metadata.uid, line_items, additionalData, setCheckoutLoad)
+    }, [user])
+
+    const addToCartCallback = useCallback(() => {
+        if (!user) { setLogin(true); return; }
+        addToCart(firestore, user, objectID)
+    })
 
     return (
         <>
@@ -59,14 +72,12 @@ export default function ImageDisplay({ hit }) {
                     </h4>
                 </div>
                 <div className={styles.hoverWrapper}>
-                    <ExpandableButton icon='/shopping-cart-black.svg' text='Add to Cart' iconSize={40} onClick={() => addToCart(firestore, user, objectID)} />
-                    <ExpandableButton icon='/credit-card.svg' text='Buy Now' iconSize={40} onClick={() => {
-                        setCheckoutLoad(true);
-                        createSession(firestore, user, line_items, additionalData, setCheckoutLoad)
-                    }} />
+                    <ExpandableButton icon='/shopping-cart-black.svg' text='Add to Cart' iconSize={40} onClick={addToCartCallback} />
+                    <ExpandableButton icon='/credit-card.svg' text='Buy Now' iconSize={40} onClick={buyNowCallback} />
                 </div>
             </main>
             {checkoutLoad && <div className={globalStyles.checkoutLoader}><Loader /></div>}
+            {login && <LoginModal message='This Feature is Protected' setShowLogin={setLogin} />}
         </>
     )
 }
