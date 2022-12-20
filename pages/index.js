@@ -22,18 +22,17 @@ function Home(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/* <HomeBackdrop images={props.images}> */}
+      <HomeBackdrop images={props.images}>
         <main className={styles.main}>
           <div>
             <Image src='/Logo.png' alt="Better Than You Society Logo" width={logoSize} height={logoSize} />
           </div>
           <p className={styles.text}>Create AI Art. Buy it as a Sticker.</p>
-          {/* Button that sends you to design page */}
           <Link href="/design">
             <button className={styles.button}>Get Started</button>
           </Link>
         </main>
-      {/* </HomeBackdrop> */}
+      </HomeBackdrop>
     </>
   )
 }
@@ -42,19 +41,19 @@ Home.displayName = 'Home';
 
 export default Home;
 
-// export async function getStaticProps() {
-//   const db = getFirestore();
-//   const colRef = collection(db, 'images')
-//   const docs = await getDocs(colRef)
-//   const images = []
-//   docs.forEach((doc) => {
-//     let data = doc.data()
-//     images.push({url: data.url, prompt: data.prompt})
-//   })
+export async function getStaticProps() {
+  const db = getFirestore();
+  const colRef = collection(db, 'images')
+  const docs = await getDocs(colRef)
+  const images = []
+  docs.forEach((doc) => {
+    let data = doc.data()
+    images.push({url: data.url, prompt: data.prompt})
+  })
 
-//   return {
-//     props: {
-//       images
-//     }
-//   }
-// }
+  return {
+    props: {
+      images
+    }
+  }
+}
