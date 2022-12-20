@@ -42,6 +42,7 @@ function Cart() {
     // }
 
     useEffect(() => {
+        if (!user) return;
         const getCartItems = async () => {
             const cartRef = collection(firestore, 'users', user.uid, 'cart');
             const cartItems = await getDocs(cartRef);
