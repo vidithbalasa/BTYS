@@ -1,8 +1,8 @@
 import { collection, addDoc, onSnapshot, doc, setDoc } from "firebase/firestore";
 import { loadStripe } from "@stripe/stripe-js";
 
-export default async function createSession (firestore, user, line_items, additionalData, setLoading) {
-    const checkout_session_ref = collection(firestore, 'users', user.uid, 'checkout_sessions')
+export default async function createSession (firestore, uid, line_items, additionalData, setLoading) {
+    const checkout_session_ref = collection(firestore, 'users', uid, 'checkout_sessions')
 
     const docRef = await addDoc(checkout_session_ref, {
         mode: 'payment',
